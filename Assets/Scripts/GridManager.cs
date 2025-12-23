@@ -27,8 +27,6 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        Debug.Log($"[GridManager] Génération grille {gridWidth}x{gridHeight} (0,0 en bas à gauche)");
-
         for (int y = 0; y < gridHeight; y++)
         {
             for (int x = 0; x < gridWidth; x++)

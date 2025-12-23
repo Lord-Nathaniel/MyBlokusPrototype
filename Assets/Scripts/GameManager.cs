@@ -48,12 +48,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //if (cell == null) { return; }
-        //Debug.Log(cell.GetGridPosition(Input.mousePosition));
-    }
-
     private UnityAction OrangePlayerControlAndPass()
     {
         if (state != State.OrangePlayerTurn) return null;
