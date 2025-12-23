@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button bluePlayerButton;
     [SerializeField] private Button orangePlayerButton;
     [SerializeField] private TextMeshProUGUI boardText;
+    [SerializeField] private CellItem cell;
 
     public int bluePlayerTurn { get; private set; }
     private bool hasBluePlayerEnded = false;
@@ -45,6 +46,12 @@ public class GameManager : MonoBehaviour
             bluePlayerButton.gameObject.SetActive(false);
             boardText.text = "joueur Orange commence";
         }
+    }
+
+    private void Update()
+    {
+        //if (cell == null) { return; }
+        //Debug.Log(cell.GetGridPosition(Input.mousePosition));
     }
 
     private UnityAction OrangePlayerControlAndPass()
@@ -125,17 +132,18 @@ public class GameManager : MonoBehaviour
 
     private DraggableItem GetPlacedPiece()
     {
-        return null;
+        throw new System.NotImplementedException("GetPlacedPiece");
         //TODO attraper la pièce qu vient tout juste d'être placée
     }
 
     private void PlacePieceInGrid(DraggableItem placedPiece)
     {
-        throw new System.NotImplementedException();
+        throw new System.NotImplementedException("PlacePieceInGrid");
     }
 
     public void EndTurn()
     {
+        throw new System.NotImplementedException("EndTurn");
         //TODO refacto les BluePlayerControlAndPass et OrangePlayerControlAndPass
         //TODO la pièce qui vient d'être attrapée donne ses positions sur la grille,
         // et la grille change les cases correspondantes pour être colorées

@@ -272,6 +272,7 @@ MonoBehaviour:
   bluePlayerButton: {fileID: 105112160}
   orangePlayerButton: {fileID: 829582907}
   boardText: {fileID: 1622024423}
+  cell: {fileID: 7187166329096283735, guid: 205ae03dde4a04d4b8aa3ffd2ec3848c, type: 3}
 --- !u!4 &276406070
 Transform:
   m_ObjectHideFlags: 0
