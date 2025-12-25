@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class GridManager : MonoBehaviour
 
     [Header("Parent for UI Cells")]
     [SerializeField] private RectTransform gridBoard;
+
+    public List<GameObject> cells = new();
 
     void Awake()
     {
@@ -40,7 +43,19 @@ public class GridManager : MonoBehaviour
                 );
 
                 rt.anchoredPosition = localPos;
+
+                cells.Add(cellObj);
             }
         }
     }
+
+    // pas besoin car pas de liste d'Items à mémoriser
+    //public void AddItem(DraggableItem item)
+    //{
+    //    if (!items.Any(c => c.ID == item.ID))
+    //    {
+    //        item.isInGrid = true;
+    //        items.Add(item);
+    //    }
+    //}
 }
