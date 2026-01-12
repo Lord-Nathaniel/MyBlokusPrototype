@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager
 {
-    public static GridManager instance;
+    //public static GridManager instance;
 
     [Header("Grid Settings")]
     public int gridLenght { get; private set; }
@@ -27,54 +26,57 @@ public class GridManager : MonoBehaviour
                             int ID,
                             int placedObjectIndex)
     {
-        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-        CellData data = new CellData(positionToOccupy, ID, placedObjectIndex);
+        //List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        //CellData data = new CellData(positionToOccupy, ID, placedObjectIndex);
 
-        foreach (var position in positionToOccupy)
-        {
-            if (placedSquares.ContainsKey(position))
-                throw new Exception($"Dictionary already contains this cell position {position}");
-            placedSquares[position] = data;
-        }
+        //foreach (var position in positionToOccupy)
+        //{
+        //    if (placedSquares.ContainsKey(position))
+        //        throw new Exception($"Dictionary already contains this cell position {position}");
+        //    placedSquares[position] = data;
+        //}
     }
 
     private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
     {
-        List<Vector3Int> returnVal = new();
-        for (int x = 0; x < objectSize.x; x++)
-        {
-            for (int y = 0; y < objectSize.y; y++)
-            {
-                returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
-            }
-        }
-        return returnVal;
+        //List<Vector3Int> returnVal = new();
+        //for (int x = 0; x < objectSize.x; x++)
+        //{
+        //    for (int y = 0; y < objectSize.y; y++)
+        //    {
+        //        returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
+        //    }
+        //}
+        //return returnVal;
+        return null;
     }
 
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
     {
-        List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-        foreach (var position in positionToOccupy)
-        {
-            if (placedSquares.ContainsKey(position))
-                return false;
-        }
-        return true;
+        //List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        //foreach (var position in positionToOccupy)
+        //{
+        //    if (placedSquares.ContainsKey(position))
+        //        return false;
+        //}
+        //return true;
+        return false;
     }
 
     public int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if (placedSquares.ContainsKey(gridPosition) == false)
-            return -1;
-        return placedSquares[gridPosition].PlacedObjectIndex;
+        //if (placedSquares.ContainsKey(gridPosition) == false)
+        //    return -1;
+        //return placedSquares[gridPosition].PlacedObjectIndex;
+        return 0;
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
     {
-        foreach (var position in placedSquares[gridPosition].occupiedPositions)
-        {
-            placedSquares.Remove(position);
-        }
+        //foreach (var position in placedSquares[gridPosition].occupiedPositions)
+        //{
+        //    placedSquares.Remove(position);
+        //}
     }
 }
 

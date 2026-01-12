@@ -7,17 +7,18 @@ public class SquarePlacer : MonoBehaviour
 
     public int PlaceObject(GameObject prefab, Vector3 position)
     {
-        GameObject newObject = Instantiate(prefab);
-        newObject.transform.position = position;
-        placedGameObjects.Add(newObject);
-        return placedGameObjects.Count - 1;
+        //GameObject newObject = Instantiate(prefab);
+        //newObject.transform.position = position;
+        //placedGameObjects.Add(newObject);
+        //return placedGameObjects.Count - 1;
+        return 0;
     }
 
-    internal void RemoveObjectAt(int gameObjectIndex)
+    public void RemoveObjectAt(int gameObjectIndex)
     {
-        if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
-            return;
-        Destroy(placedGameObjects[gameObjectIndex]);
-        placedGameObjects[gameObjectIndex] = null;
+        //if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
+        //    return;
+        //Destroy(placedGameObjects[gameObjectIndex]);
+        //placedGameObjects[gameObjectIndex] = null;
     }
 }
