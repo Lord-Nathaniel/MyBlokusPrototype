@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
   m_Name: 1_oneSquare
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceID: 0
+  ID: 1
+  prefab: {fileID: 2035943218496302096, guid: e3f94d8754abe3646b316f78a7d221b5, type: 3}
   squares: []
   corners: []
   rotable: 0
   mirrorable: 0
-  pointValue: 0
+  pointValue: 1
