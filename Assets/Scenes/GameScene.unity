@@ -252,21 +252,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorIndicatorParent
       objectReference: {fileID: 0}
-    - target: {fileID: 980969516807694874, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4037836552902878482, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 3853aac7281910f40a99781272918d92, type: 2}
     - target: {fileID: 4068950509318832494, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4068950509318832494, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.015
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4068950509318832494, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
       propertyPath: m_LocalPosition.z
@@ -302,23 +294,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8329308487458749692, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8329308487458749692, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
-      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8329308487458749692, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8933183846873864573, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
-      propertyPath: m_Name
-      value: CursorIndicator
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 8157409616399076117, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73aab3c2bfa8a584cb89e68846f4f667, type: 3}
@@ -707,6 +690,8 @@ MonoBehaviour:
   cellIndicator: {fileID: 983296808}
   inputManager: {fileID: 735406504}
   grid: {fileID: 1000392020}
+  database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
+  gridVisualization: {fileID: 738940046}
 --- !u!4 &625892633
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,7 +1224,7 @@ Transform:
   m_LocalScale: {x: 1.6, y: 1, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2039392021}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &991860405
 MeshCollider:
@@ -1328,7 +1313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1000392019}
-  - component: {fileID: 1000392018}
+  - component: {fileID: 1000392021}
   - component: {fileID: 1000392020}
   m_Layer: 6
   m_Name: Grid
@@ -1337,14 +1322,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!33 &1000392018
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000392015}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1000392019
 Transform:
   m_ObjectHideFlags: 0
@@ -1372,6 +1349,28 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!64 &1000392021
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000392015}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1253508211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2675,7 +2674,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3131,7 +3130,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 991860404}
   - {fileID: 1000392019}
   - {fileID: 738940047}
   m_Father: {fileID: 0}
@@ -3191,6 +3189,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1406940882}
   - {fileID: 1561962054}
+  - {fileID: 991860404}
   - {fileID: 2039392021}
   - {fileID: 1582172403}
   - {fileID: 254639773}

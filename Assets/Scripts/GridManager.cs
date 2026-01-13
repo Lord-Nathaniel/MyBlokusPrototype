@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager
+public class GridManager : MonoBehaviour
 {
     //public static GridManager instance;
 
     [Header("Grid Settings")]
-    public int gridLenght { get; private set; }
-    public int gridHeight { get; private set; }
+    [SerializeField] private int gridLenght;
+    [SerializeField] private int gridHeight;
 
     [Header("Cell Size")]
-    public float cellLenght { get; private set; }
-    public float cellHeight { get; private set; }
+    [SerializeField] private float cellLenght;
+    [SerializeField] private float cellHeight;
 
     [Header("Cell Sprites")]
     //TODO after polishing grid shader
@@ -77,6 +77,27 @@ public class GridManager
         //{
         //    placedSquares.Remove(position);
         //}
+    }
+
+
+    public Vector3Int WorldToCell(Vector3 world)
+    {
+        Vector3 GridOrigin = new Vector3(-(gridLenght / 2), 0, -(gridHeight / 2));
+        Vector3 local = world - GridOrigin;
+
+        int x = Mathf.FloorToInt(local.x / cellLenght);
+        int y = Mathf.FloorToInt(local.z / cellHeight);
+
+        return new Vector3Int(x, y, 0);
+    }
+
+    public Vector3 CellToWorld(Vector3Int cell)
+    {
+        return new Vector3(
+            -(gridLenght / 2) + (cell.x + 0.5f) * cellLenght,
+            0,
+            -(gridHeight / 2) + (cell.y + 0.5f) * cellHeight
+        );
     }
 }
 
