@@ -14,23 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceData
   playerPieces:
   - {fileID: 11400000, guid: 76df6d45f4104cd479dcf11c63009d55, type: 2}
-  - {fileID: 11400000, guid: 084394e5fbfc84d40b58ec36085e65b9, type: 2}
-  - {fileID: 11400000, guid: 1369383b120b56647960ffa53a7e2b8e, type: 2}
-  - {fileID: 11400000, guid: ccd7e53b54df1be4e94a65299095655f, type: 2}
   - {fileID: 11400000, guid: 353176891fcc63f4580cb75ff2f96fc7, type: 2}
-  - {fileID: 11400000, guid: 32a9a2669941f064693a447d5013997a, type: 2}
-  - {fileID: 11400000, guid: aad3b272ef3ed15498a624ed9d48e5a4, type: 2}
-  - {fileID: 11400000, guid: f12deb469610c274087f3f3059817d22, type: 2}
-  - {fileID: 11400000, guid: 670779ea690f89841956eb37db238157, type: 2}
-  - {fileID: 11400000, guid: f35e8b10569d3d2449b06de138ba7f11, type: 2}
-  - {fileID: 11400000, guid: 646f2ccbc2ef0aa40b05d0543510e76c, type: 2}
-  - {fileID: 11400000, guid: f1621c1e79aa13e429af1dc1e4e6cb2e, type: 2}
-  - {fileID: 11400000, guid: cea39bbd974534d41a247a670256519b, type: 2}
-  - {fileID: 11400000, guid: 43233a0e083480f4fb35cfee3b6f6d05, type: 2}
-  - {fileID: 11400000, guid: 27bd4445ba4b1c84f9cd4113382829f0, type: 2}
-  - {fileID: 11400000, guid: e9e03d76f67286b4d9b388e4d74846cc, type: 2}
-  - {fileID: 11400000, guid: 9df727b055ffc964d96413bb5194a8cb, type: 2}
-  - {fileID: 11400000, guid: b316d4057b149c14d8824541efe7c9f3, type: 2}
-  - {fileID: 11400000, guid: eb8e55523cf28c74ca6d24297ae8923d, type: 2}
-  - {fileID: 11400000, guid: 8983773f105b5754fb4dc6c8b1efadc4, type: 2}
-  - {fileID: 11400000, guid: 07b73a0dbd0a1d841a7edaf93f66c1be, type: 2}

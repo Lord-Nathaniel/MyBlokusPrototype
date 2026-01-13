@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
   ID: 1
   prefab: {fileID: 2035943218496302096, guid: e3f94d8754abe3646b316f78a7d221b5, type: 3}
-  squares: []
-  corners: []
+  squares:
+  - {x: 0, y: 0}
+  corners:
+  - {x: -1, y: -1}
+  - {x: -1, y: 1}
+  - {x: 1, y: -1}
+  - {x: 1, y: 1}
   rotable: 0
   mirrorable: 0
   pointValue: 1
+  miniature: {fileID: 21300000, guid: c88a9d704d85cc14ba80a7dceb7614cf, type: 3}
