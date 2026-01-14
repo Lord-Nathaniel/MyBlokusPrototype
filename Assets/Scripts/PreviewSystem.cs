@@ -23,10 +23,20 @@ public class PreviewSystem : MonoBehaviour
 
         PlayerPieceSO playerPieceSO = database.playerPieces[ID];
 
+        //square preview
         foreach (Vector2Int square in playerPieceSO.squares)
         {
-            _ = Instantiate(database.prefab,
+            _ = Instantiate(database.squarePreviewPrefab,
                 new Vector3((float)square.x + 0.5f, 0.05f, (float)square.y + 0.5f),
+                new Quaternion(0f, 0f, 0f, 0f),
+                cellIndicatorParent.transform);
+        }
+
+        //corner preview
+        foreach (Vector2Int corner in playerPieceSO.corners)
+        {
+            _ = Instantiate(database.cornerPreviewPrefab,
+                new Vector3((float)corner.x + 0.5f, 0.05f, (float)corner.y + 0.5f),
                 new Quaternion(0f, 0f, 0f, 0f),
                 cellIndicatorParent.transform);
         }

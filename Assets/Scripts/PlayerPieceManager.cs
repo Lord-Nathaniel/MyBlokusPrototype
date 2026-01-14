@@ -72,7 +72,7 @@ public class PlayerPieceManager : MonoBehaviour
         //}
 
 
-        GameObject newObject = Instantiate(database.prefab);
+        GameObject newObject = Instantiate(database.squarePreviewPrefab);
         newObject.transform.position = gridManager.CellToWorld(gridPosition);
 
         //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
