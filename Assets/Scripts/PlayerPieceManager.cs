@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class PlayerPieceManager : MonoBehaviour
 {
-    [SerializeField] private GameObject mouseIndicator, cellIndicator;
+    [SerializeField] private GameObject cellIndicator;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject gridVisualization;
     [SerializeField] private GridManager gridManager;
-    //[SerializeField] private PreviewSystem previewSystem;
+    [SerializeField] private PreviewSystem previewSystem;
     //[SerializeField] private SquarePlacer squarePlacer;
     //[SerializeField] private SoundManager soundManager;
 
@@ -30,8 +30,11 @@ public class PlayerPieceManager : MonoBehaviour
         selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex > -1)
         {
-            //    previewSystem.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab,
-            //                                               database.objectsData[selectedObjectIndex].Size);
+            Debug.Log(selectedObjectIndex);
+            Debug.Log(database);
+            Debug.Log(database.playerPieces);
+            Debug.Log(database.playerPieces[selectedObjectIndex]);
+            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID);
         }
         else
         {
@@ -118,7 +121,6 @@ public class PlayerPieceManager : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        mouseIndicator.transform.position = mousePosition;
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
 
         //if (lastDetectedPosition != gridPosition)

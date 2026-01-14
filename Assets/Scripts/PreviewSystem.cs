@@ -3,54 +3,57 @@ using UnityEngine;
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField] private float previewYOffset = 0.006f;
-    [SerializeField] private GameObject cellIndicator;
-    //[SerializeField] private Material previewMaterialsPrefab;
+    [SerializeField] private GameObject cellIndicatorParent;
+    [SerializeField] private PlayerPieceDataSO database;
 
     private GameObject previewObject;
-    private Material previewMaterialInstance;
-    private Renderer cellIndicatorRenderer;
+    private PlayerPieceSO playerPieceSO;
 
     private void Start()
     {
-        //previewMaterialInstance = new Material(previewMaterialsPrefab);
-        cellIndicator.SetActive(false);
-        cellIndicatorRenderer = cellIndicator.GetComponentInChildren<Renderer>();
+        cellIndicatorParent.SetActive(false);
     }
 
-    public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size)
+    public void StartShowingPlacementPreview(int ID)
     {
-        previewObject = Instantiate(prefab);
-        PreparePreview(previewObject);
-        PrepareCursor(size);
-        cellIndicator.SetActive(true);
+        this.playerPieceSO = database.playerPieces[ID];
+        //previewObject = Instantiate(playerPieceSO.prefab);
+        PreparePreview();
+        //PrepareCursor(size);
+        cellIndicatorParent.SetActive(true);
     }
 
     private void PrepareCursor(Vector2Int size)
     {
         if (size.x > 0 || size.y > 0)
         {
-            cellIndicator.transform.localScale = new Vector3(size.x, 1, size.y);
-            cellIndicatorRenderer.material.mainTextureScale = size;
+            cellIndicatorParent.transform.localScale = new Vector3(size.x, 1, size.y);
         }
     }
 
-    private void PreparePreview(GameObject previewObject)
+    private void PreparePreview()
     {
-        Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
-        {
-            Material[] materials = renderer.materials;
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i] = previewMaterialInstance;
-            }
-            renderer.materials = materials;
-        }
+        //foreach (Vector2Int square in playerPieceSO.squares)
+        //{
+
+        //    //Transform cellIndicatorPreviewTransform = cellIndicatorParent./*GetComponent*/<CursorIndicator>().transform;
+        //    _ = Instantiate(cellIndicatorParent, cellIndicatorParent.transform, false);
+        //}
     }
+    //Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
+    //foreach (Renderer renderer in renderers)
+    //{
+    //    Material[] materials = renderer.materials;
+    //    for (int i = 0; i < materials.Length; i++)
+    //    {
+    //        materials[i] = previewMaterialInstance;
+    //    }
+    //    renderer.materials = materials;
+    //}
 
     public void StopShowingPreview()
     {
-        cellIndicator.SetActive(false);
+        cellIndicatorParent.SetActive(false);
         if (previewObject != null)
             Destroy(previewObject);
     }
@@ -60,11 +63,11 @@ public class PreviewSystem : MonoBehaviour
         if (previewObject != null)
         {
             MovePreview(position);
-            ApplyFeedbackToPreview(validity);
+            //ApplyFeedbackToPreview(validity);
         }
 
         MoveCursor(position);
-        ApplyFeedbackToCursor(validity);
+        //ApplyFeedbackToCursor(validity);
     }
 
     private void MovePreview(Vector3 position)
@@ -74,27 +77,27 @@ public class PreviewSystem : MonoBehaviour
 
     private void MoveCursor(Vector3 position)
     {
-        cellIndicator.transform.position = position;
+        cellIndicatorParent.transform.position = position;
     }
 
-    private void ApplyFeedbackToPreview(bool validity)
-    {
-        Color color = validity ? Color.white : Color.red;
-        previewMaterialInstance.color = color;
-        color.a = 0.5f;
-    }
+    //private void ApplyFeedbackToPreview(bool validity)
+    //{
+    //    Color color = validity ? Color.white : Color.red;
+    //    previewMaterialInstance.color = color;
+    //    color.a = 0.5f;
+    //}
 
-    private void ApplyFeedbackToCursor(bool validity)
-    {
-        Color color = validity ? Color.white : Color.red;
-        cellIndicatorRenderer.material.color = color;
-        color.a = 0.5f;
-    }
+    //private void ApplyFeedbackToCursor(bool validity)
+    //{
+    //    Color color = validity ? Color.white : Color.red;
+    //    cellIndicatorRenderer.material.color = color;
+    //    color.a = 0.5f;
+    //}
 
-    internal void StartShowingRemovePreview()
-    {
-        cellIndicator.SetActive(true);
-        PrepareCursor(Vector2Int.one);
-        ApplyFeedbackToCursor(false);
-    }
+    //internal void StartShowingRemovePreview()
+    //{
+    //    cellIndicator.SetActive(true);
+    //    PrepareCursor(Vector2Int.one);
+    //    ApplyFeedbackToCursor(false);
+    //}
 }

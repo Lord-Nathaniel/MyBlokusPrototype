@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
   m_Name: 1_oneSquare
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  ID: 1
+  ID: 0
   prefab: {fileID: 2035943218496302096, guid: e3f94d8754abe3646b316f78a7d221b5, type: 3}
   squares:
   - {x: 0, y: 0}
@@ -24,4 +24,4 @@ MonoBehaviour:
   rotable: 0
   mirrorable: 0
   pointValue: 1
-  miniature: {fileID: 21300000, guid: c88a9d704d85cc14ba80a7dceb7614cf, type: 3}
+  miniature: {fileID: 21300000, guid: 6b2934529408fb746963f4b1686a5a87, type: 3}
