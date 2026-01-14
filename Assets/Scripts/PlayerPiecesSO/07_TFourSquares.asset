@@ -10,11 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
-  m_Name: 4_fourSquares
+  m_Name: 07_TFourSquares
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceID: 0
-  squares: []
+  ID: 6
+  squares:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  - {x: 1, y: 1}
   corners: []
-  rotable: 0
+  rotable: 1
   mirrorable: 0
-  pointValue: 0
+  pointValue: 4
+  miniature: {fileID: 21300000, guid: 5a41e0c91baad7d4b93d7af17f6da4f2, type: 3}

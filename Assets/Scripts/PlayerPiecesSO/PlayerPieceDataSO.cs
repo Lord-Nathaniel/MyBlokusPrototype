@@ -5,4 +5,5 @@ using UnityEngine;
 public class PlayerPieceDataSO : ScriptableObject
 {
     public List<PlayerPieceSO> playerPieces;
+    public GameObject prefab;
 }

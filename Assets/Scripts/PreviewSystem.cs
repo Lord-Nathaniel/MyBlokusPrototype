@@ -7,8 +7,6 @@ public class PreviewSystem : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
 
     private GameObject previewObject;
-    private PlayerPieceSO playerPieceSO;
-
     private void Start()
     {
         cellIndicatorParent.SetActive(false);
@@ -16,11 +14,22 @@ public class PreviewSystem : MonoBehaviour
 
     public void StartShowingPlacementPreview(int ID)
     {
-        this.playerPieceSO = database.playerPieces[ID];
-        //previewObject = Instantiate(playerPieceSO.prefab);
-        PreparePreview();
-        //PrepareCursor(size);
         cellIndicatorParent.SetActive(true);
+        foreach (Transform child in cellIndicatorParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        cellIndicatorParent.transform.position = new Vector3(0, 0.05f, 0);
+
+        PlayerPieceSO playerPieceSO = database.playerPieces[ID];
+
+        foreach (Vector2Int square in playerPieceSO.squares)
+        {
+            _ = Instantiate(database.prefab,
+                new Vector3((float)square.x + 0.5f, 0.05f, (float)square.y + 0.5f),
+                new Quaternion(0f, 0f, 0f, 0f),
+                cellIndicatorParent.transform);
+        }
     }
 
     private void PrepareCursor(Vector2Int size)
@@ -31,15 +40,15 @@ public class PreviewSystem : MonoBehaviour
         }
     }
 
-    private void PreparePreview()
-    {
-        //foreach (Vector2Int square in playerPieceSO.squares)
-        //{
+    //private void PreparePreview()
+    //{
+    //foreach (Vector2Int square in playerPieceSO.squares)
+    //{
 
-        //    //Transform cellIndicatorPreviewTransform = cellIndicatorParent./*GetComponent*/<CursorIndicator>().transform;
-        //    _ = Instantiate(cellIndicatorParent, cellIndicatorParent.transform, false);
-        //}
-    }
+    //    //Transform cellIndicatorPreviewTransform = cellIndicatorParent./*GetComponent*/<CursorIndicator>().transform;
+    //    _ = Instantiate(cellIndicatorParent, cellIndicatorParent.transform, false);
+    //}
+    //}
     //Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
     //foreach (Renderer renderer in renderers)
     //{
@@ -60,11 +69,11 @@ public class PreviewSystem : MonoBehaviour
 
     public void UpdatePosition(Vector3 position, bool validity)
     {
-        if (previewObject != null)
-        {
-            MovePreview(position);
-            //ApplyFeedbackToPreview(validity);
-        }
+        //if (previewObject != null)
+        //{
+        //    MovePreview(position);
+        //    //ApplyFeedbackToPreview(validity);
+        //}
 
         MoveCursor(position);
         //ApplyFeedbackToCursor(validity);

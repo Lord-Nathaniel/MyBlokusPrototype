@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
-  m_Name: 2_twoSquares
+  m_Name: 11_LFiveSquares
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  ID: 1
-  prefab: {fileID: 0}
-  squares: []
+  ID: 10
+  squares:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  - {x: 0, y: 3}
+  - {x: 1, y: 0}
   corners: []
   rotable: 1
-  mirrorable: 0
-  pointValue: 2
-  miniature: {fileID: 21300000, guid: 748d0829001a9b3449140e08d0d8afd6, type: 3}
+  mirrorable: 1
+  pointValue: 5
+  miniature: {fileID: 21300000, guid: 425ad493086e86f4487567ae3584826f, type: 3}

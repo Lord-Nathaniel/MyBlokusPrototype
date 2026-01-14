@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerPieceManager : MonoBehaviour
 {
-    [SerializeField] private GameObject cellIndicator;
+    [SerializeField] private GameObject cellIndicatorParent;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
     [SerializeField] private PlayerPieceDataSO database;
@@ -42,7 +42,7 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         }
         gridVisualization.SetActive(true);
-        cellIndicator.SetActive(true);
+        cellIndicatorParent.SetActive(true);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -72,7 +72,7 @@ public class PlayerPieceManager : MonoBehaviour
         //}
 
 
-        GameObject newObject = Instantiate(database.playerPieces[selectedObjectIndex].prefab);
+        GameObject newObject = Instantiate(database.prefab);
         newObject.transform.position = gridManager.CellToWorld(gridPosition);
 
         //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
@@ -102,7 +102,7 @@ public class PlayerPieceManager : MonoBehaviour
         //}
         selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
-        cellIndicator.SetActive(false);
+        cellIndicatorParent.SetActive(false);
         //previewSystem.StopShowingPreview();
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
@@ -121,7 +121,7 @@ public class PlayerPieceManager : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+        cellIndicatorParent.transform.position = grid.CellToWorld(gridPosition);
 
         //if (lastDetectedPosition != gridPosition)
         //{

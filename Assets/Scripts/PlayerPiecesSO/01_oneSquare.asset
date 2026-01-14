@@ -10,11 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
-  m_Name: 5_sLFiveSquares
+  m_Name: 01_oneSquare
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceID: 0
-  squares: []
-  corners: []
+  ID: 0
+  prefab: {fileID: 2035943218496302096, guid: e3f94d8754abe3646b316f78a7d221b5, type: 3}
+  squares:
+  - {x: 0, y: 0}
+  corners:
+  - {x: -1, y: -1}
+  - {x: -1, y: 1}
+  - {x: 1, y: -1}
+  - {x: 1, y: 1}
   rotable: 0
   mirrorable: 0
-  pointValue: 0
+  pointValue: 1
+  miniature: {fileID: 21300000, guid: 6b2934529408fb746963f4b1686a5a87, type: 3}

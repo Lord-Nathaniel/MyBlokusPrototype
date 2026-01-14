@@ -9,21 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cf51a90cd36c544e9cca42ff4a400cd, type: 3}
-  m_Name: 5_uFiveSquares
+  m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
+  m_Name: 12_sLFiveSquares
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceName: 
-  blocks:
-  - {x: 1, y: 1}
-  - {x: 2, y: 1}
-  - {x: 1, y: 2}
-  - {x: 1, y: 3}
-  - {x: 2, y: 3}
-  corners:
+  ID: 11
+  squares:
   - {x: 0, y: 0}
-  - {x: 3, y: 0}
-  - {x: 3, y: 2}
-  - {x: 0, y: 4}
-  - {x: 3, y: 4}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  - {x: 1, y: 0}
+  - {x: 1, y: -1}
+  corners: []
   rotable: 1
-  mirrorable: 0
+  mirrorable: 1
+  pointValue: 5
+  miniature: {fileID: 21300000, guid: ded35873264f8fb4fab7314d91f73123, type: 3}

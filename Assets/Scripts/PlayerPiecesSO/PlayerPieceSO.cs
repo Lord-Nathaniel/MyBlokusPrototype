@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerPieceSO : ScriptableObject
 {
     public int ID;
-    public GameObject prefab;
     public List<Vector2Int> squares;
     public List<Vector2Int> corners;
     public bool rotable;

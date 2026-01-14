@@ -10,11 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
-  m_Name: 5_crossFiveSquares
+  m_Name: 21_crossFiveSquares
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceID: 0
-  squares: []
+  ID: 20
+  squares:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: -1, y: 0}
+  - {x: 0, y: -1}
   corners: []
   rotable: 0
   mirrorable: 0
-  pointValue: 0
+  pointValue: 5
+  miniature: {fileID: 21300000, guid: 991ef7472c3852a43ae26f238b9ef4ad, type: 3}

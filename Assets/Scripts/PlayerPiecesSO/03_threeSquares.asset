@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65962a567ac4e634e9a18be347717e8e, type: 3}
-  m_Name: 5_ITFiveSquares
+  m_Name: 03_threeSquares
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceSO
-  pieceID: 0
-  squares: []
+  ID: 2
+  squares:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
   corners: []
-  rotable: 0
+  rotable: 1
   mirrorable: 0
-  pointValue: 0
+  pointValue: 3
+  miniature: {fileID: 21300000, guid: 9b676be127f86dc43952b0a3a19fa9b8, type: 3}
