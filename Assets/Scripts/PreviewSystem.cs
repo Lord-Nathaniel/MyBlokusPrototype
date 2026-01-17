@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PreviewSystem : MonoBehaviour
@@ -5,8 +6,13 @@ public class PreviewSystem : MonoBehaviour
     [SerializeField] private float previewYOffset = 0.006f;
     [SerializeField] private GameObject cellIndicatorParent;
     [SerializeField] private PlayerPieceDataSO database;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private Grid grid;
 
     private GameObject previewObject;
+    private PlayerPieceSO playerPieceSO;
+    [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
+
     private void Start()
     {
         cellIndicatorParent.SetActive(false);
@@ -15,40 +21,68 @@ public class PreviewSystem : MonoBehaviour
     public void StartShowingPlacementPreview(int ID)
     {
         cellIndicatorParent.SetActive(true);
-        foreach (Transform child in cellIndicatorParent.transform)
+        playerPieceSO = database.playerPieces[ID];
+        cursorPreview(playerPieceSO.squares, playerPieceSO.corners);
+    }
+
+    private void cursorPreview(List<Vector2Int> squares, List<Vector2Int> corners)
+    {
+        foreach (Transform child in cellIndicatorParent.transform.GetChild(0))
         {
             Destroy(child.gameObject);
         }
-        cellIndicatorParent.transform.position = new Vector3(0, 0.05f, 0);
+        cellIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
+        cellIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        PlayerPieceSO playerPieceSO = database.playerPieces[ID];
 
         //square preview
-        foreach (Vector2Int square in playerPieceSO.squares)
+        foreach (Vector2Int square in squares)
         {
-            _ = Instantiate(database.squarePreviewPrefab,
-                new Vector3((float)square.x + 0.5f, 0.05f, (float)square.y + 0.5f),
-                new Quaternion(0f, 0f, 0f, 0f),
-                cellIndicatorParent.transform);
+            GameObject squareGO = Instantiate(database.squarePreviewPrefab, cellIndicatorParent.transform.GetChild(0));
+            squareGO.transform.localPosition = new Vector3((float)square.x, 0f, (float)square.y);
+            squareGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
 
         //corner preview
-        foreach (Vector2Int corner in playerPieceSO.corners)
+        foreach (Vector2Int corner in corners)
         {
-            _ = Instantiate(database.cornerPreviewPrefab,
-                new Vector3((float)corner.x + 0.5f, 0.05f, (float)corner.y + 0.5f),
-                new Quaternion(0f, 0f, 0f, 0f),
-                cellIndicatorParent.transform);
+            GameObject cornerGO = Instantiate(database.cornerPreviewPrefab, cellIndicatorParent.transform.GetChild(0));
+            cornerGO.transform.localPosition = new Vector3((float)corner.x, 0f, (float)corner.y);
+            cornerGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
     }
 
-    private void PrepareCursor(Vector2Int size)
+    //private List<Vector2Int> Normalize(List<Vector2Int> points)
+    //{
+    //    int minX = int.MaxValue;
+    //    int minY = int.MaxValue;
+
+    //    foreach (Vector2Int p in points)
+    //    {
+    //        if (p.x < minX) minX = p.x;
+    //        if (p.y < minY) minY = p.y;
+    //    }
+
+    //    List<Vector2Int> result = new List<Vector2Int>();
+
+    //    foreach (Vector2Int p in points)
+    //        result.Add(new Vector2Int(p.x - minX, p.y - minY));
+
+    //    return result;
+    //}
+
+    public void RotatePlacementPreview()
     {
-        if (size.x > 0 || size.y > 0)
-        {
-            cellIndicatorParent.transform.localScale = new Vector3(size.x, 1, size.y);
-        }
+        cellIndicatorParent.transform.GetChild(0).Rotate(0f, -90f, 0f);
     }
+
+    public void MirrorPlacementPreview()
+    {
+        Vector3 scale = cellIndicatorParent.transform.GetChild(0).localScale;
+        scale.x *= -1;
+        cellIndicatorParent.transform.GetChild(0).localScale = scale;
+    }
+
 
     //private void PreparePreview()
     //{
@@ -119,4 +153,28 @@ public class PreviewSystem : MonoBehaviour
     //    PrepareCursor(Vector2Int.one);
     //    ApplyFeedbackToCursor(false);
     //}
+
+    private void Update()
+    {
+        //if (!isBuidling)
+        //{
+        //    return;
+        //}
+        if (playerPieceSO == null)
+            return;
+        Vector3 mousePosition = inputManager.GetSelectedMapPosition();
+        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+
+
+        cellIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,
+                                                             cellIndicatorParentYOffset,
+                                                             grid.CellToWorld(gridPosition).z);
+
+        //if (lastDetectedPosition != gridPosition)
+        //{
+        //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        //    previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+        //    lastDetectedPosition = gridPosition;
+        //}
+    }
 }

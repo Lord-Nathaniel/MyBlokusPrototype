@@ -9,15 +9,21 @@ public class InputManager : MonoBehaviour
 
     private Vector3 lastPosition;
 
-    public event Action OnClicked, OnExit;
+    public event Action OnLeftClicked, OnMiddleClicked, OnMiddleScrollUp, OnMiddleScrollDown, OnRightClicked, OnExit;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            OnClicked?.Invoke();
+            OnLeftClicked?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.Escape))
             OnExit?.Invoke();
+
+        if (Input.GetMouseButtonDown(1))
+            OnRightClicked?.Invoke();
+
+        if (Input.GetMouseButtonDown(2))
+            OnMiddleClicked?.Invoke();
     }
 
     public bool IsPointerOverUI()

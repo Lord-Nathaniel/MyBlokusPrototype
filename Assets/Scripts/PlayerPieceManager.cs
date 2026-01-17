@@ -15,6 +15,8 @@ public class PlayerPieceManager : MonoBehaviour
     //private GridManager floorData, furnitureData;
     //private Vector3Int lastDetectedPosition = Vector3Int.zero;
     private int selectedObjectIndex = -1;
+    private int selectedObjectRotation = 0;
+    private bool isSelectedObjectMirrored = false;
     //private bool isBuidling = false;
 
     private void Start()
@@ -30,21 +32,19 @@ public class PlayerPieceManager : MonoBehaviour
         selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex > -1)
         {
-            Debug.Log(selectedObjectIndex);
-            Debug.Log(database);
-            Debug.Log(database.playerPieces);
-            Debug.Log(database.playerPieces[selectedObjectIndex]);
             previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID);
+            selectedObjectRotation = 0;
+            isSelectedObjectMirrored = false;
         }
         else
         {
-            Debug.LogError($"No object with ID {ID}");
             return;
         }
         gridVisualization.SetActive(true);
-        cellIndicatorParent.SetActive(true);
-        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnLeftClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+        inputManager.OnRightClicked += RotatePlayerPiece;
+        inputManager.OnMiddleClicked += MirrorPlayerPiece;
     }
 
     public void StartRemoving()
@@ -71,7 +71,7 @@ public class PlayerPieceManager : MonoBehaviour
         //    return;
         //}
 
-
+        //on left click = place a square : TODO !
         GameObject newObject = Instantiate(database.squarePreviewPrefab);
         newObject.transform.position = gridManager.CellToWorld(gridPosition);
 
@@ -94,6 +94,24 @@ public class PlayerPieceManager : MonoBehaviour
         //previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
+    public void RotatePlayerPiece()
+    {
+        if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].rotable)
+        {
+            selectedObjectRotation = (selectedObjectRotation + 1) % 4; ;
+            previewSystem.RotatePlacementPreview();
+        }
+    }
+
+    public void MirrorPlayerPiece()
+    {
+        if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].mirrorable)
+        {
+            isSelectedObjectMirrored = !isSelectedObjectMirrored;
+            previewSystem.MirrorPlacementPreview();
+        }
+    }
+
     public void StopPlacement()
     {
         //if (!isBuidling)
@@ -104,32 +122,13 @@ public class PlayerPieceManager : MonoBehaviour
         gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
         //previewSystem.StopShowingPreview();
-        inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnLeftClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         //lastDetectedPosition = Vector3Int.zero;
         //isBuidling = false;
     }
 
-    private void Update()
-    {
-        //if (!isBuidling)
-        //{
-        //    return;
-        //}
-        if (selectedObjectIndex < 0)
-            return;
-        Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        cellIndicatorParent.transform.position = grid.CellToWorld(gridPosition);
-
-        //if (lastDetectedPosition != gridPosition)
-        //{
-        //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        //    previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
-        //    lastDetectedPosition = gridPosition;
-        //}
-    }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
