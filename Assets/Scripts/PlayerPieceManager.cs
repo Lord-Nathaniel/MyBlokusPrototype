@@ -124,16 +124,18 @@ public class PlayerPieceManager : MonoBehaviour
         //previewSystem.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
-        //lastDetectedPosition = Vector3Int.zero;
-        //isBuidling = false;
+        inputManager.OnRightClicked -= RotatePlayerPiece;
+        inputManager.OnMiddleClicked -= MirrorPlayerPiece;
     }
-
-
-
-    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-    {
-        //GridManager selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-        //return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-        return false;
-    }
+    //lastDetectedPosition = Vector3Int.zero;
+    //isBuidling = false;
 }
+
+
+
+//private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
+//{
+//    //GridManager selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
+//    //return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+//    return false;
+//}

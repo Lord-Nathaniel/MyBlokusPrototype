@@ -73,7 +73,7 @@ public class PreviewSystem : MonoBehaviour
 
     public void RotatePlacementPreview()
     {
-        cellIndicatorParent.transform.GetChild(0).Rotate(0f, -90f, 0f);
+        cellIndicatorParent.transform.GetChild(0).Rotate(0f, 90f, 0f);
     }
 
     public void MirrorPlacementPreview()

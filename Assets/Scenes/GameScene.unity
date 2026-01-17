@@ -2921,6 +2921,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   inputManager: {fileID: 735406504}
   grid: {fileID: 1000392020}
+  cellIndicatorParentYOffset: 0.015
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
