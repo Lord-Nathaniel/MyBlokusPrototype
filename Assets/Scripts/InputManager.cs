@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
 
     private Vector3 lastPosition;
 
-    public event Action OnLeftClicked, OnMiddleClicked, OnMiddleScrollUp, OnMiddleScrollDown, OnRightClicked, OnExit;
+    public event Action OnLeftClicked, OnMiddleClicked, OnRightClicked, OnExit;
 
     private void Update()
     {

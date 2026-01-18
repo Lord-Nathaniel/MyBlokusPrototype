@@ -52,25 +52,6 @@ public class PreviewSystem : MonoBehaviour
         }
     }
 
-    //private List<Vector2Int> Normalize(List<Vector2Int> points)
-    //{
-    //    int minX = int.MaxValue;
-    //    int minY = int.MaxValue;
-
-    //    foreach (Vector2Int p in points)
-    //    {
-    //        if (p.x < minX) minX = p.x;
-    //        if (p.y < minY) minY = p.y;
-    //    }
-
-    //    List<Vector2Int> result = new List<Vector2Int>();
-
-    //    foreach (Vector2Int p in points)
-    //        result.Add(new Vector2Int(p.x - minX, p.y - minY));
-
-    //    return result;
-    //}
-
     public void RotatePlacementPreview()
     {
         cellIndicatorParent.transform.GetChild(0).Rotate(0f, 90f, 0f);
@@ -156,10 +137,6 @@ public class PreviewSystem : MonoBehaviour
 
     private void Update()
     {
-        //if (!isBuidling)
-        //{
-        //    return;
-        //}
         if (playerPieceSO == null)
             return;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();

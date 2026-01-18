@@ -105,13 +105,13 @@ public class CellData
 {
     public List<Vector3Int> occupiedPositions;
 
-    public int ID { get; private set; }
+    public int PlayerID { get; private set; }
     public int PlacedObjectIndex { get; private set; }
 
-    public CellData(List<Vector3Int> occupiedPositions, int iD, int placedObjectIndex)
+    public CellData(List<Vector3Int> occupiedPositions, int playerId, int placedObjectIndex)
     {
         this.occupiedPositions = occupiedPositions;
-        ID = iD;
+        PlayerID = playerId;
         PlacedObjectIndex = placedObjectIndex;
     }
 }
