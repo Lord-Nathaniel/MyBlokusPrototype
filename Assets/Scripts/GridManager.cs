@@ -6,8 +6,8 @@ public class GridManager : MonoBehaviour
     //public static GridManager instance;
 
     [Header("Grid Settings")]
-    [SerializeField] private int gridLenght;
-    [SerializeField] private int gridHeight;
+    public int gridLenght;
+    public int gridHeight;
 
     [Header("Cell Size")]
     [SerializeField] private float cellLenght;
@@ -18,6 +18,9 @@ public class GridManager : MonoBehaviour
 
     [Header("Grid Management")]
     [SerializeField] private GameObject gridParent;
+    [SerializeField] private PlayerPieceDataSO database;
+
+    private PlayerPieceSO playerPieceSO;
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
 
@@ -37,30 +40,96 @@ public class GridManager : MonoBehaviour
         //}
     }
 
-    private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
+    //private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
+    //{
+    //List<Vector3Int> returnVal = new();
+    //for (int x = 0; x < objectSize.x; x++)
+    //{
+    //    for (int y = 0; y < objectSize.y; y++)
+    //    {
+    //        returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
+    //    }
+    //}
+    //return returnVal;
+    //    return null;
+    //}
+
+    private List<Vector3Int> CalculateGridPositions(Vector3Int gridPosition, List<Vector2Int> objectCells)
     {
-        //List<Vector3Int> returnVal = new();
-        //for (int x = 0; x < objectSize.x; x++)
-        //{
-        //    for (int y = 0; y < objectSize.y; y++)
-        //    {
-        //        returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
-        //    }
-        //}
-        //return returnVal;
-        return null;
+        List<Vector3Int> returnVal = new();
+        foreach (Vector2Int cell in objectCells)
+        {
+            returnVal.Add(gridPosition + new Vector3Int(cell.x, 0, cell.y));
+        }
+        return returnVal;
     }
 
-    public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
+    public bool CanPlaceObjectAt(Vector3Int gridPosition, int ID, int rotationNb, bool isMirrored)
     {
-        //List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-        //foreach (var position in positionToOccupy)
-        //{
-        //    if (placedSquares.ContainsKey(position))
+        playerPieceSO = database.playerPieces[ID];
+        List<Vector2Int> selectedSquares = playerPieceSO.squares;
+        List<Vector2Int> selectedCorners = playerPieceSO.corners;
+
+        if (isMirrored)
+        {
+            selectedSquares = MirrorVector2List(selectedSquares);
+            selectedCorners = MirrorVector2List(selectedCorners);
+        }
+
+        if (rotationNb > 0)
+        {
+            selectedSquares = RotateVector2List(selectedSquares, rotationNb);
+            selectedCorners = RotateVector2List(selectedCorners, rotationNb);
+        }
+
+        List<Vector3Int> squarePositions = CalculateGridPositions(gridPosition, selectedSquares);
+        List<Vector3Int> cornerPositions = CalculateGridPositions(gridPosition, selectedCorners);
+
+
+        // RULE 1 : No out-of-bound piece 
+        if (IsAnySquareOutOfBound(squarePositions))
+            return false;
+
+        // RULE 2 : First piece must be placed on starting cell
+        // TODO
+
+        // RULE 3 : No square must cover an already occupied cell
+        // TODO
+        //if (placedSquares.ContainsKey(position))
         //        return false;
-        //}
-        //return true;
+
+        // RULE 4 : At least one corner must cover an already owned cell
+        // TODO
+
+        // RULE 5 : No square must cover nor touch an already owned cell
+        // TODO
+
+        return true;
+    }
+
+    private bool IsAnySquareOutOfBound(List<Vector3Int> squares)
+    {
+        foreach (Vector3Int square in squares)
+        {
+            if (square.x < -(gridLenght / 2) || square.x >= (gridLenght / 2)
+                || square.z < -(gridHeight / 2) || square.z >= (gridHeight / 2))
+                return true;
+        }
         return false;
+    }
+
+    private List<Vector2Int> MirrorVector2List(List<Vector2Int> vectors)
+    {
+
+
+        return vectors;
+    }
+
+    private List<Vector2Int> RotateVector2List(List<Vector2Int> vectors, int rotationNb)
+    {
+
+
+        return vectors;
     }
 
     public int GetRepresentationIndex(Vector3Int gridPosition)

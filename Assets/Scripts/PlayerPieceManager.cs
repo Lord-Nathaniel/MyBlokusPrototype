@@ -22,6 +22,7 @@ public class PlayerPieceManager : MonoBehaviour
     private void Start()
     {
         StopPlacement();
+
         //floorData = new();
         //furnitureData = new();
     }
@@ -64,14 +65,13 @@ public class PlayerPieceManager : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = gridManager.WorldToCell(mousePosition);
 
-        //bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        //if (!placementValidity)
-        //{
-        //    soundManager.PlaySound(SoundType.WrongPlacement);
-        //    return;
-        //}
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex, selectedObjectRotation, isSelectedObjectMirrored);
+        if (!placementValidity)
+        {
+            //soundManager.PlaySound(SoundType.WrongPlacement);
+            return;
+        }
 
-        //on left click = place a square : TODO !
         GameObject newObject = Instantiate(database.squarePreviewPrefab);
         newObject.transform.position = gridManager.CellToWorld(gridPosition);
 
@@ -92,6 +92,14 @@ public class PlayerPieceManager : MonoBehaviour
         //                         index);
 
         //previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
+    }
+
+    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored)
+    {
+        return gridManager.CanPlaceObjectAt(gridPosition,
+                                            database.playerPieces[selectedObjectIndex].ID,
+                                            selectedObjectRotation,
+                                            isSelectedObjectMirrored);
     }
 
     public void RotatePlayerPiece()
@@ -130,12 +138,3 @@ public class PlayerPieceManager : MonoBehaviour
     //lastDetectedPosition = Vector3Int.zero;
     //isBuidling = false;
 }
-
-
-
-//private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-//{
-//    //GridManager selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-//    //return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-//    return false;
-//}
