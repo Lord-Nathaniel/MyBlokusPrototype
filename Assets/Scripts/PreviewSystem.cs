@@ -142,7 +142,7 @@ public class PreviewSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        Debug.Log(("gridPosition :", gridPosition.x, gridPosition.y, gridPosition.z));
+        //Debug.Log(("gridPosition :", gridPosition.x, gridPosition.y, gridPosition.z));
 
 
         cellIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,

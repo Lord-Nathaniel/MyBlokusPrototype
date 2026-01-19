@@ -64,7 +64,7 @@ public class GridManager : MonoBehaviour
         return returnVal;
     }
 
-    public bool CanPlaceObjectAt(Vector3Int gridPosition, int ID, int rotationNb, bool isMirrored)
+    public bool CanPlaceObjectAt(Vector3Int gridPosition, int ID, int rotationNb, bool isMirrored, bool isFirstPlacedPiece)
     {
         playerPieceSO = database.playerPieces[ID];
         List<Vector2Int> selectedSquares = playerPieceSO.squares;
@@ -88,23 +88,106 @@ public class GridManager : MonoBehaviour
 
         // RULE 1 : No out-of-bound piece 
         if (IsAnySquareOutOfBound(squarePositions))
+        {
+            Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
             return false;
+        }
 
         // RULE 2 : First piece must be placed on starting cell
-        // TODO
+        if (isFirstPlacedPiece && IsFirstPieceNotOnStartCell(squarePositions))
+        {
+            Debug.Log("Placement Rule 2 broken : first piece must be placed on starting cell !");
+            return false;
+        }
 
         // RULE 3 : No square must cover an already occupied cell
-        // TODO
-        //if (placedSquares.ContainsKey(position))
-        //        return false;
+        if (IsAnySquareOnAlreadyPlacedCell(squarePositions))
+        {
+            Debug.Log("Placement Rule 3 broken : no square must cover an already occupied cell !");
+            return false;
+        }
 
         // RULE 4 : At least one corner must cover an already owned cell
-        // TODO
+        if (!isFirstPlacedPiece && IsNoCornerOnAlreadyPlacedCell(cornerPositions))
+        {
+            Debug.Log("Placement Rule 4 broken : at least one corner must cover an already owned cell !");
+            return false;
+        }
 
         // RULE 5 : No square must cover nor touch an already owned cell
-        // TODO
+        if (IsAnySquareTouchingAnyPlacedCell(squarePositions))
+        {
+            Debug.Log("Placement Rule 5 broken : no square must cover nor touch an already owned cell !");
+            return false;
+        }
 
+        Debug.Log("All rules respected, piece placed !");
+        Debug.Log(placedSquares.Values);
         return true;
+    }
+
+    //public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
+    //{
+    //    List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+    //    foreach (var position in positionToOccupy)
+    //    {
+    //        if (placedObjects.ContainsKey(position))
+    //            return false;
+    //    }
+    //    return true;
+    //}
+
+    private bool IsAnySquareTouchingAnyPlacedCell(List<Vector3Int> squares)
+    {
+        foreach (Vector3Int square in squares)
+        {
+            List<Vector3Int> touchingSquares = new();
+
+            touchingSquares.Add(new Vector3Int(square.x - 1, 0, square.z));
+            touchingSquares.Add(new Vector3Int(square.x + 1, 0, square.z));
+            touchingSquares.Add(new Vector3Int(square.x, 0, square.z - 1));
+            touchingSquares.Add(new Vector3Int(square.x, 0, square.z + 1));
+
+            if (IsAnySquareOnAlreadyPlacedCell(touchingSquares))
+                return true;
+        }
+        return false;
+    }
+
+    private bool IsNoCornerOnAlreadyPlacedCell(List<Vector3Int> corners)
+    {
+        foreach (Vector3Int corner in corners)
+        {
+            if (placedSquares.ContainsKey(corner))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool IsAnySquareOnAlreadyPlacedCell(List<Vector3Int> squares)
+    {
+        foreach (Vector3Int square in squares)
+        {
+            if (placedSquares.ContainsKey(square))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsFirstPieceNotOnStartCell(List<Vector3Int> squares)
+    {
+        foreach (Vector3Int square in squares)
+        {
+            if (placedSquares.TryGetValue(square, out CellData cell) && cell.PlacedObjectIndex == -10)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private bool IsAnySquareOutOfBound(List<Vector3Int> squares)
@@ -167,6 +250,24 @@ public class GridManager : MonoBehaviour
             0,
             -(gridHeight / 2) + (cell.y + 0.5f) * cellHeight
         );
+    }
+
+    public void PlaceStartCell(int playerNb)
+    {
+        List<Vector3Int> startPositions = new();
+        if (playerNb == 2)
+        {
+            startPositions.Add(new Vector3Int(-3, 0, -3));
+            startPositions.Add(new Vector3Int(2, 0, 2));
+        }
+        else
+        {
+            startPositions.Add(new Vector3Int(-10, 0, -10));
+            startPositions.Add(new Vector3Int(-10, 0, 9));
+            startPositions.Add(new Vector3Int(9, 0, -10));
+            startPositions.Add(new Vector3Int(9, 0, 9));
+        }
+        CellData startCells = new CellData(startPositions, -10, -1);
     }
 }
 

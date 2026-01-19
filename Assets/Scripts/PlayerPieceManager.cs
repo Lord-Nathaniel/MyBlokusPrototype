@@ -17,14 +17,17 @@ public class PlayerPieceManager : MonoBehaviour
     private int selectedObjectIndex = -1;
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
+    private bool isFirstPlacedPiece = true;
+    private int playerNb = 2;
     //private bool isBuidling = false;
 
     private void Start()
     {
         StopPlacement();
+        gridManager.PlaceStartCell(playerNb);
 
         //floorData = new();
-        //furnitureData = new();
+        //furnitureData = new();d
     }
 
     public void StartPlacement(int ID)
@@ -74,6 +77,8 @@ public class PlayerPieceManager : MonoBehaviour
 
         GameObject newObject = Instantiate(database.squarePreviewPrefab);
         newObject.transform.position = gridManager.CellToWorld(gridPosition);
+        if (isFirstPlacedPiece)
+            isFirstPlacedPiece = false;
 
         //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
@@ -99,7 +104,8 @@ public class PlayerPieceManager : MonoBehaviour
         return gridManager.CanPlaceObjectAt(gridPosition,
                                             database.playerPieces[selectedObjectIndex].ID,
                                             selectedObjectRotation,
-                                            isSelectedObjectMirrored);
+                                            isSelectedObjectMirrored,
+                                            isFirstPlacedPiece);
     }
 
     public void RotatePlayerPiece()
