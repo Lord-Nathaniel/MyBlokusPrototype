@@ -21,6 +21,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
 
     private PlayerPieceSO playerPieceSO;
+    private List<Vector3Int> squarePositions;
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
 
@@ -64,8 +65,9 @@ public class GridManager : MonoBehaviour
         return returnVal;
     }
 
-    public bool CanPlaceObjectAt(Vector3Int gridPosition, int ID, int rotationNb, bool isMirrored, bool isFirstPlacedPiece)
+    public bool CanPlaceObjectAt(Vector3 mousePosition, int ID, int rotationNb, bool isMirrored, bool isFirstPlacedPiece)
     {
+        Vector3Int gridPosition = WorldToCell(mousePosition);
         playerPieceSO = database.playerPieces[ID];
         List<Vector2Int> selectedSquares = playerPieceSO.squares;
         List<Vector2Int> selectedCorners = playerPieceSO.corners;
@@ -82,7 +84,7 @@ public class GridManager : MonoBehaviour
             selectedCorners = RotateVector2List(selectedCorners, rotationNb);
         }
 
-        List<Vector3Int> squarePositions = CalculateGridPositions(gridPosition, selectedSquares);
+        squarePositions = CalculateGridPositions(gridPosition, selectedSquares);
         List<Vector3Int> cornerPositions = CalculateGridPositions(gridPosition, selectedCorners);
 
 
@@ -122,7 +124,6 @@ public class GridManager : MonoBehaviour
         }
 
         Debug.Log("All rules respected, piece placed !");
-        Debug.Log(placedSquares.Values);
         return true;
     }
 
@@ -182,7 +183,7 @@ public class GridManager : MonoBehaviour
     {
         foreach (Vector3Int square in squares)
         {
-            if (placedSquares.TryGetValue(square, out CellData cell) && cell.PlacedObjectIndex == -10)
+            if (placedSquares.TryGetValue(square, out CellData cell) && cell.PlayerID == -10)
             {
                 return true;
             }
@@ -234,21 +235,28 @@ public class GridManager : MonoBehaviour
 
     public Vector3Int WorldToCell(Vector3 world)
     {
-        Vector3 GridOrigin = new Vector3(-(gridLenght / 2), 0, -(gridHeight / 2));
-        Vector3 local = world - GridOrigin;
 
-        int x = Mathf.FloorToInt(local.x / cellLenght);
-        int y = Mathf.FloorToInt(local.z / cellHeight);
+        Debug.Log(("[GridManager] mousePosition x=", world.x, " z=", world.z));
+        //Vector3 GridOrigin = new Vector3(-(gridLenght / 2), 0, -(gridHeight / 2));
+        //Vector3 local = world - GridOrigin;
 
-        return new Vector3Int(x, y, 0);
+        int x = Mathf.FloorToInt(world.x / cellLenght);
+        int z = Mathf.FloorToInt(world.z / cellHeight);
+
+
+        Debug.Log(("[GridManager] WorldToCell x=", x, " z=", z));
+        return new Vector3Int(x, 0, z);
     }
 
     public Vector3 CellToWorld(Vector3Int cell)
     {
+        float x = -(gridLenght / 2) + (cell.x + 0.5f) * cellLenght;
+        float z = -(gridHeight / 2) + (cell.y + 0.5f) * cellHeight;
+        Debug.Log(("CellToWorld : x=", x, "z=", z));
         return new Vector3(
-            -(gridLenght / 2) + (cell.x + 0.5f) * cellLenght,
+            (cell.x + 0.5f) * cellLenght,
             0,
-            -(gridHeight / 2) + (cell.y + 0.5f) * cellHeight
+            (cell.z + 0.5f) * cellHeight
         );
     }
 
@@ -257,30 +265,54 @@ public class GridManager : MonoBehaviour
         List<Vector3Int> startPositions = new();
         if (playerNb == 2)
         {
-            startPositions.Add(new Vector3Int(-3, 0, -3));
-            startPositions.Add(new Vector3Int(2, 0, 2));
+            placedSquares.Add(new Vector3Int(-3, 0, -3), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(2, 0, 2), new CellData(-10, -1));
         }
         else
         {
-            startPositions.Add(new Vector3Int(-10, 0, -10));
-            startPositions.Add(new Vector3Int(-10, 0, 9));
-            startPositions.Add(new Vector3Int(9, 0, -10));
-            startPositions.Add(new Vector3Int(9, 0, 9));
+            placedSquares.Add(new Vector3Int(-10, 0, -10), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(-10, 0, 9), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(9, 0, -10), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(9, 0, 9), new CellData(-10, -1));
         }
-        CellData startCells = new CellData(startPositions, -10, -1);
+        PlaceStartingCellOnGrid();
+    }
+
+    public void PlaceStartingCellOnGrid()
+    {
+        var enumerator = placedSquares.GetEnumerator();
+        while (enumerator.MoveNext())
+        {
+            var element = enumerator.Current;
+            Vector3 worldSquare = CellToWorld(element.Key);
+            GameObject newObject = Instantiate(database.cornerPreviewPrefab);
+            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+        }
+    }
+
+    public void AddPlayerPiece(int ID, int playerID)
+    {
+        if (playerPieceSO != database.playerPieces[ID])
+            return;
+
+
+        foreach (Vector3Int square in squarePositions)
+        {
+            placedSquares.Add(square, new CellData(playerID, ID));
+            Vector3 worldSquare = CellToWorld(square);
+            GameObject newObject = Instantiate(database.squarePreviewPrefab);
+            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+        }
     }
 }
 
 public class CellData
 {
-    public List<Vector3Int> occupiedPositions;
-
     public int PlayerID { get; private set; }
     public int PlacedObjectIndex { get; private set; }
 
-    public CellData(List<Vector3Int> occupiedPositions, int playerId, int placedObjectIndex)
+    public CellData(int playerId, int placedObjectIndex)
     {
-        this.occupiedPositions = occupiedPositions;
         PlayerID = playerId;
         PlacedObjectIndex = placedObjectIndex;
     }

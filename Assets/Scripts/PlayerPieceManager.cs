@@ -19,6 +19,7 @@ public class PlayerPieceManager : MonoBehaviour
     private bool isSelectedObjectMirrored = false;
     private bool isFirstPlacedPiece = true;
     private int playerNb = 2;
+    private int playerID = 1;
     //private bool isBuidling = false;
 
     private void Start()
@@ -66,17 +67,17 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         //isBuidling = true;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = gridManager.WorldToCell(mousePosition);
 
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex, selectedObjectRotation, isSelectedObjectMirrored);
+        bool placementValidity = CheckPlacementValidity(mousePosition, selectedObjectIndex, selectedObjectRotation, isSelectedObjectMirrored, isFirstPlacedPiece);
         if (!placementValidity)
         {
             //soundManager.PlaySound(SoundType.WrongPlacement);
             return;
         }
 
-        GameObject newObject = Instantiate(database.squarePreviewPrefab);
-        newObject.transform.position = gridManager.CellToWorld(gridPosition);
+        gridManager.AddPlayerPiece(selectedObjectIndex, playerID);
+        //GameObject newObject = Instantiate(database.squarePreviewPrefab);
+        //newObject.transform.position = gridManager.CellToWorld(gridPosition);
         if (isFirstPlacedPiece)
             isFirstPlacedPiece = false;
 
@@ -99,9 +100,9 @@ public class PlayerPieceManager : MonoBehaviour
         //previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored)
+    private bool CheckPlacementValidity(Vector3 mousePosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored, bool isFirstPlacedPiece)
     {
-        return gridManager.CanPlaceObjectAt(gridPosition,
+        return gridManager.CanPlaceObjectAt(mousePosition,
                                             database.playerPieces[selectedObjectIndex].ID,
                                             selectedObjectRotation,
                                             isSelectedObjectMirrored,
