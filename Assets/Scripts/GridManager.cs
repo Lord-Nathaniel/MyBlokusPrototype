@@ -4,7 +4,6 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     //public static GridManager instance;
-
     [Header("Grid Settings")]
     public int gridLenght;
     public int gridHeight;
@@ -22,6 +21,7 @@ public class GridManager : MonoBehaviour
 
     private PlayerPieceSO playerPieceSO;
     private List<Vector3Int> squarePositions;
+    private Vector3 gridOrigin;
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
 
@@ -235,13 +235,17 @@ public class GridManager : MonoBehaviour
 
     public Vector3Int WorldToCell(Vector3 world)
     {
+        gridOrigin = new Vector3(
+            -(gridLenght * cellLenght) / 2f,
+            0,
+            -(gridHeight * cellHeight) / 2f
+        );
 
-        Debug.Log(("[GridManager] mousePosition x=", world.x, " z=", world.z));
-        //Vector3 GridOrigin = new Vector3(-(gridLenght / 2), 0, -(gridHeight / 2));
-        //Vector3 local = world - GridOrigin;
+        Debug.Log(("[GridManager] GridOrigin x=", gridOrigin.x, " z=", gridOrigin.z));
+        Vector3 local = world - gridOrigin;
 
-        int x = Mathf.FloorToInt(world.x / cellLenght);
-        int z = Mathf.FloorToInt(world.z / cellHeight);
+        int x = Mathf.FloorToInt(local.x / cellLenght);
+        int z = Mathf.FloorToInt(local.z / cellHeight);
 
 
         Debug.Log(("[GridManager] WorldToCell x=", x, " z=", z));
@@ -250,14 +254,12 @@ public class GridManager : MonoBehaviour
 
     public Vector3 CellToWorld(Vector3Int cell)
     {
-        float x = -(gridLenght / 2) + (cell.x + 0.5f) * cellLenght;
-        float z = -(gridHeight / 2) + (cell.y + 0.5f) * cellHeight;
-        Debug.Log(("CellToWorld : x=", x, "z=", z));
-        return new Vector3(
-            (cell.x + 0.5f) * cellLenght,
-            0,
-            (cell.z + 0.5f) * cellHeight
-        );
+        float x = (cell.x + 0.5f) * cellLenght;
+        float z = (cell.z + 0.5f) * cellHeight;
+        Debug.Log(("[GridManager] WorldToCell x=", x, " z=", z));
+        Vector3 result = gridOrigin + new Vector3(x, 0, z);
+        Debug.Log(("[GridManager] WorldToCell with GridOrigin x=", result.x, " z=", result.z));
+        return result;
     }
 
     public void PlaceStartCell(int playerNb)

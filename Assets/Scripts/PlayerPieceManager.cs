@@ -65,7 +65,6 @@ public class PlayerPieceManager : MonoBehaviour
     {
         if (inputManager.IsPointerOverUI())
             return;
-        //isBuidling = true;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
 
         bool placementValidity = CheckPlacementValidity(mousePosition, selectedObjectIndex, selectedObjectRotation, isSelectedObjectMirrored, isFirstPlacedPiece);
@@ -76,8 +75,6 @@ public class PlayerPieceManager : MonoBehaviour
         }
 
         gridManager.AddPlayerPiece(selectedObjectIndex, playerID);
-        //GameObject newObject = Instantiate(database.squarePreviewPrefab);
-        //newObject.transform.position = gridManager.CellToWorld(gridPosition);
         if (isFirstPlacedPiece)
             isFirstPlacedPiece = false;
 

@@ -165,9 +165,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   gridLenght: 14
   gridHeight: 14
-  cellLenght: 1
-  cellHeight: 1
+  cellLenght: 64
+  cellHeight: 64
   gridParent: {fileID: 2039392020}
+  database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
 --- !u!1 &50716968
 GameObject:
   m_ObjectHideFlags: 0
