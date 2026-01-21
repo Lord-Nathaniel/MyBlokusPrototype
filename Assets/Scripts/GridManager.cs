@@ -25,6 +25,15 @@ public class GridManager : MonoBehaviour
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
 
+
+    private void Start()
+    {
+        gridOrigin = new Vector3(
+            -(gridLenght * cellLenght) / 2f,
+            0,
+            -(gridHeight * cellHeight) / 2f
+        );
+    }
     public void AddObjectAt(Vector3Int gridPosition,
                             Vector2Int objectSize,
                             int ID,
@@ -60,6 +69,7 @@ public class GridManager : MonoBehaviour
         List<Vector3Int> returnVal = new();
         foreach (Vector2Int cell in objectCells)
         {
+            Debug.Log(("[GridManager] CalculateGridPositions : cell x=", cell.x, " cell y=", cell.y));
             returnVal.Add(gridPosition + new Vector3Int(cell.x, 0, cell.y));
         }
         return returnVal;
@@ -88,7 +98,7 @@ public class GridManager : MonoBehaviour
         List<Vector3Int> cornerPositions = CalculateGridPositions(gridPosition, selectedCorners);
 
 
-        // RULE 1 : No out-of-bound piece 
+        // RULE 1 : No out-of-bound piece
         if (IsAnySquareOutOfBound(squarePositions))
         {
             Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
@@ -109,7 +119,7 @@ public class GridManager : MonoBehaviour
             return false;
         }
 
-        // RULE 4 : At least one corner must cover an already owned cell
+        //RULE 4 : At least one corner must cover an already owned cell
         if (!isFirstPlacedPiece && IsNoCornerOnAlreadyPlacedCell(cornerPositions))
         {
             Debug.Log("Placement Rule 4 broken : at least one corner must cover an already owned cell !");
@@ -181,22 +191,24 @@ public class GridManager : MonoBehaviour
 
     private bool IsFirstPieceNotOnStartCell(List<Vector3Int> squares)
     {
+        Debug.Log("Thrown in IsFirstPieceNotOnStartCell");
         foreach (Vector3Int square in squares)
         {
             if (placedSquares.TryGetValue(square, out CellData cell) && cell.PlayerID == -10)
             {
-                return true;
+                placedSquares.Remove(square);
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private bool IsAnySquareOutOfBound(List<Vector3Int> squares)
     {
         foreach (Vector3Int square in squares)
         {
-            if (square.x < -(gridLenght / 2) || square.x >= (gridLenght / 2)
-                || square.z < -(gridHeight / 2) || square.z >= (gridHeight / 2))
+            if (square.x < 0 || square.x >= gridLenght
+                || square.z < 0 || square.z >= gridHeight)
                 return true;
         }
         return false;
@@ -204,14 +216,21 @@ public class GridManager : MonoBehaviour
 
     private List<Vector2Int> MirrorVector2List(List<Vector2Int> vectors)
     {
-
-
+        List<Vector2Int> results = new();
+        foreach (Vector2Int vector in vectors)
+        {
+            results.Add(new Vector2Int(-vector.x, vector.y));
+        }
         return vectors;
     }
 
     private List<Vector2Int> RotateVector2List(List<Vector2Int> vectors, int rotationNb)
     {
-
+        List<Vector2Int> results = new();
+        foreach (Vector2Int vector in vectors)
+        {
+            results.Add(new Vector2Int(-vector.y, vector.x));
+        }
 
         return vectors;
     }
@@ -235,20 +254,11 @@ public class GridManager : MonoBehaviour
 
     public Vector3Int WorldToCell(Vector3 world)
     {
-        gridOrigin = new Vector3(
-            -(gridLenght * cellLenght) / 2f,
-            0,
-            -(gridHeight * cellHeight) / 2f
-        );
-
-        Debug.Log(("[GridManager] GridOrigin x=", gridOrigin.x, " z=", gridOrigin.z));
         Vector3 local = world - gridOrigin;
 
         int x = Mathf.FloorToInt(local.x / cellLenght);
         int z = Mathf.FloorToInt(local.z / cellHeight);
 
-
-        Debug.Log(("[GridManager] WorldToCell x=", x, " z=", z));
         return new Vector3Int(x, 0, z);
     }
 
@@ -256,9 +266,8 @@ public class GridManager : MonoBehaviour
     {
         float x = (cell.x + 0.5f) * cellLenght;
         float z = (cell.z + 0.5f) * cellHeight;
-        Debug.Log(("[GridManager] WorldToCell x=", x, " z=", z));
-        Vector3 result = gridOrigin + new Vector3(x, 0, z);
-        Debug.Log(("[GridManager] WorldToCell with GridOrigin x=", result.x, " z=", result.z));
+
+        Vector3 result = new Vector3(x, 0, z) + gridOrigin;
         return result;
     }
 
@@ -267,15 +276,15 @@ public class GridManager : MonoBehaviour
         List<Vector3Int> startPositions = new();
         if (playerNb == 2)
         {
-            placedSquares.Add(new Vector3Int(-3, 0, -3), new CellData(-10, -1));
-            placedSquares.Add(new Vector3Int(2, 0, 2), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(4, 0, 4), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(9, 0, 9), new CellData(-10, -1));
         }
         else
         {
-            placedSquares.Add(new Vector3Int(-10, 0, -10), new CellData(-10, -1));
-            placedSquares.Add(new Vector3Int(-10, 0, 9), new CellData(-10, -1));
-            placedSquares.Add(new Vector3Int(9, 0, -10), new CellData(-10, -1));
-            placedSquares.Add(new Vector3Int(9, 0, 9), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(0, 0, 0), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(0, 0, 19), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(19, 0, 0), new CellData(-10, -1));
+            placedSquares.Add(new Vector3Int(19, 0, 19), new CellData(-10, -1));
         }
         PlaceStartingCellOnGrid();
     }
@@ -286,9 +295,10 @@ public class GridManager : MonoBehaviour
         while (enumerator.MoveNext())
         {
             var element = enumerator.Current;
+
             Vector3 worldSquare = CellToWorld(element.Key);
             GameObject newObject = Instantiate(database.cornerPreviewPrefab);
-            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+            newObject.transform.position = new Vector3(worldSquare.x, 0.01f, worldSquare.z);
         }
     }
 
@@ -296,7 +306,6 @@ public class GridManager : MonoBehaviour
     {
         if (playerPieceSO != database.playerPieces[ID])
             return;
-
 
         foreach (Vector3Int square in squarePositions)
         {
