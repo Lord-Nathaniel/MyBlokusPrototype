@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
     private Vector3 gridOrigin;
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
+    private List<GameObject> currentlyPlacedPiece = new();
 
 
     private void Start()
@@ -99,39 +100,39 @@ public class GridManager : MonoBehaviour
 
 
         // RULE 1 : No out-of-bound piece
-        if (IsAnySquareOutOfBound(squarePositions))
-        {
-            Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
-            return false;
-        }
-
-        // RULE 2 : First piece must be placed on starting cell
-        if (isFirstPlacedPiece && IsFirstPieceNotOnStartCell(squarePositions))
-        {
-            Debug.Log("Placement Rule 2 broken : first piece must be placed on starting cell !");
-            return false;
-        }
-
-        // RULE 3 : No square must cover an already occupied cell
-        if (IsAnySquareOnAlreadyPlacedCell(squarePositions))
-        {
-            Debug.Log("Placement Rule 3 broken : no square must cover an already occupied cell !");
-            return false;
-        }
-
-        //RULE 4 : At least one corner must cover an already owned cell
-        if (!isFirstPlacedPiece && IsNoCornerOnAlreadyPlacedCell(cornerPositions))
-        {
-            Debug.Log("Placement Rule 4 broken : at least one corner must cover an already owned cell !");
-            return false;
-        }
-
-        // RULE 5 : No square must cover nor touch an already owned cell
-        if (IsAnySquareTouchingAnyPlacedCell(squarePositions))
-        {
-            Debug.Log("Placement Rule 5 broken : no square must cover nor touch an already owned cell !");
-            return false;
-        }
+        //if (IsAnySquareOutOfBound(squarePositions))
+        //{
+        //    Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
+        //    return false;
+        //}
+        //
+        //// RULE 2 : First piece must be placed on starting cell
+        //if (isFirstPlacedPiece && IsFirstPieceNotOnStartCell(squarePositions))
+        //{
+        //    Debug.Log("Placement Rule 2 broken : first piece must be placed on starting cell !");
+        //    return false;
+        //}
+        //
+        //// RULE 3 : No square must cover an already occupied cell
+        //if (IsAnySquareOnAlreadyPlacedCell(squarePositions))
+        //{
+        //    Debug.Log("Placement Rule 3 broken : no square must cover an already occupied cell !");
+        //    return false;
+        //}
+        //
+        ////RULE 4 : At least one corner must cover an already owned cell
+        //if (!isFirstPlacedPiece && IsNoCornerOnAlreadyPlacedCell(cornerPositions))
+        //{
+        //    Debug.Log("Placement Rule 4 broken : at least one corner must cover an already owned cell !");
+        //    return false;
+        //}
+        //
+        //// RULE 5 : No square must cover nor touch an already owned cell
+        //if (IsAnySquareTouchingAnyPlacedCell(squarePositions))
+        //{
+        //    Debug.Log("Placement Rule 5 broken : no square must cover nor touch an already owned cell !");
+        //    return false;
+        //}
 
         Debug.Log("All rules respected, piece placed !");
         return true;
@@ -221,18 +222,34 @@ public class GridManager : MonoBehaviour
         {
             results.Add(new Vector2Int(-vector.x, vector.y));
         }
-        return vectors;
+        return results;
     }
 
     private List<Vector2Int> RotateVector2List(List<Vector2Int> vectors, int rotationNb)
     {
         List<Vector2Int> results = new();
-        foreach (Vector2Int vector in vectors)
+        switch (rotationNb)
         {
-            results.Add(new Vector2Int(-vector.y, vector.x));
+            case 1:
+                foreach (Vector2Int vector in vectors)
+                {
+                    results.Add(new Vector2Int(vector.y, -vector.x));
+                }
+                break;
+            case 2:
+                foreach (Vector2Int vector in vectors)
+                {
+                    results.Add(new Vector2Int(-vector.x, -vector.y));
+                }
+                break;
+            case 3:
+                foreach (Vector2Int vector in vectors)
+                {
+                    results.Add(new Vector2Int(-vector.y, vector.x));
+                }
+                break;
         }
-
-        return vectors;
+        return results;
     }
 
     public int GetRepresentationIndex(Vector3Int gridPosition)
@@ -312,7 +329,24 @@ public class GridManager : MonoBehaviour
             placedSquares.Add(square, new CellData(playerID, ID));
             Vector3 worldSquare = CellToWorld(square);
             GameObject newObject = Instantiate(database.squarePreviewPrefab);
+            currentlyPlacedPiece.Add(newObject);
             newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+        }
+    }
+
+    public void RemovePlayerPiece(int ID)
+    {
+        if (playerPieceSO != database.playerPieces[ID])
+            return;
+
+        foreach (Vector3Int square in squarePositions)
+        {
+            placedSquares.Remove(square);
+        }
+
+        foreach (GameObject placedPiece in currentlyPlacedPiece)
+        {
+            Destroy(placedPiece);
         }
     }
 }

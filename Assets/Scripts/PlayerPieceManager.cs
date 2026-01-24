@@ -20,6 +20,7 @@ public class PlayerPieceManager : MonoBehaviour
     private bool isFirstPlacedPiece = true;
     private int playerNb = 2;
     private int playerID = 1;
+    private bool isPiecePlaced = false;
     //private bool isBuidling = false;
 
     private void Start()
@@ -34,12 +35,27 @@ public class PlayerPieceManager : MonoBehaviour
     public void StartPlacement(int ID)
     {
         StopPlacement();
+        int previousObjectIndex = -1;
+        if (selectedObjectIndex > -1)
+        {
+            previousObjectIndex = selectedObjectIndex;
+        }
+
         selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex > -1)
         {
-            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID);
+            if (isPiecePlaced)
+            {
+                Debug.Log(("[PlayerPieceManager] previous objectIndex = ", previousObjectIndex, " | selected object index = ", selectedObjectIndex));
+                gridManager.RemovePlayerPiece(previousObjectIndex);
+            }
+
+
             selectedObjectRotation = 0;
             isSelectedObjectMirrored = false;
+            isPiecePlaced = false;
+
+            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID);
         }
         else
         {
@@ -74,7 +90,16 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         }
 
+        if (isPiecePlaced)
+        {
+            gridManager.RemovePlayerPiece(selectedObjectIndex);
+        }
+
+        previewSystem.ModifyCursorColorAndOpacity(Color.white, 0.5f);
+
         gridManager.AddPlayerPiece(selectedObjectIndex, playerID);
+        if (!isPiecePlaced)
+            isPiecePlaced = true;
         if (isFirstPlacedPiece)
             isFirstPlacedPiece = false;
 
@@ -130,7 +155,7 @@ public class PlayerPieceManager : MonoBehaviour
         //{
         //    return;
         //}
-        selectedObjectIndex = -1;
+        //selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
         //previewSystem.StopShowingPreview();
