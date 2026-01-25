@@ -10,5 +10,5 @@ public class PlayerPieceSO : ScriptableObject
     public bool rotable;
     public bool mirrorable;
     public int pointValue;
-    public Sprite miniature;
+    public Texture2D miniature;
 }

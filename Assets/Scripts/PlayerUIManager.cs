@@ -7,17 +7,22 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject zone;
     [SerializeField] private PlayerPieceManager playerPieceManager;
-    [SerializeField] private Sprite passButtonSprite;
+    [SerializeField] private Texture2D passButtonTexture;
+    [SerializeField] private Color playerColor;
+    [SerializeField] private Material playerColorSwap;
 
     private void Start()
     {
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
             Button newButton = Instantiate(prefab, zone.transform, false);
-            Sprite pieceSprite = playerPiece.miniature;
-            if (pieceSprite != null)
+            Texture2D pieceTexture = playerPiece.miniature;
+            if (pieceTexture != null)
             {
-                newButton.GetComponent<Image>().sprite = pieceSprite;
+                Material colorSwap = playerColorSwap;
+                colorSwap.SetColor("ColorRange", playerColor);
+                colorSwap.SetTexture("Texture", pieceTexture);
+                newButton.GetComponent<Image>().material = colorSwap;
             }
             newButton.onClick.AddListener(() =>
             {
@@ -26,7 +31,9 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         Button passButton = Instantiate(prefab, zone.transform, false);
-        passButton.GetComponent<Image>().sprite = passButtonSprite;
+        playerColorSwap.SetColor("ColorRange", playerColor);
+        playerColorSwap.SetTexture("Texture", passButtonTexture);
+        passButton.GetComponent<Image>().material = playerColorSwap;
         passButton.onClick.AddListener(() =>
         {
             //TODO pass            

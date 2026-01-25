@@ -217,7 +217,9 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   zone: {fileID: 942368098}
   playerPieceManager: {fileID: 625892632}
-  passButtonSprite: {fileID: 21300000, guid: 4090d3111c6ca0c448a4cac08547ed83, type: 3}
+  passButtonTexture: {fileID: 0}
+  playerColor: {r: 0.12822352, g: 0.72907346, b: 0.78113204, a: 0}
+  playerColorSwap: {fileID: -6465566751694194690, guid: de64d50e6babbea4f9a9210f93662368, type: 3}
 --- !u!1 &105112158
 GameObject:
   m_ObjectHideFlags: 0
