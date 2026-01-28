@@ -16,27 +16,37 @@ public class PlayerUIManager : MonoBehaviour
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
             Button newButton = Instantiate(prefab, zone.transform, false);
+            Image img = newButton.GetComponent<Image>();
             Texture2D pieceTexture = playerPiece.miniature;
             if (pieceTexture != null)
             {
-                Material colorSwap = playerColorSwap;
-                colorSwap.SetColor("ColorRange", playerColor);
-                colorSwap.SetTexture("Texture", pieceTexture);
-                newButton.GetComponent<Image>().material = colorSwap;
+                img.sprite = Sprite.Create(
+                    playerPiece.miniature,
+                    new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                    new Vector2(0.5f, 0.5f)
+                );
             }
+
+            Material mat = new Material(playerColorSwap);
+            mat.SetColor("_PlayerColor", playerColor);
+            mat.SetTexture("_MainTex", pieceTexture);
+
+            img.material = mat;
+
+
             newButton.onClick.AddListener(() =>
             {
                 playerPieceManager.StartPlacement(playerPiece.ID);
             });
         }
 
-        Button passButton = Instantiate(prefab, zone.transform, false);
-        playerColorSwap.SetColor("ColorRange", playerColor);
-        playerColorSwap.SetTexture("Texture", passButtonTexture);
-        passButton.GetComponent<Image>().material = playerColorSwap;
-        passButton.onClick.AddListener(() =>
-        {
-            //TODO pass            
-        });
+        //Button passButton = Instantiate(prefab, zone.transform, false);
+        //playerColorSwap.SetColor("ColorRange", playerColor);
+        //playerColorSwap.SetTexture("Texture", passButtonTexture);
+        //passButton.GetComponent<Image>().material = playerColorSwap;
+        //passButton.onClick.AddListener(() =>
+        //{
+        //    //TODO pass            
+        //});
     }
 }

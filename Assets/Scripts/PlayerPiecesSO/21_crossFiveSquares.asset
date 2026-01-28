@@ -31,4 +31,4 @@ MonoBehaviour:
   rotable: 0
   mirrorable: 0
   pointValue: 5
-  miniature: {fileID: 2800000, guid: 4090d3111c6ca0c448a4cac08547ed83, type: 3}
+  miniature: {fileID: 2800000, guid: 991ef7472c3852a43ae26f238b9ef4ad, type: 3}

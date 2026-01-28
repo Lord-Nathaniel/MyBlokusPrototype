@@ -134,6 +134,13 @@ public class PreviewSystem : MonoBehaviour
     //    PrepareCursor(Vector2Int.one);
     //    ApplyFeedbackToCursor(false);
     //}
+    public void ModifyCursorColorAndOpacity(Color color, float opacity)
+    {
+        //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
+        //{
+        //    cursorSquare
+        //}
+    }
 
     private void Update()
     {
