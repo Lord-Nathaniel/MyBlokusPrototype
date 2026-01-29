@@ -1,7 +1,14 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private UIManager uiManager;
+
+    private int playerNb = 2;
+    private int currentPlayer = 0;
+    private List<Tuple<int, bool>> currentPlayers;
     private State state;
     public enum State
     {
@@ -15,13 +22,58 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        state = State.StartGame;
-        Debug.Log(state);
+        currentPlayers = new List<Tuple<int, bool>>();
+        currentPlayers.Add(new Tuple<int, bool>(0, true));
+        currentPlayers.Add(new Tuple<int, bool>(1, true));
+        if (playerNb > 2)
+            currentPlayers.Add(new Tuple<int, bool>(2, true));
+        if (playerNb > 3)
+            currentPlayers.Add(new Tuple<int, bool>(3, true));
+
+        SwitchState(State.StartGame);
     }
 
-    private void SwitchState()
+    public void GameStart()
     {
-        throw new System.NotImplementedException("SwitchState");
+        SwitchState(State.PlayerOneTurn);
+    }
+
+    public void NextPlayer(int playerID)
+    {
+        State nextPlayerState = SelectNextPlayerState(playerID);
+        SwitchState(nextPlayerState);
+    }
+
+    private State SelectNextPlayerState(int playerID)
+    {
+        //TODO search in currentPlayers
+        return State.EndGame;
+    }
+
+    public void GameEnd()
+    {
+        //TODO End Game
+    }
+
+    private void SwitchState(State state)
+    {
+        this.state = state;
+        switch (state)
+        {
+            case State.StartGame:
+                uiManager.ShowStartScreen();
+                break;
+            case State.PlayerOneTurn:
+                uiManager.HideStartScreen();
+                break;
+            case State.PlayerTwoTurn:
+                uiManager.HideStartScreen();
+                break;
+            case State.EndGame:
+                uiManager.ShowEndScreen();
+                break;
+
+        }
         //if (boardText.enabled)
         //{
         //    boardText.enabled = false;

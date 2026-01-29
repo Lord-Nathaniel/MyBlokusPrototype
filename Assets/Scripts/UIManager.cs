@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] private Button prefab;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject zone;
@@ -10,9 +11,35 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private Texture2D passButtonTexture;
     [SerializeField] private Color playerColor;
     [SerializeField] private Material playerColorSwap;
+    [SerializeField] private Button nextPlayerButton;
+
+    [Header("Game Settings")]
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject startingMessage;
+    [SerializeField] private Button startMessageButton;
+    [SerializeField] private GameObject endingMessage;
+    [SerializeField] private Button endMessageButton;
+
+    private int player = 0;
 
     private void Start()
     {
+        startMessageButton.onClick.AddListener(() =>
+        {
+            gameManager.GameStart();
+        });
+
+        endMessageButton.onClick.AddListener(() =>
+        {
+            gameManager.GameEnd();
+        });
+
+        nextPlayerButton.onClick.AddListener(() =>
+        {
+            gameManager.NextPlayer(player);
+        });
+
+
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
             Button newButton = Instantiate(prefab, zone.transform, false);
@@ -48,5 +75,35 @@ public class PlayerUIManager : MonoBehaviour
         //{
         //    //TODO pass            
         //});
+    }
+
+    public void ShowStartScreen()
+    {
+        Show(startingMessage);
+    }
+
+    public void HideStartScreen()
+    {
+        Hide(startingMessage);
+    }
+
+    public void ShowEndScreen()
+    {
+        Show(endingMessage);
+    }
+
+    public void HideEndScreen()
+    {
+        Hide(endingMessage);
+    }
+
+    private void Show(GameObject toShow)
+    {
+        toShow.SetActive(true);
+    }
+
+    private void Hide(GameObject toHide)
+    {
+        toHide.SetActive(false);
     }
 }

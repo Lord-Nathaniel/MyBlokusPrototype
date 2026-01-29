@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    //public static GridManager instance;
     [Header("Grid Settings")]
     public int gridLenght;
     public int gridHeight;
