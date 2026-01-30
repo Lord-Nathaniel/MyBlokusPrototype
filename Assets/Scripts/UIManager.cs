@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class manage all UI settings and actions.
+/// It mainly exchange with the GameManager to display UI from the current state of the game.
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     [Header("Player Settings")]
@@ -77,24 +81,28 @@ public class UIManager : MonoBehaviour
         //});
     }
 
+    /// <summary>
+    /// Show all UI elements needed for the start of the game.
+    /// </summary>
     public void ShowStartScreen()
     {
         Show(startingMessage);
     }
 
+    /// <summary>
+    /// End the start of the game by hidding all UI elements.
+    /// </summary>
     public void HideStartScreen()
     {
         Hide(startingMessage);
     }
 
+    /// <summary>
+    /// Show all UI elements needed for the end of the game.
+    /// </summary>
     public void ShowEndScreen()
     {
         Show(endingMessage);
-    }
-
-    public void HideEndScreen()
-    {
-        Hide(endingMessage);
     }
 
     private void Show(GameObject toShow)

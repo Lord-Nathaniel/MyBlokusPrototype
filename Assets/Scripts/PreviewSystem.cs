@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the preview attached to the player cursor.
+/// Actions only changes the preview attached to the cursor and have no gameplay interaction.
+/// </summary>
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField] private float previewYOffset = 0.006f;
@@ -18,6 +22,10 @@ public class PreviewSystem : MonoBehaviour
         cellIndicatorParent.SetActive(false);
     }
 
+    /// <summary>
+    /// Create the preview object.
+    /// </summary>
+    /// <param name="ID"></param>
     public void StartShowingPlacementPreview(int ID)
     {
         cellIndicatorParent.SetActive(true);
@@ -52,11 +60,17 @@ public class PreviewSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rotates 90° clockwise the preview.
+    /// </summary>
     public void RotatePlacementPreview()
     {
         cellIndicatorParent.transform.GetChild(0).Rotate(0f, 90f, 0f);
     }
 
+    /// <summary>
+    /// Mirrors the preview.
+    /// </summary>
     public void MirrorPlacementPreview()
     {
         Vector3 scale = cellIndicatorParent.transform.GetChild(0).localScale;
@@ -85,6 +99,9 @@ public class PreviewSystem : MonoBehaviour
     //    renderer.materials = materials;
     //}
 
+    /// <summary>
+    /// Destroys the preview object.
+    /// </summary>
     public void StopShowingPreview()
     {
         cellIndicatorParent.SetActive(false);

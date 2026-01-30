@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the state of the game. 
+/// It receives state change ask as input, and output action to do with the current state.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
@@ -33,11 +37,18 @@ public class GameManager : MonoBehaviour
         SwitchState(State.StartGame);
     }
 
+    /// <summary>
+    /// Switch from StartGame state to the currentPlayer state
+    /// </summary>
     public void GameStart()
     {
         SwitchState(State.PlayerOneTurn);
     }
 
+    /// <summary>
+    /// Switch from currentPlayer state to nextPlayer state
+    /// </summary>
+    /// <param name="playerID"></param>
     public void NextPlayer(int playerID)
     {
         State nextPlayerState = SelectNextPlayerState(playerID);
@@ -50,9 +61,12 @@ public class GameManager : MonoBehaviour
         return State.EndGame;
     }
 
+    /// <summary>
+    /// Switch from currentPlayer state to EndGame state
+    /// </summary>
     public void GameEnd()
     {
-        //TODO End Game
+        SwitchState(State.EndGame);
     }
 
     private void SwitchState(State state)

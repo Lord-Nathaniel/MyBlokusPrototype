@@ -2,6 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// This class manages the keyboard and mouse input.
+/// When the player interact with the game, it calls corresponding Actions.
+/// </summary>
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private Camera sceneCamera;
@@ -26,9 +30,17 @@ public class InputManager : MonoBehaviour
             OnMiddleClicked?.Invoke();
     }
 
+    /// <summary>
+    /// Checks the UI EventSystem to know if the mouseCursor is over an UI element.
+    /// </summary>
+    /// <returns></returns>
     public bool IsPointerOverUI()
         => EventSystem.current.IsPointerOverGameObject();
 
+    /// <summary>
+    /// Gives the last mouse positions.
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetSelectedMapPosition()
     {
         Vector3 mousePos = Input.mousePosition;

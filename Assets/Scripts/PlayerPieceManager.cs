@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// This class manages the player piece element data during the player turn.
+/// 
+/// </summary>
 public class PlayerPieceManager : MonoBehaviour
 {
     [SerializeField] private GameObject cellIndicatorParent;
@@ -25,6 +29,8 @@ public class PlayerPieceManager : MonoBehaviour
 
     private void Start()
     {
+
+        //TODO remove start because should be called for each player.
         StopPlacement();
         gridManager.PlaceStartCell(playerNb);
 
@@ -32,6 +38,10 @@ public class PlayerPieceManager : MonoBehaviour
         //furnitureData = new();d
     }
 
+    /// <summary>
+    /// State of the game where playerpiece preview is shown and other things disabbled when a player use the select button.
+    /// </summary>
+    /// <param name="ID"></param>
     public void StartPlacement(int ID)
     {
         StopPlacement();
@@ -77,6 +87,9 @@ public class PlayerPieceManager : MonoBehaviour
         //inputManager.OnExit += StopPlacement;
     }
 
+    /// <summary>
+    /// State of the game where the gridManager is called to know if writing is legal.
+    /// </summary>
     public void PlaceStructure()
     {
         if (inputManager.IsPointerOverUI())
@@ -131,6 +144,10 @@ public class PlayerPieceManager : MonoBehaviour
                                             isFirstPlacedPiece);
     }
 
+
+    /// <summary>
+    /// This helps to rememeber the current state of piece rotation.
+    /// </summary>
     public void RotatePlayerPiece()
     {
         if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].rotable)
@@ -140,6 +157,9 @@ public class PlayerPieceManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This helps to rememeber the current state of piece mirroring.
+    /// </summary>
     public void MirrorPlayerPiece()
     {
         if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].mirrorable)
@@ -149,6 +169,9 @@ public class PlayerPieceManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// State of the game where player turn should either end or go back to placement state.
+    /// </summary>
     public void StopPlacement()
     {
         //if (!isBuidling)

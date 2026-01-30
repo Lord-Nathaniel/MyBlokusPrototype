@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the grid data and display.
+/// It contains a dictionnary of all Cells with its state.
+/// </summary>
 public class GridManager : MonoBehaviour
 {
     [Header("Grid Settings")]
@@ -34,6 +38,7 @@ public class GridManager : MonoBehaviour
             -(gridHeight * cellHeight) / 2f
         );
     }
+
     public void AddObjectAt(Vector3Int gridPosition,
                             Vector2Int objectSize,
                             int ID,
@@ -75,6 +80,15 @@ public class GridManager : MonoBehaviour
         return returnVal;
     }
 
+    /// <summary>
+    /// Check with game rule if squares from a piece are allowed to go on cells.
+    /// </summary>
+    /// <param name="mousePosition"></param>
+    /// <param name="ID"></param>
+    /// <param name="rotationNb"></param>
+    /// <param name="isMirrored"></param>
+    /// <param name="isFirstPlacedPiece"></param>
+    /// <returns></returns>
     public bool CanPlaceObjectAt(Vector3 mousePosition, int ID, int rotationNb, bool isMirrored, bool isFirstPlacedPiece)
     {
         Vector3Int gridPosition = WorldToCell(mousePosition);
@@ -251,23 +265,11 @@ public class GridManager : MonoBehaviour
         return results;
     }
 
-    public int GetRepresentationIndex(Vector3Int gridPosition)
-    {
-        //if (placedSquares.ContainsKey(gridPosition) == false)
-        //    return -1;
-        //return placedSquares[gridPosition].PlacedObjectIndex;
-        return 0;
-    }
-
-    internal void RemoveObjectAt(Vector3Int gridPosition)
-    {
-        //foreach (var position in placedSquares[gridPosition].occupiedPositions)
-        //{
-        //    placedSquares.Remove(position);
-        //}
-    }
-
-
+    /// <summary>
+    /// Internal conversion from Vector3 to Vector3Int with the grid offset.
+    /// </summary>
+    /// <param name="world"></param>
+    /// <returns></returns>
     public Vector3Int WorldToCell(Vector3 world)
     {
         Vector3 local = world - gridOrigin;
@@ -278,6 +280,11 @@ public class GridManager : MonoBehaviour
         return new Vector3Int(x, 0, z);
     }
 
+    /// <summary>
+    /// Internal conversion from Vector3Int to Vector3 with the grid offset.
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <returns></returns>
     public Vector3 CellToWorld(Vector3Int cell)
     {
         float x = (cell.x + 0.5f) * cellLenght;
@@ -287,6 +294,10 @@ public class GridManager : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// Place the correct number of cells depending of the number of players.
+    /// </summary>
+    /// <param name="playerNb"></param>
     public void PlaceStartCell(int playerNb)
     {
         List<Vector3Int> startPositions = new();
@@ -305,7 +316,7 @@ public class GridManager : MonoBehaviour
         PlaceStartingCellOnGrid();
     }
 
-    public void PlaceStartingCellOnGrid()
+    private void PlaceStartingCellOnGrid()
     {
         var enumerator = placedSquares.GetEnumerator();
         while (enumerator.MoveNext())
@@ -318,6 +329,11 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If check is ok, place the player piece squares stored on the grid.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="playerID"></param>
     public void AddPlayerPiece(int ID, int playerID)
     {
         if (playerPieceSO != database.playerPieces[ID])
@@ -333,6 +349,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Remove the player piece squares stored on the grid.
+    /// </summary>
+    /// <param name="ID"></param>
     public void RemovePlayerPiece(int ID)
     {
         if (playerPieceSO != database.playerPieces[ID])
@@ -350,6 +370,9 @@ public class GridManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Store the cell data to be put in the GridManager dictionnary.
+/// </summary>
 public class CellData
 {
     public int PlayerID { get; private set; }
