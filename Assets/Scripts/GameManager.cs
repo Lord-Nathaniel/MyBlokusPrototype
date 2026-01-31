@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,30 +8,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private int playerNb = 2;
+    private int currentPlayerID = 0;
+    private readonly State state;
+    List<PlayerData> currentPlayers;
 
-    private int playerNb = 2;
-    private int currentPlayer = 0;
-    private List<Tuple<int, bool>> currentPlayers;
-    private State state;
     public enum State
     {
         StartGame,
-        PlayerOneTurn,
-        PlayerTwoTurn,
-        PlayerThreeTurn,
-        PlayerFourTurn,
+        PlayerTurn,
         EndGame
     }
 
     private void Start()
     {
-        currentPlayers = new List<Tuple<int, bool>>();
-        currentPlayers.Add(new Tuple<int, bool>(0, true));
-        currentPlayers.Add(new Tuple<int, bool>(1, true));
-        if (playerNb > 2)
-            currentPlayers.Add(new Tuple<int, bool>(2, true));
-        if (playerNb > 3)
-            currentPlayers.Add(new Tuple<int, bool>(3, true));
+        currentPlayers = new List<PlayerData>(playerNb);
+        for (int i = 0; i < playerNb; i++)
+        {
+            currentPlayers.Add(new PlayerData(true));
+        }
 
         SwitchState(State.StartGame);
     }
@@ -42,22 +36,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameStart()
     {
-        SwitchState(State.PlayerOneTurn);
+        SwitchState(State.PlayerTurn);
     }
 
     /// <summary>
     /// Switch from currentPlayer state to nextPlayer state
     /// </summary>
-    /// <param name="playerID"></param>
-    public void NextPlayer(int playerID)
+    public void NextPlayer()
     {
-        State nextPlayerState = SelectNextPlayerState(playerID);
-        SwitchState(nextPlayerState);
+        SwitchState(SelectNextState());
     }
 
-    private State SelectNextPlayerState(int playerID)
+    private State SelectNextState()
     {
-        //TODO search in currentPlayers
+        for (int i = 1; i <= currentPlayers.Count; i++)
+        {
+            int nextPlayerID = (currentPlayerID + i) % currentPlayers.Count;
+
+            if (currentPlayers[nextPlayerID].IsActive)
+            {
+                currentPlayerID = nextPlayerID;
+                return State.PlayerTurn;
+            }
+        }
         return State.EndGame;
     }
 
@@ -69,50 +70,32 @@ public class GameManager : MonoBehaviour
         SwitchState(State.EndGame);
     }
 
-    private void SwitchState(State state)
+    private void SwitchState(State newState)
     {
-        this.state = state;
-        switch (state)
+        if (state == newState)
+            return;
+
+        switch (newState)
         {
             case State.StartGame:
                 uiManager.ShowStartScreen();
                 break;
-            case State.PlayerOneTurn:
-                uiManager.HideStartScreen();
-                break;
-            case State.PlayerTwoTurn:
+            case State.PlayerTurn:
                 uiManager.HideStartScreen();
                 break;
             case State.EndGame:
                 uiManager.ShowEndScreen();
                 break;
-
         }
-        //if (boardText.enabled)
-        //{
-        //    boardText.enabled = false;
-        //}
+    }
 
-        //if (hasBluePlayerEnded && hasOrangePlayerEnded)
-        //{
-        //    state = State.EndGame;
-        //    bluePlayerButton.gameObject.SetActive(false);
-        //    orangePlayerButton.gameObject.SetActive(false);
-        //    boardText.enabled = true;
-        //}
+    struct PlayerData
+    {
+        public bool IsActive;
 
-        //if (state == State.BluePlayerTurn && !hasOrangePlayerEnded)
-        //{
-        //    state = State.OrangePlayerTurn;
-        //    bluePlayerButton.gameObject.SetActive(false);
-        //    orangePlayerButton.gameObject.SetActive(true);
-        //}
-
-        //if (state == State.OrangePlayerTurn && !hasBluePlayerEnded)
-        //{
-        //    state = State.BluePlayerTurn;
-        //    bluePlayerButton.gameObject.SetActive(true);
-        //    orangePlayerButton.gameObject.SetActive(false);
-        //}
+        public PlayerData(bool isActive)
+        {
+            IsActive = isActive;
+        }
     }
 }

@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject endingMessage;
     [SerializeField] private Button endMessageButton;
 
-    private int player = 0;
+    private int currentPlayer;
 
     private void Start()
     {
@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
 
         nextPlayerButton.onClick.AddListener(() =>
         {
-            gameManager.NextPlayer(player);
+            gameManager.NextPlayer();
         });
 
 

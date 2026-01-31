@@ -152,7 +152,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].rotable)
         {
-            selectedObjectRotation = (selectedObjectRotation + 1) % 4; ;
+            selectedObjectRotation = (selectedObjectRotation + 1) % 4;
             previewSystem.RotatePlacementPreview();
         }
     }
