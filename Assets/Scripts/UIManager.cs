@@ -42,7 +42,20 @@ public class UIManager : MonoBehaviour
         {
             gameManager.NextPlayer();
         });
+    }
 
+    /// <summary>
+    /// Spawn all player piece button and a pass buttons in the player zone.
+    /// </summary>
+    public void GeneratePlayerPieceButtons(int playerID, Color playerColor)
+    {
+        if (zone.transform.childCount > 0)
+        {
+            foreach (Transform child in zone.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
@@ -70,15 +83,6 @@ public class UIManager : MonoBehaviour
                 playerPieceManager.StartPlacement(playerPiece.ID);
             });
         }
-
-        //Button passButton = Instantiate(prefab, zone.transform, false);
-        //playerColorSwap.SetColor("ColorRange", playerColor);
-        //playerColorSwap.SetTexture("Texture", passButtonTexture);
-        //passButton.GetComponent<Image>().material = playerColorSwap;
-        //passButton.onClick.AddListener(() =>
-        //{
-        //    //TODO pass            
-        //});
     }
 
     /// <summary>

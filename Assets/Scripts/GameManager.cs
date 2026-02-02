@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         currentPlayers = new List<PlayerData>(playerNb);
         for (int i = 0; i < playerNb; i++)
         {
-            currentPlayers.Add(new PlayerData(true));
+            currentPlayers.Add(new PlayerData(true, new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3))));
         }
 
         SwitchState(State.StartGame);
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             int nextPlayerID = (currentPlayerID + i) % currentPlayers.Count;
 
-            if (currentPlayers[nextPlayerID].IsActive)
+            if (currentPlayers[nextPlayerID].isActive)
             {
                 currentPlayerID = nextPlayerID;
                 return State.PlayerTurn;
@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
                 break;
             case State.PlayerTurn:
                 uiManager.HideStartScreen();
+                uiManager.GeneratePlayerPieceButtons(currentPlayerID, currentPlayers[currentPlayerID].playerColor);
+
                 break;
             case State.EndGame:
                 uiManager.ShowEndScreen();
@@ -91,11 +93,13 @@ public class GameManager : MonoBehaviour
 
     struct PlayerData
     {
-        public bool IsActive;
+        public bool isActive;
+        public Color playerColor;
 
-        public PlayerData(bool isActive)
+        public PlayerData(bool isActive, Color playerColor)
         {
-            IsActive = isActive;
+            this.isActive = isActive;
+            this.playerColor = playerColor;
         }
     }
 }
