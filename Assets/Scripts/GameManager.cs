@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
     [SerializeField] private int playerNb = 2;
+    [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private readonly State state;
     List<PlayerData> currentPlayers;
@@ -22,13 +23,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InitPlayers();
+
+        SwitchState(State.StartGame);
+    }
+
+    private void InitPlayers()
+    {
         currentPlayers = new List<PlayerData>(playerNb);
         for (int i = 0; i < playerNb; i++)
         {
-            currentPlayers.Add(new PlayerData(true, new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3))));
-        }
+            List<int> playerPieces = new();
+            for (int j = 0; j < database.playerPieces.Count; j++)
+            {
+                playerPieces.Add(j);
+            }
 
-        SwitchState(State.StartGame);
+            currentPlayers.Add(new PlayerData(true,
+            new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3)),
+            playerPieces, 0
+            ));
+        }
     }
 
     /// <summary>
@@ -80,26 +95,31 @@ public class GameManager : MonoBehaviour
             case State.StartGame:
                 uiManager.ShowStartScreen();
                 break;
+
             case State.PlayerTurn:
                 uiManager.HideStartScreen();
-                uiManager.GeneratePlayerPieceButtons(currentPlayerID, currentPlayers[currentPlayerID].playerColor);
-
+                uiManager.GeneratePlayerPieceButtons(currentPlayerID, currentPlayers[currentPlayerID].playerColor, currentPlayers[currentPlayerID].remainingPlayerPieces);
                 break;
+
             case State.EndGame:
                 uiManager.ShowEndScreen();
                 break;
         }
     }
 
-    struct PlayerData
+    private struct PlayerData
     {
         public bool isActive;
         public Color playerColor;
+        public List<int> remainingPlayerPieces;
+        public int score;
 
-        public PlayerData(bool isActive, Color playerColor)
+        public PlayerData(bool isActive, Color playerColor, List<int> playerPieces, int score)
         {
             this.isActive = isActive;
             this.playerColor = playerColor;
+            this.remainingPlayerPieces = playerPieces;
+            this.score = score;
         }
     }
 }

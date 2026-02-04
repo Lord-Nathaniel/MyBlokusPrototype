@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Spawn all player piece button and a pass buttons in the player zone.
     /// </summary>
-    public void GeneratePlayerPieceButtons(int playerID, Color playerColor)
+    public void GeneratePlayerPieceButtons(int playerID, Color playerColor, List<int> remainingPlayerPieces)
     {
         if (zone.transform.childCount > 0)
         {
@@ -59,29 +60,32 @@ public class UIManager : MonoBehaviour
 
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
-            Button newButton = Instantiate(prefab, zone.transform, false);
-            Image img = newButton.GetComponent<Image>();
-            Texture2D pieceTexture = playerPiece.miniature;
-            if (pieceTexture != null)
+            if (remainingPlayerPieces.Contains(playerPiece.ID))
             {
-                img.sprite = Sprite.Create(
-                    playerPiece.miniature,
-                    new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
-                    new Vector2(0.5f, 0.5f)
-                );
+                Button newButton = Instantiate(prefab, zone.transform, false);
+                Image img = newButton.GetComponent<Image>();
+                Texture2D pieceTexture = playerPiece.miniature;
+                if (pieceTexture != null)
+                {
+                    img.sprite = Sprite.Create(
+                        playerPiece.miniature,
+                        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                        new Vector2(0.5f, 0.5f)
+                    );
+                }
+
+                Material mat = new Material(playerColorSwap);
+                mat.SetColor("_PlayerColor", playerColor);
+                mat.SetTexture("_MainTex", pieceTexture);
+
+                img.material = mat;
+
+
+                newButton.onClick.AddListener(() =>
+                {
+                    playerPieceManager.StartPlacement(playerPiece.ID, playerID);
+                });
             }
-
-            Material mat = new Material(playerColorSwap);
-            mat.SetColor("_PlayerColor", playerColor);
-            mat.SetTexture("_MainTex", pieceTexture);
-
-            img.material = mat;
-
-
-            newButton.onClick.AddListener(() =>
-            {
-                playerPieceManager.StartPlacement(playerPiece.ID, playerID);
-            });
         }
 
         Button passButton = Instantiate(prefab, zone.transform, false);

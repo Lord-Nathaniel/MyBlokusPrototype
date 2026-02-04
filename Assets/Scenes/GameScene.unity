@@ -514,6 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   uiManager: {fileID: 50716970}
   playerNb: 4
+  database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
 --- !u!4 &276406070
 Transform:
   m_ObjectHideFlags: 0
