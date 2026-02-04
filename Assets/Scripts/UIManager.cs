@@ -83,6 +83,26 @@ public class UIManager : MonoBehaviour
                 playerPieceManager.StartPlacement(playerPiece.ID, playerID);
             });
         }
+
+        Button passButton = Instantiate(prefab, zone.transform, false);
+        Image passButtonImg = passButton.GetComponent<Image>();
+        if (passButtonTexture != null)
+        {
+            passButtonImg.sprite = Sprite.Create(
+                passButtonTexture,
+                new Rect(0, 0, passButtonTexture.width, passButtonTexture.height),
+                new Vector2(0.5f, 0.5f)
+            );
+        }
+        Material passButtonMat = new Material(playerColorSwap);
+        passButtonMat.SetColor("_PlayerColor", playerColor);
+        passButtonMat.SetTexture("_MainTex", passButtonTexture);
+        passButtonImg.material = passButtonMat;
+        passButton.onClick.AddListener(() =>
+        {
+            //TODO to change to pass
+            gameManager.NextPlayer();
+        });
     }
 
     /// <summary>
