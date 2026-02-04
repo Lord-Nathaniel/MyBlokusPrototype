@@ -830,9 +830,9 @@ MonoBehaviour:
   gridManager: {fileID: 46582186}
   previewSystem: {fileID: 2052154209}
   playerOneColor: {r: 0, g: 0, b: 0, a: 0}
-  playerTwoColor: {r: 0.1845303, g: 0.3962264, b: 0.16970451, a: 0}
-  playerThreeColor: {r: 0.6830188, g: 0.23583476, b: 0.23583476, a: 0}
-  playerFourColor: {r: 1, g: 1, b: 1, a: 0}
+  playerTwoColor: {r: 0, g: 0, b: 0, a: 0}
+  playerThreeColor: {r: 0, g: 0, b: 0, a: 0}
+  playerFourColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &625892633
 Transform:
   m_ObjectHideFlags: 0

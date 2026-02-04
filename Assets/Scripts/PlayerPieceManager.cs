@@ -13,6 +13,11 @@ public class PlayerPieceManager : MonoBehaviour
     [SerializeField] private GameObject gridVisualization;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private PreviewSystem previewSystem;
+
+    [SerializeField] private Color playerOneColor;
+    [SerializeField] private Color playerTwoColor;
+    [SerializeField] private Color playerThreeColor;
+    [SerializeField] private Color playerFourColor;
     //[SerializeField] private SquarePlacer squarePlacer;
     //[SerializeField] private SoundManager soundManager;
 
@@ -65,7 +70,19 @@ public class PlayerPieceManager : MonoBehaviour
             isSelectedObjectMirrored = false;
             isPiecePlaced = false;
 
-            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID);
+            Color selectedColor = Color.blue;
+            switch (ID)
+            {
+                case 0:
+                    selectedColor = playerOneColor; break;
+                case 1:
+                    selectedColor = playerTwoColor; break;
+                case 2:
+                    selectedColor = playerThreeColor; break;
+                case 3:
+                    selectedColor = playerFourColor; break;
+            }
+            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID, selectedColor);
         }
         else
         {

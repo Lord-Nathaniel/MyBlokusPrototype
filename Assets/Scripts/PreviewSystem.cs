@@ -16,6 +16,7 @@ public class PreviewSystem : MonoBehaviour
     private GameObject previewObject;
     private PlayerPieceSO playerPieceSO;
     [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
+    private Color playerColor;
 
     private void Start()
     {
@@ -26,8 +27,9 @@ public class PreviewSystem : MonoBehaviour
     /// Create the preview object.
     /// </summary>
     /// <param name="ID"></param>
-    public void StartShowingPlacementPreview(int ID)
+    public void StartShowingPlacementPreview(int ID, Color playerColor)
     {
+        this.playerColor = playerColor;
         cellIndicatorParent.SetActive(true);
         playerPieceSO = database.playerPieces[ID];
         cursorPreview(playerPieceSO.squares, playerPieceSO.corners);
