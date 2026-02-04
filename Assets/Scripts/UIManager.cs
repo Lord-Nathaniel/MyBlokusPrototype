@@ -80,7 +80,7 @@ public class UIManager : MonoBehaviour
 
             newButton.onClick.AddListener(() =>
             {
-                playerPieceManager.StartPlacement(playerPiece.ID);
+                playerPieceManager.StartPlacement(playerPiece.ID, playerID);
             });
         }
     }

@@ -321,20 +321,22 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// If check is ok, place the player piece squares stored on the grid.
     /// </summary>
-    /// <param name="ID"></param>
+    /// <param name="pieceID"></param>
     /// <param name="playerID"></param>
-    public void AddPlayerPiece(int ID, int playerID)
+    public void AddPlayerPiece(int pieceID, int playerID, Color playerColor)
     {
-        if (playerPieceSO != database.playerPieces[ID])
+        if (playerPieceSO != database.playerPieces[pieceID])
             return;
 
         foreach (Vector3Int square in squarePositions)
         {
-            placedSquares.Add(square, new CellData(playerID, ID));
+            placedSquares.Add(square, new CellData(playerID, pieceID));
             Vector3 worldSquare = CellToWorld(square);
             GameObject newObject = Instantiate(database.squarePreviewPrefab);
             currentlyPlacedPiece.Add(newObject);
             newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+            Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
+            squareRenderer.material.SetColor("_PlayerColor", playerColor);
         }
     }
 
@@ -365,11 +367,11 @@ public class GridManager : MonoBehaviour
 public class CellData
 {
     public int PlayerID { get; private set; }
-    public int PlacedObjectIndex { get; private set; }
+    public int PieceID { get; private set; }
 
-    public CellData(int playerId, int placedObjectIndex)
+    public CellData(int playerId, int pieceId)
     {
         PlayerID = playerId;
-        PlacedObjectIndex = placedObjectIndex;
+        PieceID = pieceId;
     }
 }

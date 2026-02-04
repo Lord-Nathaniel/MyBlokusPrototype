@@ -30,6 +30,7 @@ public class PlayerPieceManager : MonoBehaviour
     private int playerNb = 2;
     private int playerID = 1;
     private bool isPiecePlaced = false;
+    private Color selectedColor;
     //private bool isBuidling = false;
 
     private void Start()
@@ -46,8 +47,8 @@ public class PlayerPieceManager : MonoBehaviour
     /// <summary>
     /// State of the game where playerpiece preview is shown and other things disabbled when a player use the select button.
     /// </summary>
-    /// <param name="ID"></param>
-    public void StartPlacement(int ID)
+    /// <param name="pieceID"></param>
+    public void StartPlacement(int pieceID, int playerID)
     {
         StopPlacement();
         int previousObjectIndex = -1;
@@ -56,7 +57,7 @@ public class PlayerPieceManager : MonoBehaviour
             previousObjectIndex = selectedObjectIndex;
         }
 
-        selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == ID);
+        selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == pieceID);
         if (selectedObjectIndex > -1)
         {
             if (isPiecePlaced)
@@ -70,8 +71,7 @@ public class PlayerPieceManager : MonoBehaviour
             isSelectedObjectMirrored = false;
             isPiecePlaced = false;
 
-            Color selectedColor = Color.blue;
-            switch (ID)
+            switch (playerID)
             {
                 case 0:
                     selectedColor = playerOneColor; break;
@@ -127,7 +127,7 @@ public class PlayerPieceManager : MonoBehaviour
 
         previewSystem.ModifyCursorColorAndOpacity(Color.white, 0.5f);
 
-        gridManager.AddPlayerPiece(selectedObjectIndex, playerID);
+        gridManager.AddPlayerPiece(selectedObjectIndex, playerID, selectedColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
         if (isFirstPlacedPiece)

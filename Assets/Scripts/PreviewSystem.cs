@@ -51,6 +51,8 @@ public class PreviewSystem : MonoBehaviour
             GameObject squareGO = Instantiate(database.squarePreviewPrefab, cellIndicatorParent.transform.GetChild(0));
             squareGO.transform.localPosition = new Vector3((float)square.x, 0f, (float)square.y);
             squareGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            Renderer squareRenderer = squareGO.GetComponentInChildren<Renderer>();
+            squareRenderer.material.SetColor("_PlayerColor", playerColor);
         }
 
         //corner preview
