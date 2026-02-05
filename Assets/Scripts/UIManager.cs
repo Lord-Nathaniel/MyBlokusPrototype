@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Texture2D passButtonTexture;
     [SerializeField] private Color playerColor;
     [SerializeField] private Material playerColorSwap;
+    [SerializeField] private Material highlight;
     [SerializeField] private Button nextPlayerButton;
 
     [Header("Game Settings")]
@@ -26,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button endMessageButton;
 
     private int currentPlayer;
+    private Button selectedButton;
+
 
     private void Start()
     {
@@ -80,9 +83,9 @@ public class UIManager : MonoBehaviour
 
                 img.material = mat;
 
-
                 newButton.onClick.AddListener(() =>
                 {
+                    SelectButton(newButton);
                     playerPieceManager.StartPlacement(playerPiece.ID, playerID);
                 });
             }
@@ -105,9 +108,19 @@ public class UIManager : MonoBehaviour
         passButton.onClick.AddListener(() =>
         {
             //TODO to change to pass
-            gameManager.NextPlayer();
+            SelectButton(passButton);
         });
     }
+
+    private void SelectButton(Button button)
+    {
+        if (selectedButton != null)
+            Hide(selectedButton.transform.GetChild(0).gameObject);
+
+        selectedButton = button;
+        Show(selectedButton.transform.GetChild(0).gameObject);
+    }
+
 
     /// <summary>
     /// Show all UI elements needed for the start of the game.
