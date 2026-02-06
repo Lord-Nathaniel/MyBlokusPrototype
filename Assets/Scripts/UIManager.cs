@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [Header("Player Settings")]
-    [SerializeField] private Button prefab;
+    [SerializeField] private Button playerPieceButtonPrefab;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject zone;
     [SerializeField] private PlayerPieceManager playerPieceManager;
@@ -18,6 +19,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Material playerColorSwap;
     [SerializeField] private Material highlight;
     [SerializeField] private Button nextPlayerButton;
+
+    [Header("Player Settings")]
+    [SerializeField] private Image playerPieceImagePrefab;
+    [SerializeField] private GameObject playerPiecesSubzonePrefab;
+    [SerializeField] private GameObject playerPieceImageZone;
 
     [Header("Game Settings")]
     [SerializeField] private GameManager gameManager;
@@ -49,6 +55,38 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Spawn all player piece images in the remaining pieces zone.
+    /// </summary>
+    public void GenerateRemainingPlayerPieceImages(List<Color> playerColors)
+    {
+        for (int i = 1; i < playerColors.Count + 1; i++)
+        {
+            GameObject currentSubzone = Instantiate(playerPiecesSubzonePrefab, playerPieceImageZone.transform);
+            currentSubzone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + i + " remaining pieces :";
+            foreach (PlayerPieceSO playerPiece in database.playerPieces)
+            {
+                Image img = Instantiate(playerPieceImagePrefab, currentSubzone.transform.GetChild(1));
+
+                Texture2D pieceTexture = playerPiece.miniature;
+                if (pieceTexture != null)
+                {
+                    img.sprite = Sprite.Create(
+                        playerPiece.miniature,
+                        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                        new Vector2(0.5f, 0.5f)
+                    );
+                }
+
+                Material mat = new Material(playerColorSwap);
+                mat.SetColor("_PlayerColor", playerColor);
+                mat.SetTexture("_MainTex", pieceTexture);
+
+                img.material = mat;
+            }
+        }
+    }
+
+    /// <summary>
     /// Spawn all player piece button and a pass buttons in the player zone.
     /// </summary>
     public void GeneratePlayerPieceButtons(int playerID, Color playerColor, List<int> remainingPlayerPieces)
@@ -65,7 +103,7 @@ public class UIManager : MonoBehaviour
         {
             if (remainingPlayerPieces.Contains(playerPiece.ID))
             {
-                Button newButton = Instantiate(prefab, zone.transform, false);
+                Button newButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
                 Image img = newButton.GetComponent<Image>();
                 Texture2D pieceTexture = playerPiece.miniature;
                 if (pieceTexture != null)
@@ -91,7 +129,7 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        Button passButton = Instantiate(prefab, zone.transform, false);
+        Button passButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
         Image passButtonImg = passButton.GetComponent<Image>();
         if (passButtonTexture != null)
         {

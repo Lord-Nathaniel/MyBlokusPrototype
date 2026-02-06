@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54937ef26e2a5d749beeca490dcca2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  prefab: {fileID: 8650193029944085354, guid: f1156288b5abd4b4fab8a8ff5ed05804, type: 3}
+  playerPieceButtonPrefab: {fileID: 0}
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   zone: {fileID: 942368098}
   playerPieceManager: {fileID: 625892632}
@@ -222,6 +222,9 @@ MonoBehaviour:
   playerColorSwap: {fileID: 2100000, guid: 7125c8eb03e28b44aae09395090e3cfb, type: 2}
   highlight: {fileID: 2100000, guid: 3853aac7281910f40a99781272918d92, type: 2}
   nextPlayerButton: {fileID: 105112160}
+  playerPieceImagePrefab: {fileID: 265415383466774337, guid: 28682bc235af521448e2967b3c119b6b, type: 3}
+  playerPiecesSubzonePrefab: {fileID: 4813371734795542029, guid: 749bd75cc29945441819f1a9e5b9db15, type: 3}
+  playerPieceImageZone: {fileID: 1253508211}
   gameManager: {fileID: 276406069}
   startingMessage: {fileID: 2123056433}
   startMessageButton: {fileID: 2146262386}
@@ -1917,6 +1920,7 @@ GameObject:
   - component: {fileID: 1253508212}
   - component: {fileID: 1253508214}
   - component: {fileID: 1253508213}
+  - component: {fileID: 1253508215}
   m_Layer: 5
   m_Name: RemainingPiecesZone
   m_TagString: Untagged
@@ -1981,6 +1985,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253508211}
   m_CullTransparentMesh: 1
+--- !u!114 &1253508215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253508211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 500, y: 200}
+  m_Spacing: {x: 50, y: 50}
+  m_Constraint: 1
+  m_ConstraintCount: 1
 --- !u!1 &1283470870
 GameObject:
   m_ObjectHideFlags: 0

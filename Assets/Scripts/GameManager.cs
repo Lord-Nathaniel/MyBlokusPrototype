@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void InitPlayers()
     {
         currentPlayers = new List<PlayerData>(playerNb);
+        List<Color> currentPlayersColors = new List<Color>();
         for (int i = 0; i < playerNb; i++)
         {
             List<int> playerPieces = new();
@@ -39,11 +40,18 @@ public class GameManager : MonoBehaviour
                 playerPieces.Add(j);
             }
 
-            currentPlayers.Add(new PlayerData(true,
-            new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3)),
-            playerPieces, 0
+            Color currentPlayerColor = new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3));
+
+            currentPlayers.Add(new PlayerData(
+                true,
+                currentPlayerColor,
+                playerPieces,
+                0
             ));
+            currentPlayersColors.Add(currentPlayerColor);
         }
+
+        uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
     /// <summary>
