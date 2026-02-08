@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// This class manages the player piece element data during the player turn.
-/// -OUT- InputManager | GridManager | PreviewSystem
+/// -OUT- InputManager | GridManager | PreviewManager
 /// </summary>
 public class PlayerPieceManager : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class PlayerPieceManager : MonoBehaviour
     // Needed services
     private InputManager inputManager;
     private GridManager gridManager;
-    private PreviewSystem previewSystem;
+    private PreviewManager previewSystem;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         inputManager = ServiceManager.Get<InputManager>();
         gridManager = ServiceManager.Get<GridManager>();
-        previewSystem = ServiceManager.Get<PreviewSystem>();
+        previewSystem = ServiceManager.Get<PreviewManager>();
 
         //TODO remove start because should be called for each player.
         StopPlacement();

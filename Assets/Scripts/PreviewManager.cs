@@ -6,7 +6,7 @@ using UnityEngine;
 /// Actions only changes the preview attached to the cursor and have no gameplay interaction.
 /// -OUT- InputManager
 /// </summary>
-public class PreviewSystem : MonoBehaviour
+public class PreviewManager : MonoBehaviour
 {
     [SerializeField] private float previewYOffset = 0.006f;
     [SerializeField] private GameObject cellIndicatorParent;
