@@ -4,13 +4,13 @@ using UnityEngine;
 /// <summary>
 /// This class manages the preview attached to the player cursor.
 /// Actions only changes the preview attached to the cursor and have no gameplay interaction.
+/// -OUT- InputManager
 /// </summary>
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField] private float previewYOffset = 0.006f;
     [SerializeField] private GameObject cellIndicatorParent;
     [SerializeField] private PlayerPieceDataSO database;
-    [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
 
     private GameObject previewObject;
@@ -18,8 +18,23 @@ public class PreviewSystem : MonoBehaviour
     [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
     private Color playerColor;
 
+    // Needed services
+    private InputManager inputManager;
+
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
+
     private void Start()
     {
+        inputManager = ServiceManager.Get<InputManager>();
+
         cellIndicatorParent.SetActive(false);
     }
 

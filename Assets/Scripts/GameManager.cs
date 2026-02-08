@@ -4,15 +4,19 @@ using UnityEngine;
 /// <summary>
 /// This class manages the state of the game. 
 /// It receives state change ask as input, and output action to do with the current state.
+/// -OUT- UIManager | PlayerPieceManager
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private UIManager uiManager;
     [SerializeField] private int playerNb = 2;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private readonly State state;
     List<PlayerData> currentPlayers;
+
+    // Needed services
+    private UIManager uiManager;
+    private PlayerPieceManager playerPieceManager;
 
     public enum State
     {
@@ -21,8 +25,21 @@ public class GameManager : MonoBehaviour
         EndGame
     }
 
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
+
     private void Start()
     {
+        uiManager = ServiceManager.Get<UIManager>();
+        playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
+
         InitPlayers();
 
         SwitchState(State.StartGame);
@@ -67,7 +84,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        SwitchState(SelectNextState());
+        if (playerPieceManager.IsPlayerPiecePlaced())
+            SwitchState(SelectNextState());
+    }
+
+    private void CheckCurrentPiece()
+    {
+
     }
 
     private State SelectNextState()

@@ -15,9 +15,6 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float cellLenght;
     [SerializeField] private float cellHeight;
 
-    [Header("Cell Sprites")]
-    //TODO after polishing grid shader
-
     [Header("Grid Management")]
     [SerializeField] private GameObject gridParent;
     [SerializeField] private PlayerPieceDataSO database;
@@ -29,6 +26,15 @@ public class GridManager : MonoBehaviour
     Dictionary<Vector3Int, CellData> placedSquares = new();
     private List<GameObject> currentlyPlacedPiece = new();
 
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
 
     private void Start()
     {
@@ -357,6 +363,28 @@ public class GridManager : MonoBehaviour
         foreach (GameObject placedPiece in currentlyPlacedPiece)
         {
             Destroy(placedPiece);
+        }
+    }
+
+    public void SaveCurrentPiece()
+    {
+        bool isPiecePresent = false;
+        foreach (Vector3Int square in squarePositions)
+        {
+            placedSquares.Add(square, new CellData(playerID, pieceID));
+            Vector3 worldSquare = CellToWorld(square);
+            GameObject newObject = Instantiate(database.squarePreviewPrefab);
+            currentlyPlacedPiece.Add(newObject);
+            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+            Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
+            squareRenderer.material.SetColor("_PlayerColor", playerColor);
+        }
+
+        if (isPiecePresent)
+        {
+            playerPieceSO = null;
+            currentlyPlacedPiece.Clear();
+            squarePositions.Clear();
         }
     }
 }

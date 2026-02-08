@@ -8,6 +8,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip clickSound, placeFloorSound, placeFurnitureSound, removeSound, wrongPlacementSound;
     [SerializeField] private AudioSource audioSource;
 
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
+
     /// <summary>
     /// Plays the needed sound from the calling element.
     /// </summary>

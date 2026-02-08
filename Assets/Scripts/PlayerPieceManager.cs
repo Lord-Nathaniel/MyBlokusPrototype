@@ -2,27 +2,20 @@ using UnityEngine;
 
 /// <summary>
 /// This class manages the player piece element data during the player turn.
-/// 
+/// -OUT- InputManager | GridManager | PreviewSystem
 /// </summary>
 public class PlayerPieceManager : MonoBehaviour
 {
     [SerializeField] private GameObject cellIndicatorParent;
-    [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject gridVisualization;
-    [SerializeField] private GridManager gridManager;
-    [SerializeField] private PreviewSystem previewSystem;
 
     [SerializeField] private Color playerOneColor;
     [SerializeField] private Color playerTwoColor;
     [SerializeField] private Color playerThreeColor;
     [SerializeField] private Color playerFourColor;
-    //[SerializeField] private SquarePlacer squarePlacer;
-    //[SerializeField] private SoundManager soundManager;
 
-    //private GridManager floorData, furnitureData;
-    //private Vector3Int lastDetectedPosition = Vector3Int.zero;
     private int selectedObjectIndex = -1;
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
@@ -31,10 +24,27 @@ public class PlayerPieceManager : MonoBehaviour
     private int playerID = 1;
     private bool isPiecePlaced = false;
     private Color selectedColor;
-    //private bool isBuidling = false;
+
+    // Needed services
+    private InputManager inputManager;
+    private GridManager gridManager;
+    private PreviewSystem previewSystem;
+
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
 
     private void Start()
     {
+        inputManager = ServiceManager.Get<InputManager>();
+        gridManager = ServiceManager.Get<GridManager>();
+        previewSystem = ServiceManager.Get<PreviewSystem>();
 
         //TODO remove start because should be called for each player.
         StopPlacement();
@@ -206,4 +216,14 @@ public class PlayerPieceManager : MonoBehaviour
     }
     //lastDetectedPosition = Vector3Int.zero;
     //isBuidling = false;
+
+    public bool IsPlayerPiecePlaced()
+    {
+        if (selectedObjectIndex >= 0)
+        {
+            gridManager.SaveCurrentPiece();
+            return true;
+        }
+        return false;
+    }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// This class manage all UI settings and actions.
 /// It mainly exchange with the GameManager to display UI from the current state of the game.
+/// -OUT- GameManager | PlayerPieceManager
 /// </summary>
 public class UIManager : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button playerPieceButtonPrefab;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject zone;
-    [SerializeField] private PlayerPieceManager playerPieceManager;
     [SerializeField] private Texture2D passButtonTexture;
     [SerializeField] private Color playerColor;
     [SerializeField] private Material playerColorSwap;
@@ -26,7 +26,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject playerPieceImageZone;
 
     [Header("Game Settings")]
-    [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject startingMessage;
     [SerializeField] private Button startMessageButton;
     [SerializeField] private GameObject endingMessage;
@@ -35,9 +34,25 @@ public class UIManager : MonoBehaviour
     private int currentPlayer;
     private Button selectedButton;
 
+    // Needed services
+    private GameManager gameManager;
+    private PlayerPieceManager playerPieceManager;
+
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
 
     private void Start()
     {
+        gameManager = ServiceManager.Get<GameManager>();
+        playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
+
         startMessageButton.onClick.AddListener(() =>
         {
             gameManager.GameStart();

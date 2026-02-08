@@ -15,6 +15,16 @@ public class InputManager : MonoBehaviour
 
     public event Action OnLeftClicked, OnMiddleClicked, OnRightClicked, OnExit;
 
+    private void Awake()
+    {
+        ServiceManager.Register(this);
+    }
+
+    private void OnDestroy()
+    {
+        ServiceManager.Unregister<GameManager>();
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
