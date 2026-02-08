@@ -204,7 +204,7 @@ public class PreviewManager : MonoBehaviour
 
         //if (lastDetectedPosition != gridPosition)
         //{
-        //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
         //    previewManager.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
         //    lastDetectedPosition = gridPosition;
         //}

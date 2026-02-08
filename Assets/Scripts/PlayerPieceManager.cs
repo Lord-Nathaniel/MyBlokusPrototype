@@ -17,7 +17,7 @@ public class PlayerPieceManager : MonoBehaviour
     [SerializeField] private Color playerThreeColor;
     [SerializeField] private Color playerFourColor;
 
-    private int selectedObjectIndex = -1;
+    private int selectedObjectID = -1;
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
     private bool isFirstPlacedPiece = true;
@@ -63,17 +63,17 @@ public class PlayerPieceManager : MonoBehaviour
     {
         StopPlacement();
         int previousObjectIndex = -1;
-        if (selectedObjectIndex > -1)
+        if (selectedObjectID > -1)
         {
-            previousObjectIndex = selectedObjectIndex;
+            previousObjectIndex = selectedObjectID;
         }
 
-        selectedObjectIndex = database.playerPieces.FindIndex(data => data.ID == pieceID);
-        if (selectedObjectIndex > -1)
+        selectedObjectID = database.playerPieces.FindIndex(data => data.ID == pieceID);
+        if (selectedObjectID > -1)
         {
             if (isPiecePlaced)
             {
-                Debug.Log(("[PlayerPieceManager] previous objectIndex = ", previousObjectIndex, " | selected object index = ", selectedObjectIndex));
+                Debug.Log(("[PlayerPieceManager] previous objectIndex = ", previousObjectIndex, " | selected object index = ", selectedObjectID));
                 gridManager.RemovePlayerPiece(previousObjectIndex);
             }
 
@@ -93,7 +93,7 @@ public class PlayerPieceManager : MonoBehaviour
                 case 3:
                     selectedColor = playerFourColor; break;
             }
-            previewManager.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID, selectedColor);
+            previewManager.StartShowingPlacementPreview(database.playerPieces[selectedObjectID].ID, selectedColor);
         }
         else
         {
@@ -124,7 +124,7 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
 
-        bool placementValidity = CheckPlacementValidity(mousePosition, selectedObjectIndex, selectedObjectRotation, isSelectedObjectMirrored, isFirstPlacedPiece);
+        bool placementValidity = CheckPlacementValidity(mousePosition, selectedObjectID, selectedObjectRotation, isSelectedObjectMirrored, isFirstPlacedPiece);
         if (!placementValidity)
         {
             //soundManager.PlaySound(SoundType.WrongPlacement);
@@ -133,20 +133,20 @@ public class PlayerPieceManager : MonoBehaviour
 
         if (isPiecePlaced)
         {
-            gridManager.RemovePlayerPiece(selectedObjectIndex);
+            gridManager.RemovePlayerPiece(selectedObjectID);
         }
 
         previewManager.ModifyCursorColorAndOpacity(Color.white, 0.5f);
 
-        gridManager.AddPlayerPiece(selectedObjectIndex, playerID, selectedColor);
+        gridManager.AddPlayerPiece(selectedObjectID, playerID, selectedColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
         if (isFirstPlacedPiece)
             isFirstPlacedPiece = false;
 
-        //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
+        //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectID].Prefab, grid.CellToWorld(gridPosition));
 
-        //GridManager selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
+        //GridManager selectedData = database.objectsData[selectedObjectID].ID == 0 ? floorData : furnitureData;
         //if (selectedData == floorData)
         //{
         //    soundManager.PlaySound(SoundType.PlaceFloor);
@@ -156,8 +156,8 @@ public class PlayerPieceManager : MonoBehaviour
         //    soundManager.PlaySound(SoundType.PlaceFurniture);
         //}
         //selectedData.AddObjectAt(gridPosition,
-        //                         database.objectsData[selectedObjectIndex].Size,
-        //                         database.objectsData[selectedObjectIndex].ID,
+        //                         database.objectsData[selectedObjectID].Size,
+        //                         database.objectsData[selectedObjectID].ID,
         //                         index);
 
         //previewManager.UpdatePosition(grid.CellToWorld(gridPosition), false);
@@ -178,7 +178,7 @@ public class PlayerPieceManager : MonoBehaviour
     /// </summary>
     public void RotatePlayerPiece()
     {
-        if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].rotable)
+        if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].rotable)
         {
             selectedObjectRotation = (selectedObjectRotation + 1) % 4;
             previewManager.RotatePlacementPreview();
@@ -190,7 +190,7 @@ public class PlayerPieceManager : MonoBehaviour
     /// </summary>
     public void MirrorPlayerPiece()
     {
-        if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].mirrorable)
+        if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].mirrorable)
         {
             isSelectedObjectMirrored = !isSelectedObjectMirrored;
             previewManager.MirrorPlacementPreview();
@@ -206,7 +206,7 @@ public class PlayerPieceManager : MonoBehaviour
         //{
         //    return;
         //}
-        //selectedObjectIndex = -1;
+        //selectedObjectID = -1;
         gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
         //previewManager.StopShowingPreview();
@@ -221,13 +221,16 @@ public class PlayerPieceManager : MonoBehaviour
     /// <summary>
     /// -IN- GameManager from NextPlayerTurn()
     /// </summary>
-    public bool IsPlayerPiecePlaced()
+    public int PlacedPlayerPieceID()
     {
-        if (selectedObjectIndex >= 0)
-        {
-            gridManager.SaveCurrentPiece();
-            return true;
-        }
-        return false;
+        if (isPiecePlaced)
+            return selectedObjectID;
+
+        return -1;
+    }
+
+    public void ResetSelectedObjectID()
+    {
+        selectedObjectID = -1;
     }
 }

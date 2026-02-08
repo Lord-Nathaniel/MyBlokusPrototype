@@ -93,8 +93,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextPlayerTurn()
     {
-        if (playerPieceManager.IsPlayerPiecePlaced())
+        int placedPiece = playerPieceManager.PlacedPlayerPieceID();
+        if (placedPiece >= 0)
+        {
+            playerPieceManager.ResetSelectedObjectID();
+            RemovePieceFromPlayerData(placedPiece);
             SwitchState(SelectNextPlayer());
+        }
+    }
+
+    private void RemovePieceFromPlayerData(int pieceID)
+    {
+        currentPlayers[currentPlayerID].remainingPlayerPieces.Remove(pieceID);
     }
 
     private State SelectNextPlayer()
