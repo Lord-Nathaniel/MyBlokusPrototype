@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This class manages the grid data and display.
 /// It contains a dictionnary of all Cells with its state.
+/// -IN- PlayerPieceManager
 /// </summary>
 public class GridManager : MonoBehaviour
 {
@@ -88,6 +89,7 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// Check with game rule if squares from a piece are allowed to go on cells.
+    /// -IN- PlayerPieceManager from CheckPlacementValidity()
     /// </summary>
     /// <param name="mousePosition"></param>
     /// <param name="ID"></param>
@@ -291,6 +293,7 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// Place the correct number of cells depending of the number of players.
+    /// -IN- PlayerPieceManager from Start()
     /// </summary>
     /// <param name="playerNb"></param>
     public void PlaceStartCell(int playerNb)
@@ -326,6 +329,7 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// If check is ok, place the player piece squares stored on the grid.
+    /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
     /// <param name="pieceID"></param>
     /// <param name="playerID"></param>
@@ -348,6 +352,7 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// Remove the player piece squares stored on the grid.
+    /// -IN- PlayerPieceManager from StartPlacement() and PlaceStructure()
     /// </summary>
     /// <param name="ID"></param>
     public void RemovePlayerPiece(int ID)
@@ -366,18 +371,22 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// -IN- PlayerPieceManager from IsPlayerPiecePlaced() 
+    /// </summary>
+
     public void SaveCurrentPiece()
     {
         bool isPiecePresent = false;
         foreach (Vector3Int square in squarePositions)
         {
-            placedSquares.Add(square, new CellData(playerID, pieceID));
-            Vector3 worldSquare = CellToWorld(square);
-            GameObject newObject = Instantiate(database.squarePreviewPrefab);
-            currentlyPlacedPiece.Add(newObject);
-            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
-            Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
-            squareRenderer.material.SetColor("_PlayerColor", playerColor);
+            //placedSquares.Add(square, new CellData(playerID, pieceID));
+            //Vector3 worldSquare = CellToWorld(square);
+            //GameObject newObject = Instantiate(database.squarePreviewPrefab);
+            //currentlyPlacedPiece.Add(newObject);
+            //newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+            //Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
+            //squareRenderer.material.SetColor("_PlayerColor", playerColor);
         }
 
         if (isPiecePresent)

@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// This class manages the player piece element data during the player turn.
+/// -IN- GameManager
 /// -OUT- InputManager | GridManager | PreviewManager
 /// </summary>
 public class PlayerPieceManager : MonoBehaviour
@@ -28,7 +29,7 @@ public class PlayerPieceManager : MonoBehaviour
     // Needed services
     private InputManager inputManager;
     private GridManager gridManager;
-    private PreviewManager previewSystem;
+    private PreviewManager previewManager;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         inputManager = ServiceManager.Get<InputManager>();
         gridManager = ServiceManager.Get<GridManager>();
-        previewSystem = ServiceManager.Get<PreviewManager>();
+        previewManager = ServiceManager.Get<PreviewManager>();
 
         //TODO remove start because should be called for each player.
         StopPlacement();
@@ -92,7 +93,7 @@ public class PlayerPieceManager : MonoBehaviour
                 case 3:
                     selectedColor = playerFourColor; break;
             }
-            previewSystem.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID, selectedColor);
+            previewManager.StartShowingPlacementPreview(database.playerPieces[selectedObjectIndex].ID, selectedColor);
         }
         else
         {
@@ -109,7 +110,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         //StopPlacement();
         //gridVisualization.SetActive(true);
-        //previewSystem.StartShowingRemovePreview();
+        //previewManager.StartShowingRemovePreview();
         //inputManager.OnClicked += PlaceStructure;
         //inputManager.OnExit += StopPlacement;
     }
@@ -135,7 +136,7 @@ public class PlayerPieceManager : MonoBehaviour
             gridManager.RemovePlayerPiece(selectedObjectIndex);
         }
 
-        previewSystem.ModifyCursorColorAndOpacity(Color.white, 0.5f);
+        previewManager.ModifyCursorColorAndOpacity(Color.white, 0.5f);
 
         gridManager.AddPlayerPiece(selectedObjectIndex, playerID, selectedColor);
         if (!isPiecePlaced)
@@ -159,7 +160,7 @@ public class PlayerPieceManager : MonoBehaviour
         //                         database.objectsData[selectedObjectIndex].ID,
         //                         index);
 
-        //previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
+        //previewManager.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
     private bool CheckPlacementValidity(Vector3 mousePosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored, bool isFirstPlacedPiece)
@@ -180,7 +181,7 @@ public class PlayerPieceManager : MonoBehaviour
         if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].rotable)
         {
             selectedObjectRotation = (selectedObjectRotation + 1) % 4;
-            previewSystem.RotatePlacementPreview();
+            previewManager.RotatePlacementPreview();
         }
     }
 
@@ -192,7 +193,7 @@ public class PlayerPieceManager : MonoBehaviour
         if (selectedObjectIndex > -1 && database.playerPieces[selectedObjectIndex].mirrorable)
         {
             isSelectedObjectMirrored = !isSelectedObjectMirrored;
-            previewSystem.MirrorPlacementPreview();
+            previewManager.MirrorPlacementPreview();
         }
     }
 
@@ -208,7 +209,7 @@ public class PlayerPieceManager : MonoBehaviour
         //selectedObjectIndex = -1;
         gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
-        //previewSystem.StopShowingPreview();
+        //previewManager.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         inputManager.OnRightClicked -= RotatePlayerPiece;
@@ -217,6 +218,9 @@ public class PlayerPieceManager : MonoBehaviour
     //lastDetectedPosition = Vector3Int.zero;
     //isBuidling = false;
 
+    /// <summary>
+    /// -IN- GameManager from NextPlayer()
+    /// </summary>
     public bool IsPlayerPiecePlaced()
     {
         if (selectedObjectIndex >= 0)

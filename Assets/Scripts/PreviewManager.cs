@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This class manages the preview attached to the player cursor.
 /// Actions only changes the preview attached to the cursor and have no gameplay interaction.
+/// -IN- PlayerPieceManager
 /// -OUT- InputManager
 /// </summary>
 public class PreviewManager : MonoBehaviour
@@ -40,6 +41,7 @@ public class PreviewManager : MonoBehaviour
 
     /// <summary>
     /// Create the preview object.
+    /// -IN- PlayerPieceManager from StartPlacement()
     /// </summary>
     /// <param name="ID"></param>
     public void StartShowingPlacementPreview(int ID, Color playerColor)
@@ -81,6 +83,7 @@ public class PreviewManager : MonoBehaviour
 
     /// <summary>
     /// Rotates 90° clockwise the preview.
+    /// -IN- PlayerPieceManager from RotatePlayerPiece()
     /// </summary>
     public void RotatePlacementPreview()
     {
@@ -89,6 +92,7 @@ public class PreviewManager : MonoBehaviour
 
     /// <summary>
     /// Mirrors the preview.
+    /// -IN- PlayerPieceManager from MirrorPlayerPiece()
     /// </summary>
     public void MirrorPlacementPreview()
     {
@@ -170,6 +174,12 @@ public class PreviewManager : MonoBehaviour
     //    PrepareCursor(Vector2Int.one);
     //    ApplyFeedbackToCursor(false);
     //}
+
+    /// <summary>
+    /// -IN- PlayerPieceManager from PlaceStructure()
+    /// </summary>
+    /// <param name="color"></param>
+    /// <param name="opacity"></param>
     public void ModifyCursorColorAndOpacity(Color color, float opacity)
     {
         //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
@@ -195,7 +205,7 @@ public class PreviewManager : MonoBehaviour
         //if (lastDetectedPosition != gridPosition)
         //{
         //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        //    previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+        //    previewManager.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
         //    lastDetectedPosition = gridPosition;
         //}
     }

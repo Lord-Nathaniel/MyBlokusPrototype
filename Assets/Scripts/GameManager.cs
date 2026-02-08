@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This class manages the state of the game. 
 /// It receives state change ask as input, and output action to do with the current state.
+/// -IN- UIManager
 /// -OUT- UIManager | PlayerPieceManager
 /// </summary>
 public class GameManager : MonoBehaviour
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Switch from StartGame state to the currentPlayer state
+    /// -IN- UIManager from Start()
     /// </summary>
     public void GameStart()
     {
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Switch from currentPlayer state to nextPlayer state
+    /// -IN- UIManager from Start()
     /// </summary>
     public void NextPlayer()
     {
@@ -110,6 +113,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Switch from currentPlayer state to EndGame state
+    /// -IN- UIManager from Start()
     /// </summary>
     public void GameEnd()
     {

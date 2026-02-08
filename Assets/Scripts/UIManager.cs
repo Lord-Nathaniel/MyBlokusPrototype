@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// This class manage all UI settings and actions.
 /// It mainly exchange with the GameManager to display UI from the current state of the game.
+/// -IN- GameManager
 /// -OUT- GameManager | PlayerPieceManager
 /// </summary>
 public class UIManager : MonoBehaviour
@@ -71,6 +72,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Spawn all player piece images in the remaining pieces zone.
+    /// -IN- GameManager from InitPlayers()
     /// </summary>
     public void GenerateRemainingPlayerPieceImages(List<Color> playerColors)
     {
@@ -103,6 +105,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Spawn all player piece button and a pass buttons in the player zone.
+    /// -IN- GameManager from SwitchState()
     /// </summary>
     public void GeneratePlayerPieceButtons(int playerID, Color playerColor, List<int> remainingPlayerPieces)
     {
@@ -177,6 +180,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Show all UI elements needed for the start of the game.
+    /// -IN- GameManager from SwitchState()
     /// </summary>
     public void ShowStartScreen()
     {
@@ -185,6 +189,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// End the start of the game by hidding all UI elements.
+    /// -IN- GameManager from SwitchState()
     /// </summary>
     public void HideStartScreen()
     {
@@ -193,6 +198,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Show all UI elements needed for the end of the game.
+    /// -IN- GameManager from SwitchState()
     /// </summary>
     public void ShowEndScreen()
     {
