@@ -219,7 +219,7 @@ public class PlayerPieceManager : MonoBehaviour
     //isBuidling = false;
 
     /// <summary>
-    /// -IN- GameManager from NextPlayer()
+    /// -IN- GameManager from NextPlayerTurn()
     /// </summary>
     public bool IsPlayerPiecePlaced()
     {

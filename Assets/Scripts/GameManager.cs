@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
 
         InitPlayers();
-
-        SwitchState(State.StartGame);
+        //TODO temporary, to switch the start
+        FirstPlayerTurn();
+        //SwitchState(State.StartGame);
     }
 
     private void InitPlayers()
@@ -81,22 +82,22 @@ public class GameManager : MonoBehaviour
         SwitchState(State.PlayerTurn);
     }
 
+    private void FirstPlayerTurn()
+    {
+        SwitchState(SelectNextPlayer());
+    }
+
     /// <summary>
     /// Switch from currentPlayer state to nextPlayer state
     /// -IN- UIManager from Start()
     /// </summary>
-    public void NextPlayer()
+    public void NextPlayerTurn()
     {
         if (playerPieceManager.IsPlayerPiecePlaced())
-            SwitchState(SelectNextState());
+            SwitchState(SelectNextPlayer());
     }
 
-    private void CheckCurrentPiece()
-    {
-
-    }
-
-    private State SelectNextState()
+    private State SelectNextPlayer()
     {
         for (int i = 1; i <= currentPlayers.Count; i++)
         {

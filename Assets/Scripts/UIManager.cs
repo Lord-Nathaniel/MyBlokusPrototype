@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
 
         nextPlayerButton.onClick.AddListener(() =>
         {
-            gameManager.NextPlayer();
+            gameManager.NextPlayerTurn();
         });
     }
 
