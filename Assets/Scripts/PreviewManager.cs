@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class PreviewManager : MonoBehaviour
 {
-    [SerializeField] private float previewYOffset = 0.006f;
     [SerializeField] private GameObject cellIndicatorParent;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private Grid grid;
@@ -54,15 +53,8 @@ public class PreviewManager : MonoBehaviour
 
     private void cursorPreview(List<Vector2Int> squares, List<Vector2Int> corners)
     {
-        foreach (Transform child in cellIndicatorParent.transform.GetChild(0))
-        {
-            Destroy(child.gameObject);
-        }
-        cellIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
-        cellIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        ResetCursorPreview();
 
-
-        //square preview
         foreach (Vector2Int square in squares)
         {
             GameObject squareGO = Instantiate(database.squarePreviewPrefab, cellIndicatorParent.transform.GetChild(0));
@@ -72,13 +64,22 @@ public class PreviewManager : MonoBehaviour
             squareRenderer.material.SetColor("_PlayerColor", playerColor);
         }
 
-        //corner preview
         foreach (Vector2Int corner in corners)
         {
             GameObject cornerGO = Instantiate(database.cornerPreviewPrefab, cellIndicatorParent.transform.GetChild(0));
             cornerGO.transform.localPosition = new Vector3((float)corner.x, 0f, (float)corner.y);
             cornerGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
+    }
+
+    private void ResetCursorPreview()
+    {
+        foreach (Transform child in cellIndicatorParent.transform.GetChild(0))
+        {
+            Destroy(child.gameObject);
+        }
+        cellIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
+        cellIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     /// <summary>
@@ -101,91 +102,20 @@ public class PreviewManager : MonoBehaviour
         cellIndicatorParent.transform.GetChild(0).localScale = scale;
     }
 
-
-    //private void PreparePreview()
-    //{
-    //foreach (Vector2Int square in playerPieceSO.squares)
-    //{
-
-    //    //Transform cellIndicatorPreviewTransform = cellIndicatorParent./*GetComponent*/<CursorIndicator>().transform;
-    //    _ = Instantiate(cellIndicatorParent, cellIndicatorParent.transform, false);
-    //}
-    //}
-    //Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
-    //foreach (Renderer renderer in renderers)
-    //{
-    //    Material[] materials = renderer.materials;
-    //    for (int i = 0; i < materials.Length; i++)
-    //    {
-    //        materials[i] = previewMaterialInstance;
-    //    }
-    //    renderer.materials = materials;
-    //}
-
-    /// <summary>
-    /// Destroys the preview object.
-    /// </summary>
-    public void StopShowingPreview()
-    {
-        cellIndicatorParent.SetActive(false);
-        if (previewObject != null)
-            Destroy(previewObject);
-    }
-
-    public void UpdatePosition(Vector3 position, bool validity)
-    {
-        //if (previewObject != null)
-        //{
-        //    MovePreview(position);
-        //    //ApplyFeedbackToPreview(validity);
-        //}
-
-        MoveCursor(position);
-        //ApplyFeedbackToCursor(validity);
-    }
-
-    private void MovePreview(Vector3 position)
-    {
-        previewObject.transform.position = new Vector3(position.x, position.y + previewYOffset, position.z);
-    }
-
-    private void MoveCursor(Vector3 position)
-    {
-        cellIndicatorParent.transform.position = position;
-    }
-
-    //private void ApplyFeedbackToPreview(bool validity)
-    //{
-    //    Color color = validity ? Color.white : Color.red;
-    //    previewMaterialInstance.color = color;
-    //    color.a = 0.5f;
-    //}
-
-    //private void ApplyFeedbackToCursor(bool validity)
-    //{
-    //    Color color = validity ? Color.white : Color.red;
-    //    cellIndicatorRenderer.material.color = color;
-    //    color.a = 0.5f;
-    //}
-
-    //internal void StartShowingRemovePreview()
-    //{
-    //    cellIndicator.SetActive(true);
-    //    PrepareCursor(Vector2Int.one);
-    //    ApplyFeedbackToCursor(false);
-    //}
-
     /// <summary>
     /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
-    /// <param name="color"></param>
-    /// <param name="opacity"></param>
-    public void ModifyCursorColorAndOpacity(Color color, float opacity)
+    public void ModifyCursorOpacity()
     {
         //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
         //{
-        //    cursorSquare
+        //    cursorSquare.transform.GetChild(0).gameObject.SetActive(true);
         //}
+    }
+
+    public void StopShowingPreview()
+    {
+        ResetCursorPreview();
     }
 
     private void Update()
@@ -195,18 +125,8 @@ public class PreviewManager : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        //Debug.Log(("gridPosition :", gridPosition.x, gridPosition.y, gridPosition.z));
-
-
         cellIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,
                                                              cellIndicatorParentYOffset,
                                                              grid.CellToWorld(gridPosition).z);
-
-        //if (lastDetectedPosition != gridPosition)
-        //{
-        //    bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
-        //    previewManager.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
-        //    lastDetectedPosition = gridPosition;
-        //}
     }
 }

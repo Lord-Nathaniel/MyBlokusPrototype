@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int playerNb = 2;
+    [SerializeField] private int playerNb = 4;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private readonly State state;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
 
         InitPlayers();
-        //TODO temporary, to switch the start
+        //TODO temporary, to bypass the start screen
         FirstPlayerTurn();
         //SwitchState(State.StartGame);
     }
@@ -96,10 +96,20 @@ public class GameManager : MonoBehaviour
         int placedPiece = playerPieceManager.PlacedPlayerPieceID();
         if (placedPiece >= 0)
         {
-            playerPieceManager.ResetSelectedObjectID();
+            playerPieceManager.StopPlacement();
             RemovePieceFromPlayerData(placedPiece);
             SwitchState(SelectNextPlayer());
         }
+    }
+
+    /// <summary>
+    /// Player has selected the pass button and passed
+    /// -IN- UIManager from Start()
+    /// </summary>
+    public void PlayerPasses()
+    {
+        currentPlayers[currentPlayerID].isActive = false;
+        SelectNextPlayer();
     }
 
     private void RemovePieceFromPlayerData(int pieceID)
@@ -144,7 +154,7 @@ public class GameManager : MonoBehaviour
 
             case State.PlayerTurn:
                 uiManager.HideStartScreen();
-                uiManager.GeneratePlayerPieceButtons(currentPlayerID, currentPlayers[currentPlayerID].playerColor, currentPlayers[currentPlayerID].remainingPlayerPieces);
+                uiManager.GeneratePlayerPieceButtons(currentPlayers[currentPlayerID].playerColor, currentPlayers[currentPlayerID].remainingPlayerPieces);
                 break;
 
             case State.EndGame:
@@ -153,7 +163,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private struct PlayerData
+    private class PlayerData
     {
         public bool isActive;
         public Color playerColor;

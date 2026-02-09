@@ -24,7 +24,7 @@ public class PlayerPieceManager : MonoBehaviour
     private int playerNb = 2;
     private int playerID = 1;
     private bool isPiecePlaced = false;
-    private Color selectedColor;
+    private Color currentPlayerColor;
 
     // Needed services
     private InputManager inputManager;
@@ -50,18 +50,15 @@ public class PlayerPieceManager : MonoBehaviour
         //TODO remove start because should be called for each player.
         StopPlacement();
         gridManager.PlaceStartCell(playerNb);
-
-        //floorData = new();
-        //furnitureData = new();d
     }
 
     /// <summary>
     /// State of the game where playerpiece preview is shown and other things disabbled when a player use the select button.
     /// </summary>
     /// <param name="pieceID"></param>
-    public void StartPlacement(int pieceID, int playerID)
+    public void StartPlacement(int pieceID, Color playerColor)
     {
-        StopPlacement();
+        currentPlayerColor = playerColor;
         int previousObjectIndex = -1;
         if (selectedObjectID > -1)
         {
@@ -73,27 +70,14 @@ public class PlayerPieceManager : MonoBehaviour
         {
             if (isPiecePlaced)
             {
-                Debug.Log(("[PlayerPieceManager] previous objectIndex = ", previousObjectIndex, " | selected object index = ", selectedObjectID));
                 gridManager.RemovePlayerPiece(previousObjectIndex);
             }
-
 
             selectedObjectRotation = 0;
             isSelectedObjectMirrored = false;
             isPiecePlaced = false;
 
-            switch (playerID)
-            {
-                case 0:
-                    selectedColor = playerOneColor; break;
-                case 1:
-                    selectedColor = playerTwoColor; break;
-                case 2:
-                    selectedColor = playerThreeColor; break;
-                case 3:
-                    selectedColor = playerFourColor; break;
-            }
-            previewManager.StartShowingPlacementPreview(database.playerPieces[selectedObjectID].ID, selectedColor);
+            previewManager.StartShowingPlacementPreview(database.playerPieces[selectedObjectID].ID, currentPlayerColor);
         }
         else
         {
@@ -104,15 +88,6 @@ public class PlayerPieceManager : MonoBehaviour
         inputManager.OnExit += StopPlacement;
         inputManager.OnRightClicked += RotatePlayerPiece;
         inputManager.OnMiddleClicked += MirrorPlayerPiece;
-    }
-
-    public void StartRemoving()
-    {
-        //StopPlacement();
-        //gridVisualization.SetActive(true);
-        //previewManager.StartShowingRemovePreview();
-        //inputManager.OnClicked += PlaceStructure;
-        //inputManager.OnExit += StopPlacement;
     }
 
     /// <summary>
@@ -136,31 +111,13 @@ public class PlayerPieceManager : MonoBehaviour
             gridManager.RemovePlayerPiece(selectedObjectID);
         }
 
-        previewManager.ModifyCursorColorAndOpacity(Color.white, 0.5f);
+        previewManager.ModifyCursorOpacity();
 
-        gridManager.AddPlayerPiece(selectedObjectID, playerID, selectedColor);
+        gridManager.AddPlayerPiece(selectedObjectID, playerID, currentPlayerColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
         if (isFirstPlacedPiece)
             isFirstPlacedPiece = false;
-
-        //int index = squarePlacer.PlaceObject(database.objectsData[selectedObjectID].Prefab, grid.CellToWorld(gridPosition));
-
-        //GridManager selectedData = database.objectsData[selectedObjectID].ID == 0 ? floorData : furnitureData;
-        //if (selectedData == floorData)
-        //{
-        //    soundManager.PlaySound(SoundType.PlaceFloor);
-        //}
-        //else
-        //{
-        //    soundManager.PlaySound(SoundType.PlaceFurniture);
-        //}
-        //selectedData.AddObjectAt(gridPosition,
-        //                         database.objectsData[selectedObjectID].Size,
-        //                         database.objectsData[selectedObjectID].ID,
-        //                         index);
-
-        //previewManager.UpdatePosition(grid.CellToWorld(gridPosition), false);
     }
 
     private bool CheckPlacementValidity(Vector3 mousePosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored, bool isFirstPlacedPiece)
@@ -202,21 +159,16 @@ public class PlayerPieceManager : MonoBehaviour
     /// </summary>
     public void StopPlacement()
     {
-        //if (!isBuidling)
-        //{
-        //    return;
-        //}
-        //selectedObjectID = -1;
+        isPiecePlaced = false;
+        selectedObjectID = -1;
         gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
-        //previewManager.StopShowingPreview();
+        previewManager.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         inputManager.OnRightClicked -= RotatePlayerPiece;
         inputManager.OnMiddleClicked -= MirrorPlayerPiece;
     }
-    //lastDetectedPosition = Vector3Int.zero;
-    //isBuidling = false;
 
     /// <summary>
     /// -IN- GameManager from NextPlayerTurn()
@@ -227,10 +179,5 @@ public class PlayerPieceManager : MonoBehaviour
             return selectedObjectID;
 
         return -1;
-    }
-
-    public void ResetSelectedObjectID()
-    {
-        selectedObjectID = -1;
     }
 }

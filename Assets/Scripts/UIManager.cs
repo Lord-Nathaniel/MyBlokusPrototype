@@ -11,33 +11,34 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : MonoBehaviour
 {
-    [Header("Player Settings")]
+    [Header("Buttons Settings")]
     [SerializeField] private Button playerPieceButtonPrefab;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject zone;
     [SerializeField] private Texture2D passButtonTexture;
-    [SerializeField] private Color playerColor;
     [SerializeField] private Material playerColorSwap;
     [SerializeField] private Material highlight;
     [SerializeField] private Button nextPlayerButton;
 
-    [Header("Player Settings")]
+    [Header("Images Settings")]
     [SerializeField] private Image playerPieceImagePrefab;
     [SerializeField] private GameObject playerPiecesSubzonePrefab;
     [SerializeField] private GameObject playerPieceImageZone;
 
-    [Header("Game Settings")]
+    [Header("Start & End Settings")]
     [SerializeField] private GameObject startingMessage;
     [SerializeField] private Button startMessageButton;
     [SerializeField] private GameObject endingMessage;
     [SerializeField] private Button endMessageButton;
 
-    private int currentPlayer;
+    private List<Button> pieceButtons = new();
     private Button selectedButton;
+    private Color currentPlayerColor;
 
     // Needed services
     private GameManager gameManager;
     private PlayerPieceManager playerPieceManager;
+    private GridManager gridManager;
 
     private void Awake()
     {
@@ -53,6 +54,7 @@ public class UIManager : MonoBehaviour
     {
         gameManager = ServiceManager.Get<GameManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
+        gridManager = ServiceManager.Get<GridManager>();
 
         startMessageButton.onClick.AddListener(() =>
         {
@@ -95,8 +97,8 @@ public class UIManager : MonoBehaviour
                 }
 
                 Material mat = new Material(playerColorSwap);
-                mat.SetColor("_PlayerColor", playerColor);
-                mat.SetTexture("_MainTex", pieceTexture);
+                mat.SetColor("_PlayerColor", playerColors[i - 1]);
+                mat.SetTexture("_MainTexture", pieceTexture);
 
                 img.material = mat;
             }
@@ -107,46 +109,39 @@ public class UIManager : MonoBehaviour
     /// Spawn all player piece button and a pass buttons in the player zone.
     /// -IN- GameManager from SwitchState()
     /// </summary>
-    public void GeneratePlayerPieceButtons(int playerID, Color playerColor, List<int> remainingPlayerPieces)
+    public void GeneratePlayerPieceButtons(Color playerColor, List<int> remainingPlayerPieces)
     {
+        currentPlayerColor = playerColor;
         if (zone.transform.childCount > 0)
         {
             foreach (Transform child in zone.transform)
             {
                 Destroy(child.gameObject);
             }
+            pieceButtons = new();
         }
 
         foreach (PlayerPieceSO playerPiece in database.playerPieces)
         {
             if (remainingPlayerPieces.Contains(playerPiece.ID))
             {
-                Button newButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
-                Image img = newButton.GetComponent<Image>();
-                Texture2D pieceTexture = playerPiece.miniature;
-                if (pieceTexture != null)
-                {
-                    img.sprite = Sprite.Create(
-                        playerPiece.miniature,
-                        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
-                        new Vector2(0.5f, 0.5f)
-                    );
-                }
-
-                Material mat = new Material(playerColorSwap);
-                mat.SetColor("_PlayerColor", playerColor);
-                mat.SetTexture("_MainTex", pieceTexture);
-
-                img.material = mat;
-
+                Button newButton = GenerateNewPieceButton(playerColor, playerPiece);
                 newButton.onClick.AddListener(() =>
                 {
-                    SelectButton(newButton);
-                    playerPieceManager.StartPlacement(playerPiece.ID, playerID);
+                    OnClickPieceAction(newButton, playerPiece.ID);
                 });
             }
         }
 
+        Button passButton = GeneratePassButton(playerColor);
+        passButton.onClick.AddListener(() =>
+        {
+            OnClickPassAction(passButton);
+        });
+    }
+
+    private Button GeneratePassButton(Color playerColor)
+    {
         Button passButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
         Image passButtonImg = passButton.GetComponent<Image>();
         if (passButtonTexture != null)
@@ -159,22 +154,69 @@ public class UIManager : MonoBehaviour
         }
         Material passButtonMat = new Material(playerColorSwap);
         passButtonMat.SetColor("_PlayerColor", playerColor);
-        passButtonMat.SetTexture("_MainTex", passButtonTexture);
+        passButtonMat.SetTexture("_MainTexture", passButtonTexture);
         passButtonImg.material = passButtonMat;
-        passButton.onClick.AddListener(() =>
-        {
-            //TODO to change to pass
-            SelectButton(passButton);
-        });
+
+        pieceButtons.Add(passButton);
+        return passButton;
     }
 
-    private void SelectButton(Button button)
+    private void OnClickPassAction(Button passButton)
     {
-        if (selectedButton != null)
-            Hide(selectedButton.transform.GetChild(0).gameObject);
+        gameManager.PlayerPasses();
+    }
 
-        selectedButton = button;
-        Show(selectedButton.transform.GetChild(0).gameObject);
+    private Button GenerateNewPieceButton(Color playerColor, PlayerPieceSO playerPiece)
+    {
+        Button newButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
+        Image img = newButton.GetComponent<Image>();
+        Texture2D pieceTexture = playerPiece.miniature;
+        if (pieceTexture != null)
+        {
+            img.sprite = Sprite.Create(
+                playerPiece.miniature,
+                new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                new Vector2(0.5f, 0.5f)
+            );
+        }
+
+        Material mat = new Material(playerColorSwap);
+        mat.SetColor("_PlayerColor", playerColor);
+        mat.SetTexture("_MainTexture", pieceTexture);
+
+        img.material = mat;
+
+        pieceButtons.Add(newButton);
+        return newButton;
+    }
+
+    private void OnClickPieceAction(Button button, int playerPieceID)
+    {
+        if (selectedButton == button)
+        {
+            Hide(selectedButton.transform.GetChild(0).gameObject);
+            playerPieceManager.StopPlacement();
+            gridManager.RemovePlayerPiece(playerPieceID);
+            selectedButton = null;
+        }
+
+        else if (selectedButton != null)
+        {
+            Hide(selectedButton.transform.GetChild(0).gameObject);
+            playerPieceManager.StopPlacement();
+            gridManager.RemovePlayerPiece(playerPieceID);
+
+            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
+            selectedButton = button;
+            Show(button.transform.GetChild(0).gameObject);
+        }
+
+        else
+        {
+            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
+            selectedButton = button;
+            Show(button.transform.GetChild(0).gameObject);
+        }
     }
 
 

@@ -357,7 +357,7 @@ public class GridManager : MonoBehaviour
     /// <param name="ID"></param>
     public void RemovePlayerPiece(int ID)
     {
-        if (playerPieceSO != database.playerPieces[ID])
+        if (playerPieceSO == null && playerPieceSO != database.playerPieces[ID])
             return;
 
         foreach (Vector3Int square in squarePositions)
