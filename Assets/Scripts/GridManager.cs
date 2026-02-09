@@ -20,12 +20,18 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject gridParent;
     [SerializeField] private PlayerPieceDataSO database;
 
+    [Header("Cell rendering")]
+    [SerializeField] private Texture2D placedPieceTexture;
+    [SerializeField] private Material playerColorSwap;
+
     private PlayerPieceSO playerPieceSO;
     private List<Vector3Int> squarePositions;
     private Vector3 gridOrigin;
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
-    private List<GameObject> currentlyPlacedPiece = new();
+
+    private List<GameObject> tempPlacedSquares = new();
+    private Color currentPlayerColor;
 
     private void Awake()
     {
@@ -46,42 +52,11 @@ public class GridManager : MonoBehaviour
         );
     }
 
-    public void AddObjectAt(Vector3Int gridPosition,
-                            Vector2Int objectSize,
-                            int ID,
-                            int placedObjectIndex)
-    {
-        //List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-        //CellData data = new CellData(positionToOccupy, ID, placedObjectIndex);
-
-        //foreach (var position in positionToOccupy)
-        //{
-        //    if (placedSquares.ContainsKey(position))
-        //        throw new Exception($"Dictionary already contains this cell position {position}");
-        //    placedSquares[position] = data;
-        //}
-    }
-
-    //private List<Vector3Int> CalculatePositions(Vector3Int gridPosition, Vector2Int objectSize)
-    //{
-    //List<Vector3Int> returnVal = new();
-    //for (int x = 0; x < objectSize.x; x++)
-    //{
-    //    for (int y = 0; y < objectSize.y; y++)
-    //    {
-    //        returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
-    //    }
-    //}
-    //return returnVal;
-    //    return null;
-    //}
-
     private List<Vector3Int> CalculateGridPositions(Vector3Int gridPosition, List<Vector2Int> objectCells)
     {
         List<Vector3Int> returnVal = new();
         foreach (Vector2Int cell in objectCells)
         {
-            Debug.Log(("[GridManager] CalculateGridPositions : cell x=", cell.x, " cell y=", cell.y));
             returnVal.Add(gridPosition + new Vector3Int(cell.x, 0, cell.y));
         }
         return returnVal;
@@ -155,7 +130,7 @@ public class GridManager : MonoBehaviour
         //    return false;
         //}
 
-        Debug.Log("All rules respected, piece placed !");
+        //Debug.Log("All rules respected, piece placed !");
         return true;
     }
 
@@ -333,20 +308,20 @@ public class GridManager : MonoBehaviour
     /// </summary>
     /// <param name="pieceID"></param>
     /// <param name="playerID"></param>
-    public void AddPlayerPiece(int pieceID, int playerID, Color playerColor)
+    public void AddTempPlayerPiece(int pieceID, int playerID, Color playerColor)
     {
         if (playerPieceSO != database.playerPieces[pieceID])
             return;
-
+        currentPlayerColor = playerColor;
         foreach (Vector3Int square in squarePositions)
         {
-            placedSquares.Add(square, new CellData(playerID, pieceID));
+            //placedSquares.Add(square, new CellData(playerID, pieceID));
             Vector3 worldSquare = CellToWorld(square);
             GameObject newObject = Instantiate(database.squarePreviewPrefab);
-            currentlyPlacedPiece.Add(newObject);
+            tempPlacedSquares.Add(newObject);
             newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
             Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
-            squareRenderer.material.SetColor("_PlayerColor", playerColor);
+            squareRenderer.material.SetColor("_PlayerColor", currentPlayerColor);
         }
     }
 
@@ -355,17 +330,12 @@ public class GridManager : MonoBehaviour
     /// -IN- PlayerPieceManager from StartPlacement() and PlaceStructure()
     /// </summary>
     /// <param name="ID"></param>
-    public void RemovePlayerPiece(int ID)
+    public void RemoveTempPlayerPiece(int pieceID)
     {
-        if (playerPieceSO == null && playerPieceSO != database.playerPieces[ID])
+        if (playerPieceSO == null && playerPieceSO != database.playerPieces[pieceID])
             return;
 
-        foreach (Vector3Int square in squarePositions)
-        {
-            placedSquares.Remove(square);
-        }
-
-        foreach (GameObject placedPiece in currentlyPlacedPiece)
+        foreach (GameObject placedPiece in tempPlacedSquares)
         {
             Destroy(placedPiece);
         }
@@ -375,25 +345,25 @@ public class GridManager : MonoBehaviour
     /// -IN- PlayerPieceManager from IsPlayerPiecePlaced() 
     /// </summary>
 
-    public void SaveCurrentPiece()
+    public void SaveCurrentPiece(int playerID)
     {
-        bool isPiecePresent = false;
+        int playerPieceID = playerPieceSO.ID;
+        RemoveTempPlayerPiece(playerPieceID);
+
         foreach (Vector3Int square in squarePositions)
         {
-            //placedSquares.Add(square, new CellData(playerID, pieceID));
-            //Vector3 worldSquare = CellToWorld(square);
-            //GameObject newObject = Instantiate(database.squarePreviewPrefab);
-            //currentlyPlacedPiece.Add(newObject);
-            //newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
-            //Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
-            //squareRenderer.material.SetColor("_PlayerColor", playerColor);
-        }
+            placedSquares.Add(square, new CellData(playerID, playerPieceID));
+            Vector3 worldSquare = CellToWorld(square);
+            GameObject newObject = Instantiate(database.squarePreviewPrefab);
 
-        if (isPiecePresent)
-        {
-            playerPieceSO = null;
-            currentlyPlacedPiece.Clear();
-            squarePositions.Clear();
+            newObject.transform.position = new Vector3(worldSquare.x, 0.02f, worldSquare.z);
+            Renderer squareRenderer = newObject.GetComponentInChildren<Renderer>();
+
+            Material mat = new Material(playerColorSwap);
+            mat.SetColor("_PlayerColor", currentPlayerColor);
+            mat.SetTexture("_MainTex", placedPieceTexture);
+
+            squareRenderer.material = mat;
         }
     }
 }

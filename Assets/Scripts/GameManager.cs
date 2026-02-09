@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     // Needed services
     private UIManager uiManager;
     private PlayerPieceManager playerPieceManager;
+    private GridManager gridManager;
 
     public enum State
     {
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         uiManager = ServiceManager.Get<UIManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
+        gridManager = ServiceManager.Get<GridManager>();
 
         InitPlayers();
         //TODO temporary, to bypass the start screen
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
         int placedPiece = playerPieceManager.PlacedPlayerPieceID();
         if (placedPiece >= 0)
         {
+            gridManager.SaveCurrentPiece(placedPiece);
             playerPieceManager.StopPlacement();
             RemovePieceFromPlayerData(placedPiece);
             SwitchState(SelectNextPlayer());

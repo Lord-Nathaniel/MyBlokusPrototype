@@ -21,7 +21,7 @@ public class PlayerPieceManager : MonoBehaviour
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
     private bool isFirstPlacedPiece = true;
-    private int playerNb = 2;
+    private int playerNb = 4;
     private int playerID = 1;
     private bool isPiecePlaced = false;
     private Color currentPlayerColor;
@@ -70,7 +70,7 @@ public class PlayerPieceManager : MonoBehaviour
         {
             if (isPiecePlaced)
             {
-                gridManager.RemovePlayerPiece(previousObjectIndex);
+                gridManager.RemoveTempPlayerPiece(previousObjectIndex);
             }
 
             selectedObjectRotation = 0;
@@ -108,12 +108,12 @@ public class PlayerPieceManager : MonoBehaviour
 
         if (isPiecePlaced)
         {
-            gridManager.RemovePlayerPiece(selectedObjectID);
+            gridManager.RemoveTempPlayerPiece(selectedObjectID);
         }
 
         previewManager.ModifyCursorOpacity();
 
-        gridManager.AddPlayerPiece(selectedObjectID, playerID, currentPlayerColor);
+        gridManager.AddTempPlayerPiece(selectedObjectID, playerID, currentPlayerColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
         if (isFirstPlacedPiece)
@@ -161,7 +161,6 @@ public class PlayerPieceManager : MonoBehaviour
     {
         isPiecePlaced = false;
         selectedObjectID = -1;
-        gridVisualization.SetActive(false);
         cellIndicatorParent.SetActive(false);
         previewManager.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;

@@ -196,7 +196,7 @@ public class UIManager : MonoBehaviour
         {
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
-            gridManager.RemovePlayerPiece(playerPieceID);
+            gridManager.RemoveTempPlayerPiece(playerPieceID);
             selectedButton = null;
         }
 
@@ -204,7 +204,7 @@ public class UIManager : MonoBehaviour
         {
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
-            gridManager.RemovePlayerPiece(playerPieceID);
+            gridManager.RemoveTempPlayerPiece(playerPieceID);
 
             playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
             selectedButton = button;
