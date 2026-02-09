@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     private List<Button> pieceButtons = new();
     private Button selectedButton;
     private Color currentPlayerColor;
+    private List<GameObject> remainingPlayerPieceSubzones = new();
+    private List<Dictionary<int, Image>> remainingPieceImagesPerPlayer = new();
 
     // Needed services
     private GameManager gameManager;
@@ -80,6 +82,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 1; i < playerColors.Count + 1; i++)
         {
+            Dictionary<int, Image> playerPieceImages = new();
             GameObject currentSubzone = Instantiate(playerPiecesSubzonePrefab, playerPieceImageZone.transform);
             currentSubzone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + i + " remaining pieces :";
             foreach (PlayerPieceSO playerPiece in database.playerPieces)
@@ -101,7 +104,11 @@ public class UIManager : MonoBehaviour
                 mat.SetTexture("_MainTexture", pieceTexture);
 
                 img.material = mat;
+
+                playerPieceImages.Add(playerPiece.ID, img);
             }
+            remainingPieceImagesPerPlayer.Add(playerPieceImages);
+            remainingPlayerPieceSubzones.Add(currentSubzone);
         }
     }
 
@@ -219,6 +226,28 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update the player pieces lists
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <param name="pieceID"></param>
+    /// <param name="score"></param>
+    public void UpdateRemainingPlayerPieceImages(int playerID, int pieceID, int score)
+    {
+        if (pieceID < 0)
+        {
+            remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " passed and have " + score + "pts.";
+        }
+        else
+        {
+            remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " score : " + score + " pts; remaining pieces :";
+            if (remainingPieceImagesPerPlayer[playerID].TryGetValue(pieceID, out Image img))
+            {
+                Destroy(img.gameObject);
+                remainingPieceImagesPerPlayer[playerID].Remove(pieceID);
+            }
+        }
+    }
 
     /// <summary>
     /// Show all UI elements needed for the start of the game.

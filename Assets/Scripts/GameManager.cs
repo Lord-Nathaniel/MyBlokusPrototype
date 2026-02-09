@@ -98,9 +98,10 @@ public class GameManager : MonoBehaviour
         int placedPiece = playerPieceManager.PlacedPlayerPieceID();
         if (placedPiece >= 0)
         {
+            RemovePieceFromPlayerData(placedPiece);
+            uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPiece, currentPlayers[currentPlayerID].score);
             gridManager.SaveCurrentPiece(placedPiece);
             playerPieceManager.StopPlacement();
-            RemovePieceFromPlayerData(placedPiece);
             SwitchState(SelectNextPlayer());
         }
     }
@@ -112,12 +113,14 @@ public class GameManager : MonoBehaviour
     public void PlayerPasses()
     {
         currentPlayers[currentPlayerID].isActive = false;
+        uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, -1, currentPlayers[currentPlayerID].score);
         SelectNextPlayer();
     }
 
     private void RemovePieceFromPlayerData(int pieceID)
     {
         currentPlayers[currentPlayerID].remainingPlayerPieces.Remove(pieceID);
+        currentPlayers[currentPlayerID].score += 5;
     }
 
     private State SelectNextPlayer()

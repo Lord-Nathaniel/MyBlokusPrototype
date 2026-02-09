@@ -344,7 +344,6 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// -IN- PlayerPieceManager from IsPlayerPiecePlaced() 
     /// </summary>
-
     public void SaveCurrentPiece(int playerID)
     {
         int playerPieceID = playerPieceSO.ID;
