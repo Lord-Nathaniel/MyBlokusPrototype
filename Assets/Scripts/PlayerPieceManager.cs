@@ -70,7 +70,7 @@ public class PlayerPieceManager : MonoBehaviour
         {
             if (isPiecePlaced)
             {
-                gridManager.RemoveTempPlayerPiece(previousObjectIndex);
+                gridManager.RemoveTempPlayerPiece();
             }
 
             selectedObjectRotation = 0;
@@ -108,7 +108,7 @@ public class PlayerPieceManager : MonoBehaviour
 
         if (isPiecePlaced)
         {
-            gridManager.RemoveTempPlayerPiece(selectedObjectID);
+            gridManager.RemoveTempPlayerPiece();
         }
 
         previewManager.ModifyCursorOpacity();

@@ -104,6 +104,10 @@ public class GameManager : MonoBehaviour
             playerPieceManager.StopPlacement();
             SwitchState(SelectNextPlayer());
         }
+        else
+        {
+            PlayerPasses();
+        }
     }
 
     /// <summary>
@@ -114,13 +118,13 @@ public class GameManager : MonoBehaviour
     {
         currentPlayers[currentPlayerID].isActive = false;
         uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, -1, currentPlayers[currentPlayerID].score);
-        SelectNextPlayer();
+        SwitchState(SelectNextPlayer());
     }
 
     private void RemovePieceFromPlayerData(int pieceID)
     {
         currentPlayers[currentPlayerID].remainingPlayerPieces.Remove(pieceID);
-        currentPlayers[currentPlayerID].score += 5;
+        currentPlayers[currentPlayerID].score += database.playerPieces[pieceID].pointValue;
     }
 
     private State SelectNextPlayer()

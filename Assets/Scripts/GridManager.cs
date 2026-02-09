@@ -330,9 +330,9 @@ public class GridManager : MonoBehaviour
     /// -IN- PlayerPieceManager from StartPlacement() and PlaceStructure()
     /// </summary>
     /// <param name="ID"></param>
-    public void RemoveTempPlayerPiece(int pieceID)
+    public void RemoveTempPlayerPiece()
     {
-        if (playerPieceSO == null && playerPieceSO != database.playerPieces[pieceID])
+        if (playerPieceSO == null)
             return;
 
         foreach (GameObject placedPiece in tempPlacedSquares)
@@ -347,7 +347,7 @@ public class GridManager : MonoBehaviour
     public void SaveCurrentPiece(int playerID)
     {
         int playerPieceID = playerPieceSO.ID;
-        RemoveTempPlayerPiece(playerPieceID);
+        RemoveTempPlayerPiece();
 
         foreach (Vector3Int square in squarePositions)
         {

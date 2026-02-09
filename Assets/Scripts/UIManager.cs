@@ -170,7 +170,27 @@ public class UIManager : MonoBehaviour
 
     private void OnClickPassAction(Button passButton)
     {
-        gameManager.PlayerPasses();
+        if (selectedButton == passButton)
+        {
+            Hide(selectedButton.transform.GetChild(0).gameObject);
+            selectedButton = null;
+        }
+
+        else if (selectedButton != null)
+        {
+            Hide(selectedButton.transform.GetChild(0).gameObject);
+            playerPieceManager.StopPlacement();
+            gridManager.RemoveTempPlayerPiece();
+
+            selectedButton = passButton;
+            Show(passButton.transform.GetChild(0).gameObject);
+        }
+
+        else
+        {
+            selectedButton = passButton;
+            Show(passButton.transform.GetChild(0).gameObject);
+        }
     }
 
     private Button GenerateNewPieceButton(Color playerColor, PlayerPieceSO playerPiece)
@@ -203,7 +223,7 @@ public class UIManager : MonoBehaviour
         {
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
-            gridManager.RemoveTempPlayerPiece(playerPieceID);
+            gridManager.RemoveTempPlayerPiece();
             selectedButton = null;
         }
 
@@ -211,7 +231,7 @@ public class UIManager : MonoBehaviour
         {
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
-            gridManager.RemoveTempPlayerPiece(playerPieceID);
+            gridManager.RemoveTempPlayerPiece();
 
             playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
             selectedButton = button;
@@ -237,6 +257,7 @@ public class UIManager : MonoBehaviour
         if (pieceID < 0)
         {
             remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " passed and have " + score + "pts.";
+            remainingPlayerPieceSubzones[playerID].transform.GetChild(2).gameObject.SetActive(true);
         }
         else
         {
