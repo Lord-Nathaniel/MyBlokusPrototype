@@ -33,6 +33,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("Player Three Settings")]
     [SerializeField] private Toggle playerThreeToggle;
+    [SerializeField] private GameObject playerThreeZone;
     [SerializeField] private Button playerThreeColorButton;
     [SerializeField] private Button playerThreeTextureButton;
     [SerializeField] private TMP_InputField playerThreeInputField;
@@ -41,6 +42,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("Player Four Settings")]
     [SerializeField] private Toggle playerFourToggle;
+    [SerializeField] private GameObject playerFourZone;
     [SerializeField] private Button playerFourColorButton;
     [SerializeField] private Button playerFourTextureButton;
     [SerializeField] private TMP_InputField playerFourInputField;
@@ -176,6 +178,24 @@ public class MenuManager : MonoBehaviour
     {
         Texture2D texture = playerTextures[textureID];
         Hide(playerOneTextureSelectZone);
+    }
+
+    public void TogglePlayerThree()
+    {
+        Toggle(playerThreeZone);
+    }
+
+    public void TogglePlayerFour()
+    {
+        Toggle(playerFourZone);
+    }
+
+    public void ToggleTextureButtons()
+    {
+        Toggle(playerOneTextureButton.transform.parent.gameObject);
+        Toggle(playerTwoTextureButton.transform.parent.gameObject);
+        Toggle(playerThreeTextureButton.transform.parent.gameObject);
+        Toggle(playerFourTextureButton.transform.parent.gameObject);
     }
 
     private void Show(GameObject toShow)

@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Player One name...
+  m_text: Enter Player Three name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4277,8 +4277,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1469892565}
   - {fileID: 198725733}
+  - {fileID: 1469892565}
   - {fileID: 1101195551}
   - {fileID: 799875985}
   - {fileID: 343433056}
@@ -4318,7 +4318,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1109863855}
   - {fileID: 191741735}
   - {fileID: 1826380564}
   - {fileID: 1028771277}
@@ -7467,11 +7466,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2092707788}
-  m_Father: {fileID: 617954884}
+  m_Father: {fileID: 1534982506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -216.9, y: 76.999985}
+  m_AnchoredPosition: {x: -216.9, y: -103.00003}
   m_SizeDelta: {x: 144.1021, y: 38.4628}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1109863856
@@ -7520,7 +7519,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1997346429}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: TogglePlayerFour
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1141376498
 GameObject:
@@ -9496,7 +9507,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1997346429}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: ToggleTextureButtons
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1358186852
 GameObject:
@@ -9897,7 +9920,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1997346429}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: TogglePlayerThree
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1475420974
 GameObject:
@@ -10273,6 +10308,7 @@ RectTransform:
   - {fileID: 1865512164}
   - {fileID: 1742276905}
   - {fileID: 599598910}
+  - {fileID: 1109863855}
   - {fileID: 617954884}
   - {fileID: 1349504902}
   m_Father: {fileID: 655827698}
@@ -10845,7 +10881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Player One name...
+  m_text: Enter Player Four name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13641,7 +13677,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Player One name...
+  m_text: Enter Player Two name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14427,7 +14463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
   gameButton: {fileID: 511368730}
   optionsButton: {fileID: 1650040639}
-  creditsButton: {fileID: 0}
+  creditsButton: {fileID: 321913259}
   quitButton: {fileID: 2019848052}
   gameZone: {fileID: 1534982505}
   gameStartButton: {fileID: 1937630475}
@@ -14444,12 +14480,14 @@ MonoBehaviour:
   playerTwoColorSelectZone: {fileID: 2135661083}
   playerTwoTextureSelectZone: {fileID: 1358186852}
   playerThreeToggle: {fileID: 1469892566}
+  playerThreeZone: {fileID: 599598909}
   playerThreeColorButton: {fileID: 1210636252}
   playerThreeTextureButton: {fileID: 180919433}
   playerThreeInputField: {fileID: 198725736}
   playerThreeColorSelectZone: {fileID: 343433055}
   playerThreeTextureSelectZone: {fileID: 549381262}
   playerFourToggle: {fileID: 1109863856}
+  playerFourZone: {fileID: 617954883}
   playerFourColorButton: {fileID: 666042555}
   playerFourTextureButton: {fileID: 1732140624}
   playerFourInputField: {fileID: 191741738}
