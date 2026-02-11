@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,21 +14,49 @@ public class MenuManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private GameObject gameZone;
     [SerializeField] private Button gameStartButton;
+    [SerializeField] private Material playerColorSwap;
+    [SerializeField] private Toggle textureToggle;
 
     [Header("Player One Settings")]
     [SerializeField] private Button playerOneColorButton;
     [SerializeField] private Button playerOneTextureButton;
-    [SerializeField] private InputField playerOneInputField;
+    [SerializeField] private TMP_InputField playerOneInputField;
     [SerializeField] private GameObject playerOneColorSelectZone;
     [SerializeField] private GameObject playerOneTextureSelectZone;
+
+    [Header("Player Two Settings")]
+    [SerializeField] private Button playerTwoColorButton;
+    [SerializeField] private Button playerTwoTextureButton;
+    [SerializeField] private TMP_InputField playerTwoInputField;
+    [SerializeField] private GameObject playerTwoColorSelectZone;
+    [SerializeField] private GameObject playerTwoTextureSelectZone;
+
+    [Header("Player Three Settings")]
+    [SerializeField] private Toggle playerThreeToggle;
+    [SerializeField] private Button playerThreeColorButton;
+    [SerializeField] private Button playerThreeTextureButton;
+    [SerializeField] private TMP_InputField playerThreeInputField;
+    [SerializeField] private GameObject playerThreeColorSelectZone;
+    [SerializeField] private GameObject playerThreeTextureSelectZone;
+
+    [Header("Player Four Settings")]
+    [SerializeField] private Toggle playerFourToggle;
+    [SerializeField] private Button playerFourColorButton;
+    [SerializeField] private Button playerFourTextureButton;
+    [SerializeField] private TMP_InputField playerFourInputField;
+    [SerializeField] private GameObject playerFourColorSelectZone;
+    [SerializeField] private GameObject playerFourTextureSelectZone;
 
     [Header("Options Settings")]
     [SerializeField] private GameObject optionsZone;
     [SerializeField] private Button optionsCloseButton;
 
-    private Color playerOneColor;
     private List<Color> playerColors = new();
     private List<Texture2D> playerTextures = new();
+    private Color playerOneColor;
+    private Color playerTwoColor;
+    private Color playerThreeColor;
+    private Color playerFourColor;
 
 
     private void Awake()
@@ -58,7 +87,7 @@ public class MenuManager : MonoBehaviour
 
         gameStartButton.onClick.AddListener(() =>
         {
-            //TODO
+            string value = playerOneInputField.text;
         });
 
         optionsButton.onClick.AddListener(() =>
@@ -104,6 +133,42 @@ public class MenuManager : MonoBehaviour
         Color color = playerColors[colorID];
         playerOneColor = color;
         playerOneColorButton.image.color = color;
+
+
+        playerOneTextureButton.image.material.color = color;
+
+        Debug.Log(playerOneTextureSelectZone);
+        foreach (Button button in playerOneTextureSelectZone.GetComponentsInChildren<Button>())
+        {
+            Image img = button.GetComponent<Image>();
+
+            Debug.Log(img.material);
+            Debug.Log(img.material.shader.name);
+            Debug.Log(img.material.HasProperty("_PlayerColor"));
+
+            //Texture2D pieceTexture = img.sprite.texture;
+            //if (pieceTexture != null)
+            //{
+            //    img.sprite = Sprite.Create(
+            //        pieceTexture,
+            //        new Rect(0, 0, pieceTexture.width, pieceTexture.height),
+            //        new Vector2(0.5f, 0.5f)
+            //    );
+            //}
+
+            //Material mat = new Material(playerColorSwap);
+            //mat.SetColor("_PlayerColor", color);
+            //mat.SetTexture("_MainTex", pieceTexture);
+
+            //img.material = mat;
+
+            //Image img = button.GetComponent<Image>();
+
+            //if (img.material != null && img.material.HasProperty("_PlayerColor"))
+            //{
+            //    img.material.SetColor("_PlayerColor", color);
+            //}
+        }
         Hide(playerOneColorSelectZone);
     }
 

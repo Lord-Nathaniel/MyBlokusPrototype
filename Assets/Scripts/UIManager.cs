@@ -101,7 +101,7 @@ public class UIManager : MonoBehaviour
 
                 Material mat = new Material(playerColorSwap);
                 mat.SetColor("_PlayerColor", playerColors[i - 1]);
-                mat.SetTexture("_MainTexture", pieceTexture);
+                mat.SetTexture("_MainTex", pieceTexture);
 
                 img.material = mat;
 
@@ -201,8 +201,8 @@ public class UIManager : MonoBehaviour
         if (pieceTexture != null)
         {
             img.sprite = Sprite.Create(
-                playerPiece.miniature,
-                new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                pieceTexture,
+                new Rect(0, 0, pieceTexture.width, pieceTexture.height),
                 new Vector2(0.5f, 0.5f)
             );
         }
