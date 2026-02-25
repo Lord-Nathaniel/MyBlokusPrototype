@@ -152,51 +152,53 @@ public class MenuManager : MonoBehaviour
 
     public void SelectPlayerOneColor(int colorID)
     {
-        Color color = playerColors[colorID];
-        playerOneColor = color;
-        playerOneColorButton.image.color = color;
+        Debug.Log("Selected colorID: " + colorID);
+        //Color color = playerColors[colorID];
+        //playerOneColor = color;
+        //playerOneColorButton.image.color = color;
 
 
-        playerOneTextureButton.image.material.color = color;
+        //playerOneTextureButton.image.material.color = color;
 
-        Debug.Log(playerOneTextureSelectZone);
-        foreach (Button button in playerOneTextureSelectZone.GetComponentsInChildren<Button>())
-        {
-            Image img = button.GetComponent<Image>();
+        //Debug.Log(playerOneTextureSelectZone);
+        //foreach (Button button in playerOneTextureSelectZone.GetComponentsInChildren<Button>())
+        //{
+        //    Image img = button.GetComponent<Image>();
 
-            Debug.Log(img.material);
-            Debug.Log(img.material.shader.name);
-            Debug.Log(img.material.HasProperty("_PlayerColor"));
+        //    Debug.Log(img.material);
+        //    Debug.Log(img.material.shader.name);
+        //    Debug.Log(img.material.HasProperty("_PlayerColor"));
 
-            //Texture2D pieceTexture = img.sprite.texture;
-            //if (pieceTexture != null)
-            //{
-            //    img.sprite = Sprite.Create(
-            //        pieceTexture,
-            //        new Rect(0, 0, pieceTexture.width, pieceTexture.height),
-            //        new Vector2(0.5f, 0.5f)
-            //    );
-            //}
+        //    //Texture2D pieceTexture = img.sprite.texture;
+        //    //if (pieceTexture != null)
+        //    //{
+        //    //    img.sprite = Sprite.Create(
+        //    //        pieceTexture,
+        //    //        new Rect(0, 0, pieceTexture.width, pieceTexture.height),
+        //    //        new Vector2(0.5f, 0.5f)
+        //    //    );
+        //    //}
 
-            //Material mat = new Material(playerColorSwap);
-            //mat.SetColor("_PlayerColor", color);
-            //mat.SetTexture("_MainTex", pieceTexture);
+        //    //Material mat = new Material(playerColorSwap);
+        //    //mat.SetColor("_PlayerColor", color);
+        //    //mat.SetTexture("_MainTex", pieceTexture);
 
-            //img.material = mat;
+        //    //img.material = mat;
 
-            //Image img = button.GetComponent<Image>();
+        //    //Image img = button.GetComponent<Image>();
 
-            //if (img.material != null && img.material.HasProperty("_PlayerColor"))
-            //{
-            //    img.material.SetColor("_PlayerColor", color);
-            //}
-        }
+        //    //if (img.material != null && img.material.HasProperty("_PlayerColor"))
+        //    //{
+        //    //    img.material.SetColor("_PlayerColor", color);
+        //    //}
+        //}
         Hide(playerOneColorSelectZone);
     }
 
     public void SelectPlayerOneTexture(int textureID)
     {
-        Texture2D texture = cellTextures[textureID];
+        Debug.Log("Selected textureID: " + textureID);
+        //Texture2D texture = cellTextures[textureID];
         Hide(playerOneTextureSelectZone);
     }
 
