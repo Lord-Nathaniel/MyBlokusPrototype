@@ -17,7 +17,83 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 832424974c608e24c8ed3a8a38cf5536, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 123939201024
+    m_Localized: Jouer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206172725248
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292302757888
+    m_Localized: "Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 367481462784
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1193541246976
+    m_Localized: "Cr\xE9ez votre partie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1370972889088
+    m_Localized: "D\xE9marrer la partie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471548104704
+    m_Localized: Utiliser les textures
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1977284698112
+    m_Localized: Nom du Joueur Un
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2095543099392
+    m_Localized: Nom du Joueur Deux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2099057926144
+    m_Localized: Nom du Joueur Trois
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2102140739584
+    m_Localized: Nom du Joueur Quatre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3042075877376
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3265284153344
+    m_Localized: Fermer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3346020311040
+    m_Localized: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783985340416
+    m_Localized: Son
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3886083088384
+    m_Localized: Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016408502272
+    m_Localized: "Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4070607298560
+    m_Localized: Fermer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5398507167744
+    m_Localized: 'Langue : FR'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

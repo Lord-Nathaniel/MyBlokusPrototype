@@ -17,7 +17,83 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 832424974c608e24c8ed3a8a38cf5536, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 123939201024
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206172725248
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292302757888
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 367481462784
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1193541246976
+    m_Localized: Create your game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1370972889088
+    m_Localized: Start Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471548104704
+    m_Localized: Use Texture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1977284698112
+    m_Localized: Enter Player One name ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2095543099392
+    m_Localized: Enter Player Two name ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2099057926144
+    m_Localized: Enter Player Three name ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2102140739584
+    m_Localized: Enter Player Four name ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3042075877376
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3265284153344
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3346020311040
+    m_Localized: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3783985340416
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3886083088384
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016408502272
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4070607298560
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5398507167744
+    m_Localized: 'Language : EN'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

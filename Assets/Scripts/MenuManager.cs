@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -59,8 +60,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI soundValueText;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private TextMeshProUGUI musicValueText;
-
-
+    [SerializeField] private Button languageButton;
 
     private List<Color> playerColors = new();
     private List<Texture2D> playerTextures = new();
@@ -126,6 +126,16 @@ public class MenuManager : MonoBehaviour
         {
             Toggle(playerOneTextureSelectZone);
         });
+
+        languageButton.onClick.AddListener(() =>
+        {
+            ToggleLanguage();
+        });
+    }
+
+    private void ToggleLanguage()
+    {
+        throw new NotImplementedException();
     }
 
     private void OptionAction()
