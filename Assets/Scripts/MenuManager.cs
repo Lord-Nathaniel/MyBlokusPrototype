@@ -49,9 +49,18 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject playerFourColorSelectZone;
     [SerializeField] private GameObject playerFourTextureSelectZone;
 
+    [Header("Selectable Textures")]
+    [SerializeField] private List<Texture2D> cellTextures;
+
     [Header("Options Settings")]
     [SerializeField] private GameObject optionsZone;
     [SerializeField] private Button optionsCloseButton;
+    [SerializeField] private Slider soundSlider;
+    [SerializeField] private TextMeshProUGUI soundValueText;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private TextMeshProUGUI musicValueText;
+
+
 
     private List<Color> playerColors = new();
     private List<Texture2D> playerTextures = new();
@@ -73,7 +82,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        playerColors.Add(new Color(0.033f, 0, 1f));
+        playerColors.Add(new Color(0.8f, 0.8f, 0.8f));
+        //playerColors.Add(new Color(0.033f, 0, 1f));
         playerColors.Add(new Color(1f, 0, 0));
         playerColors.Add(new Color(1f, 1f, 0));
         playerColors.Add(new Color(0.5f, 0, 0.5f));
@@ -176,7 +186,7 @@ public class MenuManager : MonoBehaviour
 
     public void SelectPlayerOneTexture(int textureID)
     {
-        Texture2D texture = playerTextures[textureID];
+        Texture2D texture = cellTextures[textureID];
         Hide(playerOneTextureSelectZone);
     }
 
