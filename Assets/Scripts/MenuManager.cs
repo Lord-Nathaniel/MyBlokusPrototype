@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
@@ -68,7 +69,15 @@ public class MenuManager : MonoBehaviour
     private Color playerTwoColor;
     private Color playerThreeColor;
     private Color playerFourColor;
+    private int playerOneTextureId;
+    private int playerTwoTextureId;
+    private int playerThreeTextureId;
+    private int playerFourTextureId;
 
+    const string GAME_SCENE = "GameScene";
+
+    // Needed services
+    private PlayerSetup playerSetup;
 
     private void Awake()
     {
@@ -82,6 +91,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        playerSetup = ServiceManager.Get<PlayerSetup>();
+
         playerColors.Add(new Color(0.8f, 0.8f, 0.8f));
         //playerColors.Add(new Color(0.033f, 0, 1f));
         playerColors.Add(new Color(1f, 0, 0));
@@ -99,7 +110,7 @@ public class MenuManager : MonoBehaviour
 
         gameStartButton.onClick.AddListener(() =>
         {
-            string value = playerOneInputField.text;
+            StartGameAction();
         });
 
         optionsButton.onClick.AddListener(() =>
@@ -131,6 +142,23 @@ public class MenuManager : MonoBehaviour
         {
             ToggleLanguage();
         });
+    }
+
+    private void StartGameAction()
+    {
+        string playerOneName = playerOneInputField.text;
+        string playerTwoName = playerTwoInputField.text;
+        string playerThreeName = playerThreeInputField.text;
+        string playerFourName = playerFourInputField.text;
+
+        playerSetup.AddPlayerSetting(0, playerOneName, playerOneColor, playerOneTextureId);
+        playerSetup.AddPlayerSetting(1, playerTwoName, playerTwoColor, playerTwoTextureId);
+        if (playerThreeToggle.isOn)
+            playerSetup.AddPlayerSetting(2, playerThreeName, playerThreeColor, playerThreeTextureId);
+        if (playerFourToggle.isOn)
+            playerSetup.AddPlayerSetting(3, playerFourName, playerFourColor, playerFourTextureId);
+
+        SceneManager.LoadScene(GAME_SCENE);
     }
 
     private void ToggleLanguage()
