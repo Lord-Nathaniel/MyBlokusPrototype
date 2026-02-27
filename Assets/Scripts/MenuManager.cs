@@ -1,7 +1,8 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -63,6 +64,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI musicValueText;
     [SerializeField] private Button languageButton;
 
+    [Header("Credits Settings")]
+    [SerializeField] private GameObject creditsZone;
+    [SerializeField] private Button creditsCloseButton;
+
     private List<Color> playerColors = new();
     private List<Texture2D> playerTextures = new();
     private Color playerOneColor;
@@ -123,6 +128,16 @@ public class MenuManager : MonoBehaviour
             Hide(optionsZone);
         });
 
+        creditsButton.onClick.AddListener(() =>
+        {
+            CreditsAction();
+        });
+
+        creditsCloseButton.onClick.AddListener(() =>
+        {
+            Hide(creditsZone);
+        });
+
         quitButton.onClick.AddListener(() =>
         {
             Application.Quit();
@@ -161,20 +176,39 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(GAME_SCENE);
     }
 
-    private void ToggleLanguage()
+    public void ToggleLanguage()
     {
-        throw new NotImplementedException();
+        List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
+
+        if (locales.Count == 0)
+            return;
+
+        Locale currentLocale = LocalizationSettings.SelectedLocale;
+        int currentIndex = locales.IndexOf(currentLocale);
+
+        int nextIndex = (currentIndex + 1) % locales.Count;
+
+        LocalizationSettings.SelectedLocale = locales[nextIndex];
+    }
+
+    private void CreditsAction()
+    {
+        Hide(gameZone);
+        Hide(optionsZone);
+        Toggle(creditsZone);
     }
 
     private void OptionAction()
     {
         Hide(gameZone);
+        Hide(creditsZone);
         Toggle(optionsZone);
     }
 
     private void GameAction()
     {
         Hide(optionsZone);
+        Hide(creditsZone);
         Toggle(gameZone);
     }
 
