@@ -78,6 +78,7 @@ public class MenuManager : MonoBehaviour
     private int playerTwoTextureId;
     private int playerThreeTextureId;
     private int playerFourTextureId;
+    private int currentLanguageIndex;
 
     const string GAME_SCENE = "GameScene";
 
@@ -174,7 +175,9 @@ public class MenuManager : MonoBehaviour
         if (playerFourToggle.isOn)
             playerSetup.AddPlayerSetting(3, playerFourName, playerFourColor, playerFourTextureId);
 
-        playerSetup.AddOptionsSetting(8, 8, 1);
+        playerSetup.AddOptionsSetting(soundSlider.GetComponent<Slider>().value,
+                                      musicSlider.GetComponent<Slider>().value,
+                                      currentLanguageIndex);
 
         SceneManager.LoadScene(GAME_SCENE);
     }
@@ -187,9 +190,9 @@ public class MenuManager : MonoBehaviour
             return;
 
         Locale currentLocale = LocalizationSettings.SelectedLocale;
-        int currentIndex = locales.IndexOf(currentLocale);
+        currentLanguageIndex = locales.IndexOf(currentLocale);
 
-        int nextIndex = (currentIndex + 1) % locales.Count;
+        int nextIndex = (currentLanguageIndex + 1) % locales.Count;
 
         LocalizationSettings.SelectedLocale = locales[nextIndex];
     }
@@ -283,6 +286,16 @@ public class MenuManager : MonoBehaviour
         Toggle(playerTwoTextureButton.transform.parent.gameObject);
         Toggle(playerThreeTextureButton.transform.parent.gameObject);
         Toggle(playerFourTextureButton.transform.parent.gameObject);
+    }
+
+    public void UpdateSoundTextValue()
+    {
+        soundValueText.text = soundSlider.GetComponent<Slider>().value.ToString();
+    }
+
+    public void UpdateMusicTextValue()
+    {
+        musicValueText.text = musicSlider.GetComponent<Slider>().value.ToString();
     }
 
     private void Show(GameObject toShow)

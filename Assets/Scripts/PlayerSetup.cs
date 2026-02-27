@@ -29,7 +29,7 @@ public class PlayerSetup : MonoBehaviour
         playerSettings.Add(playerSetting);
     }
 
-    public void AddOptionsSetting(int soundVolume, int musicVolume, int languageIndex)
+    public void AddOptionsSetting(float soundVolume, float musicVolume, int languageIndex)
     {
         optionsSettings = new OptionsSettings(soundVolume, musicVolume, languageIndex);
     }
@@ -59,11 +59,11 @@ public class PlayerSetting
 /// </summary>
 public class OptionsSettings
 {
-    public int soundVolume { get; private set; }
-    public int musicVolume { get; private set; }
+    public float soundVolume { get; private set; }
+    public float musicVolume { get; private set; }
     public int languageIndex { get; private set; }
 
-    public OptionsSettings(int soundVolume, int musicVolume, int languageIndex)
+    public OptionsSettings(float soundVolume, float musicVolume, int languageIndex)
     {
         this.soundVolume = soundVolume;
         this.musicVolume = musicVolume;
