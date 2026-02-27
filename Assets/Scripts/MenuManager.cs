@@ -161,6 +161,7 @@ public class MenuManager : MonoBehaviour
 
     private void StartGameAction()
     {
+        //TODO complete with true values
         string playerOneName = playerOneInputField.text;
         string playerTwoName = playerTwoInputField.text;
         string playerThreeName = playerThreeInputField.text;
@@ -172,6 +173,8 @@ public class MenuManager : MonoBehaviour
             playerSetup.AddPlayerSetting(2, playerThreeName, playerThreeColor, playerThreeTextureId);
         if (playerFourToggle.isOn)
             playerSetup.AddPlayerSetting(3, playerFourName, playerFourColor, playerFourTextureId);
+
+        playerSetup.AddOptionsSetting(8, 8, 1);
 
         SceneManager.LoadScene(GAME_SCENE);
     }
