@@ -99,15 +99,17 @@ public class MenuManager : MonoBehaviour
     {
         playerSetup = ServiceManager.Get<PlayerSetup>();
 
-        playerColors.Add(new Color(0.8f, 0.8f, 0.8f));
-        //playerColors.Add(new Color(0.033f, 0, 1f));
-        playerColors.Add(new Color(1f, 0, 0));
-        playerColors.Add(new Color(1f, 1f, 0));
+        playerColors.Add(new Color(0.24f, 0.24f, 0.73f));
+        playerColors.Add(new Color(0.73f, 0.06f, 0.06f));
+        playerColors.Add(new Color(1f, 0.75f, 0));
         playerColors.Add(new Color(0.5f, 0, 0.5f));
         playerColors.Add(new Color(0.2f, 0.8f, 0.2f));
-        playerColors.Add(new Color(1f, 0.633f, 0));
-        playerColors.Add(new Color(0, 1f, 1f));
+        playerColors.Add(new Color(0.24f, 0.79f, 0.88f));
         playerColors.Add(new Color(1f, 0.42f, 0.71f));
+        playerColors.Add(new Color(.6f, 0.6f, 0.6f));
+
+        SelectPlayerOneColor(1);
+        SelectPlayerOneTexture(0);
 
         gameButton.onClick.AddListener(() =>
         {
@@ -221,52 +223,43 @@ public class MenuManager : MonoBehaviour
     public void SelectPlayerOneColor(int colorID)
     {
         Debug.Log("Selected colorID: " + colorID);
-        //Color color = playerColors[colorID];
-        //playerOneColor = color;
-        //playerOneColorButton.image.color = color;
+        Color color = playerColors[colorID];
+        playerOneColor = color;
 
+        Graphic playerOneColorButtonGraphic = playerOneColorButton.GetComponent<Graphic>();
+        Material baseMat = playerOneColorButtonGraphic.materialForRendering;
+        Material playerOneColorButtonMaterial = new Material(baseMat);
+        playerOneColorButtonMaterial.color = playerOneColor;
+        playerOneColorButtonGraphic.material = playerOneColorButtonMaterial;
 
-        //playerOneTextureButton.image.material.color = color;
+        Graphic playerOneTextureButtonGraphic = playerOneTextureButton.GetComponent<Graphic>();
 
-        //Debug.Log(playerOneTextureSelectZone);
-        //foreach (Button button in playerOneTextureSelectZone.GetComponentsInChildren<Button>())
-        //{
-        //    Image img = button.GetComponent<Image>();
+        Material runtimeMaterialInstance = new Material(playerColorSwap);
+        runtimeMaterialInstance.SetColor("_PlayerColor", color);
+        playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
 
-        //    Debug.Log(img.material);
-        //    Debug.Log(img.material.shader.name);
-        //    Debug.Log(img.material.HasProperty("_PlayerColor"));
+        for (int i = 0; i < playerOneTextureSelectZone.transform.childCount; i++)
+        {
+            Graphic graphic = playerOneTextureSelectZone.transform.GetChild(i).gameObject.GetComponent<Graphic>();
 
-        //    //Texture2D pieceTexture = img.sprite.texture;
-        //    //if (pieceTexture != null)
-        //    //{
-        //    //    img.sprite = Sprite.Create(
-        //    //        pieceTexture,
-        //    //        new Rect(0, 0, pieceTexture.width, pieceTexture.height),
-        //    //        new Vector2(0.5f, 0.5f)
-        //    //    );
-        //    //}
-
-        //    //Material mat = new Material(playerColorSwap);
-        //    //mat.SetColor("_PlayerColor", color);
-        //    //mat.SetTexture("_MainTex", pieceTexture);
-
-        //    //img.material = mat;
-
-        //    //Image img = button.GetComponent<Image>();
-
-        //    //if (img.material != null && img.material.HasProperty("_PlayerColor"))
-        //    //{
-        //    //    img.material.SetColor("_PlayerColor", color);
-        //    //}
-        //}
+            Material runtimeMaterialInstanceTex = new Material(playerColorSwap);
+            runtimeMaterialInstanceTex.SetColor("_PlayerColor", color);
+            graphic.material = runtimeMaterialInstanceTex;
+        }
         Hide(playerOneColorSelectZone);
     }
 
     public void SelectPlayerOneTexture(int textureID)
     {
-        Debug.Log("Selected textureID: " + textureID);
-        //Texture2D texture = cellTextures[textureID];
+        playerOneTextureId = textureID;
+        Texture2D selectedTexture = cellTextures[textureID];
+
+        Graphic playerOneTextureButtonGraphic = playerOneTextureButton.GetComponent<Graphic>();
+
+        Material runtimeMaterialInstance = new Material(playerColorSwap);
+        runtimeMaterialInstance.SetColor("_PlayerColor", playerOneColor);
+        runtimeMaterialInstance.SetTexture("_MainTex", selectedTexture);
+        playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
         Hide(playerOneTextureSelectZone);
     }
 
