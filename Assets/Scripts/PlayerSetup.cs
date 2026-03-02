@@ -65,9 +65,9 @@ public class PlayerSetup : MonoBehaviour
         if (scene.isLoaded)
         {
             Debug.Log(string.Format("Scene {0} loaded with mode {1}", scene, mode));
-            Debug.Log(string.Format("{0} Player Settings found.", playerSettings.Count));
-            if (playerSettings.Count > 0)
+            if (playerSettings != null)
             {
+                Debug.Log(string.Format("{0} Player Settings found.", playerSettings.Count));
                 for (int i = 0; i < playerSettings.Count; i++)
                 {
                     Debug.Log(string.Format("Player ID: {0} | name: {1} | color: {2} | textureID: {3}",
