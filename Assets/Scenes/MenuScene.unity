@@ -1571,7 +1571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a7586351369428347b0fe594ccc28812, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5093,7 +5093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5101,7 +5101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a7586351369428347b0fe594ccc28812, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5481,7 +5481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0, b: 0.5019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10119,7 +10119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12473,7 +12473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1534982506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14433,7 +14433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -14441,7 +14441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a7586351369428347b0fe594ccc28812, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17226,7 +17226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17555,30 +17555,35 @@ MonoBehaviour:
   gameStartButton: {fileID: 1937630475}
   playerColorSwap: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
   textureToggle: {fileID: 1349504903}
-  playerOneColorButton: {fileID: 817410283}
-  playerOneTextureButton: {fileID: 1947666411}
-  playerOneInputField: {fileID: 917938986}
-  playerOneColorSelectZone: {fileID: 537687240}
-  playerOneTextureSelectZone: {fileID: 542453057}
-  playerTwoColorButton: {fileID: 1960439339}
-  playerTwoTextureButton: {fileID: 637056449}
-  playerTwoInputField: {fileID: 1683188706}
-  playerTwoColorSelectZone: {fileID: 2135661083}
-  playerTwoTextureSelectZone: {fileID: 1358186852}
+  playerColorButtons:
+  - {fileID: 817410283}
+  - {fileID: 1960439339}
+  - {fileID: 1210636252}
+  - {fileID: 666042555}
+  playerTextureButtons:
+  - {fileID: 1947666411}
+  - {fileID: 637056449}
+  - {fileID: 180919433}
+  - {fileID: 1732140624}
+  playerInputFields:
+  - {fileID: 917938986}
+  - {fileID: 1683188706}
+  - {fileID: 198725736}
+  - {fileID: 191741738}
+  playerColorSelectZones:
+  - {fileID: 537687240}
+  - {fileID: 2135661083}
+  - {fileID: 343433055}
+  - {fileID: 1974230368}
+  playerTextureSelectZones:
+  - {fileID: 542453057}
+  - {fileID: 1358186852}
+  - {fileID: 549381262}
+  - {fileID: 1760818626}
   playerThreeToggle: {fileID: 1469892566}
   playerThreeZone: {fileID: 599598909}
-  playerThreeColorButton: {fileID: 1210636252}
-  playerThreeTextureButton: {fileID: 180919433}
-  playerThreeInputField: {fileID: 198725736}
-  playerThreeColorSelectZone: {fileID: 343433055}
-  playerThreeTextureSelectZone: {fileID: 549381262}
   playerFourToggle: {fileID: 1109863856}
   playerFourZone: {fileID: 617954883}
-  playerFourColorButton: {fileID: 666042555}
-  playerFourTextureButton: {fileID: 1732140624}
-  playerFourInputField: {fileID: 191741738}
-  playerFourColorSelectZone: {fileID: 1974230368}
-  playerFourTextureSelectZone: {fileID: 1760818626}
   cellTextures:
   - {fileID: 2800000, guid: a7586351369428347b0fe594ccc28812, type: 3}
   - {fileID: 2800000, guid: dc75cc1166102b148a337167accdeaf0, type: 3}
