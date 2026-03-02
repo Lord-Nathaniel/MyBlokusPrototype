@@ -56,7 +56,9 @@ public class MenuManager : MonoBehaviour
 
     private int maxPlayerNb = 4;
 
-    private List<Color> playerColors = new();
+    private List<Color> cellColors = new();
+
+    private List<int> playerColors = new();
     private List<int> playerTextureIds = new();
     private int currentLanguageIndex;
 
@@ -79,14 +81,14 @@ public class MenuManager : MonoBehaviour
     {
         playerSetup = ServiceManager.Get<PlayerSetup>();
 
-        playerColors.Add(new Color(0.24f, 0.24f, 0.73f));
-        playerColors.Add(new Color(0.73f, 0.06f, 0.06f));
-        playerColors.Add(new Color(1f, 0.75f, 0));
-        playerColors.Add(new Color(0.5f, 0, 0.5f));
-        playerColors.Add(new Color(0.2f, 0.8f, 0.2f));
-        playerColors.Add(new Color(0.24f, 0.79f, 0.88f));
-        playerColors.Add(new Color(1f, 0.42f, 0.71f));
-        playerColors.Add(new Color(0.6f, 0.6f, 0.6f));
+        cellColors.Add(new Color(0.24f, 0.24f, 0.73f));
+        cellColors.Add(new Color(0.73f, 0.06f, 0.06f));
+        cellColors.Add(new Color(1f, 0.75f, 0));
+        cellColors.Add(new Color(0.5f, 0, 0.5f));
+        cellColors.Add(new Color(0.2f, 0.8f, 0.2f));
+        cellColors.Add(new Color(0.24f, 0.79f, 0.88f));
+        cellColors.Add(new Color(1f, 0.42f, 0.71f));
+        cellColors.Add(new Color(0.6f, 0.6f, 0.6f));
 
         for (int i = 0; i < maxPlayerNb; i++)
         {
@@ -137,6 +139,9 @@ public class MenuManager : MonoBehaviour
     private void SetPlayerMenu(int i)
     {
         int index = i;
+        playerColors.Add(index);
+        playerTextureIds.Add(0);
+
         SelectPlayerColor(index, index);
         SelectPlayerTexture(index, 0);
 
@@ -150,31 +155,33 @@ public class MenuManager : MonoBehaviour
             Toggle(playerTextureSelectZones[index]);
         });
 
-        for (int j = 0; j < playerColors.Count; j++)
+        for (int j = 0; j < cellColors.Count; j++)
         {
+            int colorIndex = j;
             playerColorSelectZones[index].transform.GetChild(j).GetComponent<Button>().onClick.AddListener(() =>
             {
-                SelectPlayerColor(index, j);
+                SelectPlayerColor(index, colorIndex);
             });
         }
 
         for (int k = 0; k < cellTextures.Count; k++)
         {
+            int textureIndex = k;
             playerTextureSelectZones[index].transform.GetChild(k).GetComponent<Button>().onClick.AddListener(() =>
             {
-                SelectPlayerTexture(index, k);
+                SelectPlayerTexture(index, textureIndex);
             });
         }
     }
 
     private void StartGameAction()
     {
-        playerSetup.AddPlayerSetting(0, playerInputFields[0].text, playerColors[0], playerTextureIds[0]);
-        playerSetup.AddPlayerSetting(1, playerInputFields[1].text, playerColors[1], playerTextureIds[1]);
+        playerSetup.AddPlayerSetting(0, playerInputFields[0].text, cellColors[playerColors[0]], playerTextureIds[0]);
+        playerSetup.AddPlayerSetting(1, playerInputFields[1].text, cellColors[playerColors[1]], playerTextureIds[1]);
         if (playerThreeToggle.isOn)
-            playerSetup.AddPlayerSetting(2, playerInputFields[2].text, playerColors[2], playerTextureIds[2]);
+            playerSetup.AddPlayerSetting(2, playerInputFields[2].text, cellColors[playerColors[2]], playerTextureIds[2]);
         if (playerFourToggle.isOn)
-            playerSetup.AddPlayerSetting(1, playerInputFields[3].text, playerColors[3], playerTextureIds[3]);
+            playerSetup.AddPlayerSetting(1, playerInputFields[3].text, cellColors[playerColors[3]], playerTextureIds[3]);
 
         playerSetup.AddOptionsSetting(soundSlider.GetComponent<Slider>().value,
                                       musicSlider.GetComponent<Slider>().value,
@@ -224,19 +231,20 @@ public class MenuManager : MonoBehaviour
 
     private void SelectPlayerColor(int playerId, int colorID)
     {
-        Color color = playerColors[colorID];
-        playerColors[playerId] = color;
+        Color color = cellColors[colorID];
+        playerColors[playerId] = colorID;
 
         Graphic playerOneColorButtonGraphic = playerColorButtons[playerId].GetComponent<Graphic>();
         Material baseMat = playerOneColorButtonGraphic.materialForRendering;
         Material playerOneColorButtonMaterial = new Material(baseMat);
-        playerOneColorButtonMaterial.color = playerColors[playerId];
+        playerOneColorButtonMaterial.color = color;
         playerOneColorButtonGraphic.material = playerOneColorButtonMaterial;
 
         Graphic playerOneTextureButtonGraphic = playerTextureButtons[playerId].GetComponent<Graphic>();
 
         Material runtimeMaterialInstance = new Material(playerColorSwap);
         runtimeMaterialInstance.SetColor("_PlayerColor", color);
+        runtimeMaterialInstance.SetTexture("_MainTex", cellTextures[playerTextureIds[playerId]]);
         playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
 
         for (int i = 0; i < playerTextureSelectZones[playerId].transform.childCount; i++)
@@ -245,6 +253,7 @@ public class MenuManager : MonoBehaviour
 
             Material runtimeMaterialInstanceTex = new Material(playerColorSwap);
             runtimeMaterialInstanceTex.SetColor("_PlayerColor", color);
+            runtimeMaterialInstanceTex.SetTexture("_MainTex", cellTextures[playerTextureIds[playerId]]);
             graphic.material = runtimeMaterialInstanceTex;
         }
         Hide(playerColorSelectZones[playerId]);
@@ -252,13 +261,13 @@ public class MenuManager : MonoBehaviour
 
     private void SelectPlayerTexture(int playerId, int textureID)
     {
-        playerTextureIds.Add(textureID);
         Texture2D selectedTexture = cellTextures[textureID];
+        playerTextureIds[playerId] = textureID;
 
         Graphic playerOneTextureButtonGraphic = playerTextureButtons[playerId].GetComponent<Graphic>();
 
         Material runtimeMaterialInstance = new Material(playerColorSwap);
-        runtimeMaterialInstance.SetColor("_PlayerColor", playerColors[playerId]);
+        runtimeMaterialInstance.SetColor("_PlayerColor", cellColors[playerId]);
         runtimeMaterialInstance.SetTexture("_MainTex", selectedTexture);
         playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
         Hide(playerTextureSelectZones[playerId]);
