@@ -5,7 +5,7 @@ using UnityEngine;
 /// This class manages the preview attached to the player cursor.
 /// Actions only changes the preview attached to the cursor and have no gameplay interaction.
 /// -IN- PlayerPieceManager
-/// -OUT- InputManager
+/// -OUT- InputManager | PlayerPieceManager
 /// </summary>
 public class PreviewManager : MonoBehaviour
 {
@@ -17,9 +17,11 @@ public class PreviewManager : MonoBehaviour
     private PlayerPieceSO playerPieceSO;
     [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
     private Color playerColor;
+    private Vector3Int lastDetectedGridPosition = Vector3Int.zero;
 
     // Needed services
     private InputManager inputManager;
+    private PlayerPieceManager playerPieceManager;
 
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class PreviewManager : MonoBehaviour
     private void Start()
     {
         inputManager = ServiceManager.Get<InputManager>();
+        playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
 
         cellIndicatorParent.SetActive(false);
     }
@@ -48,10 +51,10 @@ public class PreviewManager : MonoBehaviour
         this.playerColor = playerColor;
         cellIndicatorParent.SetActive(true);
         playerPieceSO = database.playerPieces[ID];
-        cursorPreview(playerPieceSO.squares, playerPieceSO.corners);
+        StartCursorPreview(playerPieceSO.squares, playerPieceSO.corners);
     }
 
-    private void cursorPreview(List<Vector2Int> squares, List<Vector2Int> corners)
+    private void StartCursorPreview(List<Vector2Int> squares, List<Vector2Int> corners)
     {
         ResetCursorPreview();
 
@@ -113,6 +116,17 @@ public class PreviewManager : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// -IN- PlayerPieceManager from PlaceStructure()
+    /// </summary>
+    public void ModifyCursorColor()
+    {
+        //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
+        //{
+        //    cursorSquare.transform.GetChild(0).gameObject.SetActive(true);
+        //}
+    }
+
     public void StopShowingPreview()
     {
         ResetCursorPreview();
@@ -128,5 +142,14 @@ public class PreviewManager : MonoBehaviour
         cellIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,
                                                              cellIndicatorParentYOffset,
                                                              grid.CellToWorld(gridPosition).z);
+
+        if (lastDetectedGridPosition != gridPosition)
+        {
+            lastDetectedGridPosition = gridPosition;
+            if (!playerPieceManager.CheckPlacementValidity(mousePosition))
+            {
+                ModifyCursorColor();
+            }
+        }
     }
 }

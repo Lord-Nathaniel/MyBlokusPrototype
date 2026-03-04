@@ -99,7 +99,7 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
 
-        bool placementValidity = CheckPlacementValidity(mousePosition, selectedObjectID, selectedObjectRotation, isSelectedObjectMirrored, isFirstPlacedPiece);
+        bool placementValidity = CheckPlacementValidity(mousePosition);
         if (!placementValidity)
         {
             //soundManager.PlaySound(SoundType.WrongPlacement);
@@ -120,10 +120,14 @@ public class PlayerPieceManager : MonoBehaviour
             isFirstPlacedPiece = false;
     }
 
-    private bool CheckPlacementValidity(Vector3 mousePosition, int selectedObjectIndex, int selectedObjectRotation, bool isSelectedObjectMirrored, bool isFirstPlacedPiece)
+    /// <summary>
+    /// Thi helps to rememeber the current state of piece rotation.
+    /// -IN- PreviewManager from Update()
+    /// </summary>
+    public bool CheckPlacementValidity(Vector3 mousePosition)
     {
         return gridManager.CanPlaceObjectAt(mousePosition,
-                                            database.playerPieces[selectedObjectIndex].ID,
+                                            database.playerPieces[selectedObjectID].ID,
                                             selectedObjectRotation,
                                             isSelectedObjectMirrored,
                                             isFirstPlacedPiece);
