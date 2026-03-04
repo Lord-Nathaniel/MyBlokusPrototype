@@ -18,6 +18,7 @@ public class PreviewManager : MonoBehaviour
     [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
     private Color playerColor;
     private Vector3Int lastDetectedGridPosition = Vector3Int.zero;
+    private bool isPlayerColor = true;
 
     // Needed services
     private InputManager inputManager;
@@ -119,12 +120,15 @@ public class PreviewManager : MonoBehaviour
     /// <summary>
     /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
-    public void ModifyCursorColor()
+    public void ModifyCursorColor(Color color)
     {
-        //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
-        //{
-        //    cursorSquare.transform.GetChild(0).gameObject.SetActive(true);
-        //}
+        Transform preview = cellIndicatorParent.transform.GetChild(0);
+        for (int i = 0; i < preview.childCount; i++)
+        {
+            GameObject square = preview.GetChild(i).gameObject;
+            Renderer squareRenderer = square.GetComponentInChildren<Renderer>();
+            squareRenderer.material.SetColor("_PlayerColor", color);
+        }
     }
 
     public void StopShowingPreview()
@@ -148,7 +152,13 @@ public class PreviewManager : MonoBehaviour
             lastDetectedGridPosition = gridPosition;
             if (!playerPieceManager.CheckPlacementValidity(mousePosition))
             {
-                ModifyCursorColor();
+                ModifyCursorColor(Color.red);
+                isPlayerColor = false;
+            }
+            else if (!isPlayerColor)
+            {
+                ModifyCursorColor(playerColor);
+                isPlayerColor = true;
             }
         }
     }
