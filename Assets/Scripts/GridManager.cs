@@ -8,21 +8,22 @@ using UnityEngine;
 /// </summary>
 public class GridManager : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    public int gridLenght;
-    public int gridHeight;
-
     [Header("Cell Size")]
     [SerializeField] private float cellLenght;
     [SerializeField] private float cellHeight;
 
     [Header("Grid Management")]
     [SerializeField] private GameObject gridParent;
+    [SerializeField] private GameObject gridVisualsSmall;
+    [SerializeField] private GameObject gridVisualsLarge;
     [SerializeField] private PlayerPieceDataSO database;
 
     [Header("Cell rendering")]
     [SerializeField] private Texture2D placedPieceTexture;
     [SerializeField] private Material playerColorSwap;
+
+    private int gridLenght;
+    private int gridHeight;
 
     private PlayerPieceSO playerPieceSO;
     private List<Vector3Int> squarePositions;
@@ -41,15 +42,6 @@ public class GridManager : MonoBehaviour
     private void OnDestroy()
     {
         ServiceManager.Unregister<GameManager>();
-    }
-
-    private void Start()
-    {
-        gridOrigin = new Vector3(
-            -(gridLenght * cellLenght) / 2f,
-            0,
-            -(gridHeight * cellHeight) / 2f
-        );
     }
 
     private List<Vector3Int> CalculateGridPositions(Vector3Int gridPosition, List<Vector2Int> objectCells)
@@ -96,12 +88,12 @@ public class GridManager : MonoBehaviour
 
 
         // RULE 1 : No out-of-bound piece
-        //if (IsAnySquareOutOfBound(squarePositions))
-        //{
-        //    Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
-        //    return false;
-        //}
-        //
+        if (IsAnySquareOutOfBound(squarePositions))
+        {
+            Debug.Log("Placement Rule 1 broken : no out-of-boud piece !");
+            return false;
+        }
+
         //// RULE 2 : First piece must be placed on starting cell
         //if (isFirstPlacedPiece && IsFirstPieceNotOnStartCell(squarePositions))
         //{
@@ -271,13 +263,17 @@ public class GridManager : MonoBehaviour
     /// -IN- PlayerPieceManager from Start()
     /// </summary>
     /// <param name="playerNb"></param>
-    public void PlaceStartCell(int playerNb)
+    public void InitGridVisuals(int playerNb)
     {
         List<Vector3Int> startPositions = new();
         if (playerNb == 2)
         {
             placedSquares.Add(new Vector3Int(4, 0, 4), new CellData(-10, -1));
             placedSquares.Add(new Vector3Int(9, 0, 9), new CellData(-10, -1));
+            gridLenght = 14;
+            gridHeight = 14;
+            gridVisualsSmall.SetActive(true);
+            gridVisualsLarge.SetActive(false);
         }
         else
         {
@@ -285,7 +281,17 @@ public class GridManager : MonoBehaviour
             placedSquares.Add(new Vector3Int(0, 0, 19), new CellData(-10, -1));
             placedSquares.Add(new Vector3Int(19, 0, 0), new CellData(-10, -1));
             placedSquares.Add(new Vector3Int(19, 0, 19), new CellData(-10, -1));
+            gridLenght = 20;
+            gridHeight = 20;
+            gridVisualsSmall.SetActive(false);
+            gridVisualsLarge.SetActive(true);
         }
+        gridOrigin = new Vector3(
+            -(gridLenght * cellLenght) / 2f,
+            0,
+            -(gridHeight * cellHeight) / 2f
+        );
+
         PlaceStartingCellOnGrid();
     }
 
