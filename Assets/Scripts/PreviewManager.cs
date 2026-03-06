@@ -13,7 +13,6 @@ public class PreviewManager : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private Grid grid;
 
-    private GameObject previewObject;
     private PlayerPieceSO playerPieceSO;
     [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
     private Color playerColor;
@@ -84,6 +83,7 @@ public class PreviewManager : MonoBehaviour
         }
         cellIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
         cellIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        cellIndicatorParent.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     /// <summary>
