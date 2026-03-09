@@ -144,8 +144,13 @@ public class GridManager : MonoBehaviour
             touchingSquares.Add(new Vector3Int(square.x, 0, square.z - 1));
             touchingSquares.Add(new Vector3Int(square.x, 0, square.z + 1));
 
-            if (IsAnySquareOnAlreadyPlacedCell(touchingSquares, playerID))
-                return true;
+            foreach (Vector3Int touchingSquare in touchingSquares)
+            {
+                if (placedSquares.TryGetValue(touchingSquare, out CellData cell) && cell.PlayerID == playerID)
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -158,8 +163,6 @@ public class GridManager : MonoBehaviour
             {
                 return false;
             }
-            if (cell != null)
-                Debug.Log("Cell value : " + cell.PlayerID + "for corner : " + corner);
         }
         return true;
     }
