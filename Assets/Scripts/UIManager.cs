@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     private List<Button> pieceButtons = new();
     private Button selectedButton;
     private Color currentPlayerColor;
+    private int currentPlayerID;
     private List<GameObject> remainingPlayerPieceSubzones = new();
     private List<Dictionary<int, Image>> remainingPieceImagesPerPlayer = new();
 
@@ -116,9 +117,10 @@ public class UIManager : MonoBehaviour
     /// Spawn all player piece button and a pass buttons in the player zone.
     /// -IN- GameManager from SwitchState()
     /// </summary>
-    public void GeneratePlayerPieceButtons(Color playerColor, List<int> remainingPlayerPieces)
+    public void GeneratePlayerPieceButtons(Color playerColor, List<int> remainingPlayerPieces, int playerID)
     {
         currentPlayerColor = playerColor;
+        currentPlayerID = playerID;
         if (zone.transform.childCount > 0)
         {
             foreach (Transform child in zone.transform)
@@ -233,14 +235,13 @@ public class UIManager : MonoBehaviour
             playerPieceManager.StopPlacement();
             gridManager.RemoveTempPlayerPiece();
 
-            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
+            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor, currentPlayerID);
             selectedButton = button;
             Show(button.transform.GetChild(0).gameObject);
         }
-
         else
         {
-            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor);
+            playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor, currentPlayerID);
             selectedButton = button;
             Show(button.transform.GetChild(0).gameObject);
         }

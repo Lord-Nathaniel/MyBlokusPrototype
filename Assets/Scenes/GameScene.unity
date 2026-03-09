@@ -166,6 +166,8 @@ MonoBehaviour:
   cellLenght: 1
   cellHeight: 1
   gridParent: {fileID: 2039392020}
+  gridVisualsSmall: {fileID: 913354760}
+  gridVisualsLarge: {fileID: 1413473974}
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   placedPieceTexture: {fileID: 2800000, guid: a7586351369428347b0fe594ccc28812, type: 3}
   playerColorSwap: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
@@ -2305,7 +2307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1413473975
 Transform:
   m_ObjectHideFlags: 0

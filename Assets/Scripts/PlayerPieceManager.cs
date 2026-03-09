@@ -21,8 +21,9 @@ public class PlayerPieceManager : MonoBehaviour
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
     private bool isFirstPlacedPiece = true;
+    private int firstPlacedPieceNb = 0;
     private int playerNb = 4;
-    private int playerID = 1;
+    private int currentPlayerID;
     private bool isPiecePlaced = false;
     private Color currentPlayerColor;
 
@@ -56,8 +57,9 @@ public class PlayerPieceManager : MonoBehaviour
     /// State of the game where playerpiece preview is shown and other things disabbled when a player use the select button.
     /// </summary>
     /// <param name="pieceID"></param>
-    public void StartPlacement(int pieceID, Color playerColor)
+    public void StartPlacement(int pieceID, Color playerColor, int playerID)
     {
+        currentPlayerID = playerID;
         currentPlayerColor = playerColor;
         int previousObjectIndex = -1;
         if (selectedObjectID > -1)
@@ -113,15 +115,19 @@ public class PlayerPieceManager : MonoBehaviour
 
         previewManager.ModifyCursorOpacity();
 
-        gridManager.AddTempPlayerPiece(selectedObjectID, playerID, currentPlayerColor);
+        gridManager.AddTempPlayerPiece(selectedObjectID, currentPlayerID, currentPlayerColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
         if (isFirstPlacedPiece)
-            isFirstPlacedPiece = false;
+        {
+            firstPlacedPieceNb++;
+            if (firstPlacedPieceNb == playerNb)
+                isFirstPlacedPiece = false;
+        }
     }
 
     /// <summary>
-    /// Thi helps to rememeber the current state of piece rotation.
+    /// Thi helps to remember the current state of piece rotation.
     /// -IN- PreviewManager from Update()
     /// </summary>
     public bool CheckPlacementValidity(Vector3 mousePosition)
@@ -130,7 +136,8 @@ public class PlayerPieceManager : MonoBehaviour
                                             database.playerPieces[selectedObjectID].ID,
                                             selectedObjectRotation,
                                             isSelectedObjectMirrored,
-                                            isFirstPlacedPiece);
+                                            isFirstPlacedPiece,
+                                            currentPlayerID);
     }
 
 

@@ -95,12 +95,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void NextPlayerTurn()
     {
-        int placedPiece = playerPieceManager.PlacedPlayerPieceID();
-        if (placedPiece >= 0)
+        int placedPieceID = playerPieceManager.PlacedPlayerPieceID();
+        if (placedPieceID >= 0)
         {
-            RemovePieceFromPlayerData(placedPiece);
-            uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPiece, currentPlayers[currentPlayerID].score);
-            gridManager.SaveCurrentPiece(placedPiece);
+            RemovePieceFromPlayerData(placedPieceID);
+            uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPieceID, currentPlayers[currentPlayerID].score);
+            gridManager.SaveCurrentPiece(currentPlayerID);
             playerPieceManager.StopPlacement();
             SwitchState(SelectNextPlayer());
         }
@@ -164,7 +164,10 @@ public class GameManager : MonoBehaviour
 
             case State.PlayerTurn:
                 uiManager.HideStartScreen();
-                uiManager.GeneratePlayerPieceButtons(currentPlayers[currentPlayerID].playerColor, currentPlayers[currentPlayerID].remainingPlayerPieces);
+                uiManager.GeneratePlayerPieceButtons(
+                    currentPlayers[currentPlayerID].playerColor,
+                    currentPlayers[currentPlayerID].remainingPlayerPieces,
+                    currentPlayerID);
                 break;
 
             case State.EndGame:
