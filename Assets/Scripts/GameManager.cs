@@ -43,10 +43,10 @@ public class GameManager : MonoBehaviour
         uiManager = ServiceManager.Get<UIManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
         gridManager = ServiceManager.Get<GridManager>();
-        playerSetup = ServiceManager.Get<PlayerSetup>();
+        //playerSetup = ServiceManager.Get<PlayerSetup>();
 
-        InitPlayers();
-        //ProtoInitPlayers();
+        //InitPlayers();
+        ProtoInitPlayers();
         //TODO temporary, to bypass the start screen
         FirstPlayerTurn();
         //SwitchState(State.StartGame);
