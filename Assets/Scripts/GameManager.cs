@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int playerNb = 4;
+    [SerializeField] private int playerNb;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private readonly State state;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     private PlayerPieceManager playerPieceManager;
     private GridManager gridManager;
+    private PlayerSetup playerSetup;
 
     public enum State
     {
@@ -42,8 +43,10 @@ public class GameManager : MonoBehaviour
         uiManager = ServiceManager.Get<UIManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
         gridManager = ServiceManager.Get<GridManager>();
+        playerSetup = ServiceManager.Get<PlayerSetup>();
 
         InitPlayers();
+        //ProtoInitPlayers();
         //TODO temporary, to bypass the start screen
         FirstPlayerTurn();
         //SwitchState(State.StartGame);
@@ -51,6 +54,36 @@ public class GameManager : MonoBehaviour
 
     private void InitPlayers()
     {
+        List<PlayerSetting> playerSettings = playerSetup.playerSettings;
+        playerNb = playerSettings.Count;
+        currentPlayers = new List<PlayerData>(playerNb);
+        List<Color> currentPlayersColors = new List<Color>();
+
+        for (int i = 0; i < playerNb; i++)
+        {
+            List<int> playerPieces = new();
+            for (int j = 0; j < database.playerPieces.Count; j++)
+            {
+                playerPieces.Add(j);
+            }
+
+            currentPlayers.Add(new PlayerData(
+                true,
+                playerSettings[i].playerName,
+                playerSettings[i].playerColor,
+                playerSettings[i].playerTextureID,
+                playerPieces,
+                0
+            ));
+            currentPlayersColors.Add(playerSettings[i].playerColor);
+        }
+
+        uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
+    }
+
+    private void ProtoInitPlayers()
+    {
+        playerNb = 4;
         currentPlayers = new List<PlayerData>(playerNb);
         List<Color> currentPlayersColors = new List<Color>();
         for (int i = 0; i < playerNb; i++)
@@ -65,7 +98,9 @@ public class GameManager : MonoBehaviour
 
             currentPlayers.Add(new PlayerData(
                 true,
+                "Player " + i,
                 currentPlayerColor,
+                0,
                 playerPieces,
                 0
             ));
@@ -179,14 +214,18 @@ public class GameManager : MonoBehaviour
     private class PlayerData
     {
         public bool isActive;
+        public string playerName;
         public Color playerColor;
+        public int playerTextureID;
         public List<int> remainingPlayerPieces;
         public int score;
 
-        public PlayerData(bool isActive, Color playerColor, List<int> playerPieces, int score)
+        public PlayerData(bool isActive, string playerName, Color playerColor, int playerTextureID, List<int> playerPieces, int score)
         {
             this.isActive = isActive;
+            this.playerName = playerName;
             this.playerColor = playerColor;
+            this.playerTextureID = playerTextureID;
             this.remainingPlayerPieces = playerPieces;
             this.score = score;
         }

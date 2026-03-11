@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Spawn all player piece images in the remaining pieces zone.
-    /// -IN- GameManager from InitPlayers()
+    /// -IN- GameManager from ProtoInitPlayers()
     /// </summary>
     public void GenerateRemainingPlayerPieceImages(List<Color> playerColors)
     {
