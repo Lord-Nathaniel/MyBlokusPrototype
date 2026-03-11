@@ -45,7 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EdgeFade: 1
+    - _EdgeFade: 1.5
     - _TimeOffset: 50
     m_Colors:
     - _Velocity: {r: 0.1, g: 0, b: 0, a: 0}
