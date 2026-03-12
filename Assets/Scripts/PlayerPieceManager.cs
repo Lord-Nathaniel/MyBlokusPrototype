@@ -132,6 +132,9 @@ public class PlayerPieceManager : MonoBehaviour
     /// </summary>
     public bool CheckPlacementValidity(Vector3 mousePosition)
     {
+        if (selectedObjectID == -1)
+            return false;
+
         return gridManager.CanPlaceObjectAt(mousePosition,
                                             database.playerPieces[selectedObjectID].ID,
                                             selectedObjectRotation,
