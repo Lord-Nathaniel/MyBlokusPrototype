@@ -35,6 +35,14 @@ MonoBehaviour:
     m_Key: FourthPlayerScore
     m_Metadata:
       m_Items: []
+  - m_Id: 5633206268862464
+    m_Key: StartingMessageButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5633317132705792
+    m_Key: EndingMessageButtonText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
