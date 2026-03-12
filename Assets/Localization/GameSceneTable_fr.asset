@@ -16,16 +16,49 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: 3af9551192204d04793d69c0105b5fd3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 2847205408445562988
   m_TableData:
-  - m_Id: 7861837824
-    m_Localized: Joueur Bleu commence !
+  - m_Id: 5263045271625728
+    m_Localized: '{global.firstPlayerName} est victorieux !'
     m_Metadata:
       m_Items: []
-  - m_Id: 284190973952
-    m_Localized: Fin du tour
+  - m_Id: 5263251170009088
+    m_Localized: "{global.secondPlayerName} est deuxi\xE8me, avec {global.secondPlayerScore:plural:{}
+      point|{}points} et {global.secondPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{}
+      pi\xE8ces plac\xE9es}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 5612518019571712
+    m_Localized: "{global.thirdPlayerName} est troisi\xE8me, avec {global.thirdPlayerScore:plural:{}
+      point|{}points} et {global.thirdPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{}
+      pi\xE8ces plac\xE9es}."
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 5612547585220608
+    m_Localized: "{global.fourthPlayerName} est quatri\xE8me, avec {global.fourthPlayerScore:plural:{}
+      point|{}points} et {global.fourthPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{}
+      pi\xE8ces plac\xE9es}."
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 5263165744619520
+    m_Localized: "avec {global.firstPlayerScore:plural:{} point|{}points} et {global.firstPlayerPlacedPieces:plural:{}
+      pi\xE8ce plac\xE9e|{} pi\xE8ces plac\xE9es}."
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2847205408445562988
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5263251170009088
+        - id: 5612518019571712
+        - id: 5612547585220608
+        - id: 5263165744619520

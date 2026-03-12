@@ -1,5 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.Extensions;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This class manages the state of the game. 
@@ -13,7 +18,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private readonly State state;
-    List<PlayerData> currentPlayers;
+    private List<PlayerData> currentPlayers;
+
+    const string MENU_SCENE = "MenuScene";
+
+    private PersistentVariablesSource source;
 
     // Needed services
     private UIManager uiManager;
@@ -31,6 +40,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         ServiceManager.Register(this);
+        source = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>();
     }
 
     private void OnDestroy()
@@ -178,12 +188,12 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Switch from currentPlayer state to EndGame state
+    /// Quit the game and go back to the menu scene after the game has ended.
     /// -IN- UIManager from Start()
     /// </summary>
     public void GameEnd()
     {
-        SwitchState(State.EndGame);
+        SceneManager.LoadScene(MENU_SCENE);
     }
 
     private void SwitchState(State newState)
@@ -206,9 +216,41 @@ public class GameManager : MonoBehaviour
                 break;
 
             case State.EndGame:
+                CompturePlayerScores();
                 uiManager.ShowEndScreen();
                 break;
         }
+    }
+
+    private void CompturePlayerScores()
+    {
+        int totalPiecesNb = database.playerPieces.Count;
+        var sortedCurrentPlayers = currentPlayers.OrderByDescending(FindObjectOfType => FindObjectOfType.score).ToList();
+
+        var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
+        firstPlayerNameVar.Value = sortedCurrentPlayers[0].playerName;
+        var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
+        secondPlayerNameVar.Value = sortedCurrentPlayers[1].playerName;
+        var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
+        thirdPlayerNameVar.Value = sortedCurrentPlayers[2].playerName;
+        var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
+        fourthPlayerNameVar.Value = sortedCurrentPlayers[3].playerName;
+        var firstPlayerScoreVar = source["global"]["firstPlayerScore"] as IntVariable;
+        firstPlayerScoreVar.Value = sortedCurrentPlayers[0].score;
+        var secondPlayerScoreVar = source["global"]["secondPlayerScore"] as IntVariable;
+        secondPlayerScoreVar.Value = sortedCurrentPlayers[1].score;
+        var thirdPlayerScoreVar = source["global"]["thirdPlayerScore"] as IntVariable;
+        thirdPlayerScoreVar.Value = sortedCurrentPlayers[2].score;
+        var fourthPlayerScoreVar = source["global"]["fourthPlayerScore"] as IntVariable;
+        fourthPlayerScoreVar.Value = sortedCurrentPlayers[3].score;
+        var firstPlayerPlacedPiecesVar = source["global"]["firstPlayerPlacedPieces"] as IntVariable;
+        firstPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[0].remainingPlayerPieces.Count;
+        var secondPlayerPlacedPiecesVar = source["global"]["secondPlayerPlacedPieces"] as IntVariable;
+        secondPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[1].remainingPlayerPieces.Count;
+        var thirdPlayerPlacedPiecesVar = source["global"]["thirdPlayerPlacedPieces"] as IntVariable;
+        thirdPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[2].remainingPlayerPieces.Count;
+        var fourthPlayerPlacedPiecesVar = source["global"]["fourthPlayerPlacedPieces"] as IntVariable;
+        fourthPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[3].remainingPlayerPieces.Count;
     }
 
     private class PlayerData

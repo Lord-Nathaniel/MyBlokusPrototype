@@ -87,7 +87,7 @@ MonoBehaviour:
         - rid: 2661526798547812599
         - rid: 2661526798547812600
         - rid: 2661526798547812601
-        - rid: 2661526798547812602
+        - rid: 2847205408445562978
         - rid: 2661526798547812603
         m_Formatters:
         - rid: 2661526798547812597
@@ -130,7 +130,9 @@ MonoBehaviour:
     - rid: 2661526798547812598
       type: {class: PersistentVariablesSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
-        m_Groups: []
+        m_Groups:
+        - name: global
+          group: {fileID: 11400000, guid: d5e9f06ddf8c6c640ae4142583473db4, type: 2}
     - rid: 2661526798547812599
       type: {class: DictionarySource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data: 
@@ -139,9 +141,6 @@ MonoBehaviour:
       data: 
     - rid: 2661526798547812601
       type: {class: XmlSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
-      data: 
-    - rid: 2661526798547812602
-      type: {class: ReflectionSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data: 
     - rid: 2661526798547812603
       type: {class: DefaultSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
@@ -205,3 +204,6 @@ MonoBehaviour:
         - default
         - d
         - 
+    - rid: 2847205408445562978
+      type: {class: ReflectionSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
+      data: 

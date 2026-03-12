@@ -16,16 +16,51 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 3af9551192204d04793d69c0105b5fd3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 2847205408445562974
   m_TableData:
-  - m_Id: 7861837824
-    m_Localized: Blue Player begins !
+  - m_Id: 5263165744619520
+    m_Localized: with {global.firstPlayerScore:plural:{} point |{} points} and {global.firstPlayerPlacedPieces:plural:{}
+      placed piece|{} placed pieces}.
     m_Metadata:
-      m_Items: []
-  - m_Id: 284190973952
-    m_Localized: End Turn
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 5263045271625728
+    m_Localized: '{global.firstPlayerName} is victorious !'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 5263251170009088
+    m_Localized: '{global.secondPlayerName} is second, with {global.secondPlayerScore:plural:{}
+      point |{} points} and {global.secondPlayerPlacedPieces:plural:{} placed piece|{}
+      placed pieces}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 5612518019571712
+    m_Localized: '{global.thirdPlayerName} is third, with {global.thirdPlayerScore:plural:{}
+      point |{} points} and {global.thirdPlayerPlacedPieces:plural:{} placed piece|{}
+      placed pieces}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 5612547585220608
+    m_Localized: '{global.fourthPlayerName} is fourth, with {global.fourthPlayerScore:plural:{}
+      point |{} points} and {global.fourthPlayerPlacedPieces:plural:{} placed piece|{}
+      placed pieces}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2847205408445562974
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5263045271625728
+        - id: 5263251170009088
+        - id: 5612518019571712
+        - id: 5612547585220608
+        - id: 5263165744619520

@@ -15,12 +15,24 @@ MonoBehaviour:
   m_TableCollectionName: GameSceneTable
   m_TableCollectionNameGuidString: 3af9551192204d04793d69c0105b5fd3
   m_Entries:
-  - m_Id: 7861837824
-    m_Key: BoardText BluePlayerBegin
+  - m_Id: 5263045271625728
+    m_Key: FirstPlayerText
     m_Metadata:
       m_Items: []
-  - m_Id: 284190973952
-    m_Key: BluePlayerButton
+  - m_Id: 5263165744619520
+    m_Key: FirstPlayerScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5263251170009088
+    m_Key: SecondPlayerScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5612518019571712
+    m_Key: ThirdPlayerScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5612547585220608
+    m_Key: FourthPlayerScore
     m_Metadata:
       m_Items: []
   m_Metadata:
