@@ -59,6 +59,62 @@ MonoBehaviour:
     m_Localized: Main Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 5979416368390144
+    m_Localized: Scoring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979404783722496
+    m_Localized: Game End
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979377558495232
+    m_Localized: Constraints
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979021424336896
+    m_Localized: Game Goal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979432852004864
+    m_Localized: The goal of the game is to get the highest score by placing the
+      maximum number of the 21 pieces each player have on the board. The more squares
+      the piece have, the more points they're valued.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979466377076736
+    m_Localized: 'The play order is random.
+
+      During first turn, and one after
+      the other, each player place a piece on one of the highlighted cells of the
+      board.
+
+      Each consecutive turn, each new piece placed by a player must
+      touch one of their own, only by the angle, not by the side.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979476313382912
+    m_Localized: 'When a player can''t place any piece, he must select the PASS TURN
+      button.
+
+      Remaining players continues with the same turn order, until
+      everyone has passed.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979486807531520
+    m_Localized: 'Each square making a piece give 1 point to the player when placed.
+
+      If
+      every pieces are placed on teh board, a bonus of 15 points is given to the
+      player.
+
+      If the single square is the last placed piece, the bonus is
+      20 points instead.
+
+
+      The player with the hightest score is the winner
+      !'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

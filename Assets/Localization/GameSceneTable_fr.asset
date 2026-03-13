@@ -58,6 +58,51 @@ MonoBehaviour:
     m_Localized: Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 5979021424336896
+    m_Localized: But du jeu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979377558495232
+    m_Localized: Contraintes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979404783722496
+    m_Localized: Fin de la partie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979416368390144
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979432852004864
+    m_Localized: "Le but du jeu est d'obtenir le plus haut score en pla\xE7ant le
+      maximum de pi\xE8ces sur le plateau parmi les 21 pour chaque joueur. Plus la
+      pi\xE8ce contient de carr\xE9s, plus sa valeur en point est haute."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979466377076736
+    m_Localized: "L'ordre du jeu est d\xE9termin\xE9 au hasard.\nLe premier tour,
+      et \xE0 tour de r\xF4le, chaque joueur doit poser une pi\xE8ce sur l\u2019une
+      des cases indiqu\xE9e sur le plateau.\nA partir du tour suivant, chaque nouvelle
+      pi\xE8ce pos\xE9e par un joueur doit toucher au moins une pi\xE8ce de la m\xEAme
+      couleur uniquement par les angles, jamais par les cot\xE9s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979476313382912
+    m_Localized: "Lorsqu\u2019un joueur ne peut plus placer de pi\xE8ce, il est oblig\xE9
+      de s\xE9lectionner le bouton PASSER. \nLes autres joueurs poursuivent en conservant
+      le m\xEAme ordre de jeu, jusqu\u2019\xE0 ce\nque plus personne ne puisse placer
+      de pi\xE8ce."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979486807531520
+    m_Localized: "Chaque carr\xE9 composant une pi\xE8ce vaut 1 point lorsque celle-ci
+      est pos\xE9e.\nSi toutes les pi\xE8ces ont \xE9t\xE9 plac\xE9es, alors un bonus
+      de 15 points est accord\xE9.\nSi le carr\xE9 solitaire est la derni\xE8re pi\xE8ce
+      \xE0 avoir \xE9t\xE9 pos\xE9e, alors le bonus est de 20 points \xE0 la place.\n\nLe
+      joueur avec le plus de points remporte la partie !"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

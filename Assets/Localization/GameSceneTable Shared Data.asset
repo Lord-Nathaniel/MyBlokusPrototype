@@ -43,6 +43,38 @@ MonoBehaviour:
     m_Key: EndingMessageButtonText
     m_Metadata:
       m_Items: []
+  - m_Id: 5979021424336896
+    m_Key: StartingMessageSubtitle01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979377558495232
+    m_Key: StartingMessageSubtitle02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979404783722496
+    m_Key: StartingMessageSubtitle03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979416368390144
+    m_Key: StartingMessageSubtitle04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979432852004864
+    m_Key: StartingMessageText01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979466377076736
+    m_Key: StartingMessageText02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979476313382912
+    m_Key: StartingMessageText03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5979486807531520
+    m_Key: StartingMessageText04
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
