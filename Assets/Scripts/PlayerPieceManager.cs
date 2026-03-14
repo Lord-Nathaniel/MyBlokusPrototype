@@ -50,7 +50,6 @@ public class PlayerPieceManager : MonoBehaviour
 
         //TODO remove start because should be called for each player.
         StopPlacement();
-        gridManager.InitGridVisuals(playerNb);
     }
 
     /// <summary>

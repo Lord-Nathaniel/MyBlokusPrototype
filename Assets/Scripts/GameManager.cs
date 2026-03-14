@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Camera mainCamera;
     [SerializeField] private int playerNb;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
@@ -58,8 +59,29 @@ public class GameManager : MonoBehaviour
         //InitPlayers();
         ProtoInitPlayers();
         //TODO temporary, to bypass the start screen
+
+        gridManager.InitGridVisuals(currentPlayers.Count);
+        placeCamera();
+
         FirstPlayerTurn();
         //SwitchState(State.StartGame);
+
+    }
+
+    private void placeCamera()
+    {
+        int posY = 0;
+        if (currentPlayers.Count == 2)
+        {
+            posY = 20;
+        }
+        else if (currentPlayers.Count > 2)
+        {
+            posY = 28;
+        }
+
+        Vector3 camPosition = new Vector3(mainCamera.transform.position.x, posY, mainCamera.transform.position.z);
+        mainCamera.transform.position = camPosition;
     }
 
     private void InitPlayers()
