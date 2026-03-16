@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
 {
     [Header("Background Settings")]
     [SerializeField] private GameObject background;
+    [SerializeField] private Material fullscreenMaterial;
 
     [Header("Buttons Settings")]
     [SerializeField] private Button gameButton;
@@ -67,6 +68,7 @@ public class MenuManager : MonoBehaviour
 
     private const string GAME_SCENE = "GameScene";
     private const string TIME_OFFSET = "_TimeOffset";
+    private const string PLAYER_COLOR = "_PlayerColor";
 
     // Needed services
     private PlayerSetup playerSetup;
@@ -83,6 +85,7 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        fullscreenMaterial.SetColor(PLAYER_COLOR, new Color(0f, 0f, 0f, 0f));
         playerSetup = ServiceManager.Get<PlayerSetup>();
 
         cellColors.Add(new Color(0.24f, 0.24f, 0.73f));

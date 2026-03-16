@@ -17683,6 +17683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
   background: {fileID: 90917986}
+  fullscreenMaterial: {fileID: 2100000, guid: 9a2810c3298c4a843a0c58d51fbce94d, type: 2}
   gameButton: {fileID: 511368730}
   optionsButton: {fileID: 1650040639}
   creditsButton: {fileID: 321913259}

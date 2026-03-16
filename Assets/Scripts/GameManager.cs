@@ -61,14 +61,14 @@ public class GameManager : MonoBehaviour
         //TODO temporary, to bypass the start screen
 
         gridManager.InitGridVisuals(currentPlayers.Count);
-        placeCamera();
+        PlaceCamera();
 
         FirstPlayerTurn();
         //SwitchState(State.StartGame);
 
     }
 
-    private void placeCamera()
+    private void PlaceCamera()
     {
         int posY = 0;
         if (currentPlayers.Count == 2)
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
             ));
             currentPlayersColors.Add(playerSettings[i].playerColor);
         }
-        setPlayerNameGlobalVar();
+        SetPlayerNameGlobalVar();
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
@@ -138,11 +138,11 @@ public class GameManager : MonoBehaviour
             ));
             currentPlayersColors.Add(currentPlayerColor);
         }
-        setPlayerNameGlobalVar();
+        SetPlayerNameGlobalVar();
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
-    void setPlayerNameGlobalVar()
+    private void SetPlayerNameGlobalVar()
     {
         var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
         firstPlayerNameVar.Value = currentPlayers[0].playerName;
@@ -247,6 +247,7 @@ public class GameManager : MonoBehaviour
                     currentPlayers[currentPlayerID].playerColor,
                     currentPlayers[currentPlayerID].remainingPlayerPieces,
                     currentPlayerID);
+                uiManager.UpdateScreenColor(currentPlayers[currentPlayerID].playerColor);
                 break;
 
             case State.EndGame:

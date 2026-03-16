@@ -37,6 +37,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject endingMessage;
     [SerializeField] private Button endMessageButton;
 
+    [Header("Fullscreen Settings")]
+    [SerializeField] private Material fullscreenMaterial;
+
     private List<Button> pieceButtons = new();
     private Button selectedButton;
     private Color currentPlayerColor;
@@ -56,6 +59,7 @@ public class UIManager : MonoBehaviour
     private const string THIRD_PLAYER_INGAME_SCORE = "ThirdPlayerIngameScore";
     private const string FOURTH_PLAYER_INGAME_SCORE = "FourthPlayerIngameScore";
     private const string GAME_SCENE_TABLE = "GameSceneTable";
+    private const string PLAYER_COLOR = "_PlayerColor";
 
     // Needed services
     private GameManager gameManager;
@@ -324,5 +328,10 @@ public class UIManager : MonoBehaviour
     private void Hide(GameObject toHide)
     {
         toHide.SetActive(false);
+    }
+
+    internal void UpdateScreenColor(Color playerColor)
+    {
+        fullscreenMaterial.SetColor(PLAYER_COLOR, playerColor);
     }
 }
