@@ -127,6 +127,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2847205408445562988
+  - m_Id: 7069306367647744
+    m_Localized: Jeu mis en pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069348335853568
+    m_Localized: Reprendre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069377209442304
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069420737929216
+    m_Localized: Menu Principal
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

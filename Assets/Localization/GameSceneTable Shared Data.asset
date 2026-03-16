@@ -91,6 +91,22 @@ MonoBehaviour:
     m_Key: FourthPlayerIngameScore
     m_Metadata:
       m_Items: []
+  - m_Id: 7069306367647744
+    m_Key: MenuText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069348335853568
+    m_Key: MenuCloseButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069377209442304
+    m_Key: MenuOptionsButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7069420737929216
+    m_Key: MenuMainMenuButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
