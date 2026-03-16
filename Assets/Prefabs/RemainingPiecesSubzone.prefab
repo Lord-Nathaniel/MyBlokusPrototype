@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 8410328971353858719}
   - component: {fileID: 528339545227619295}
   - component: {fileID: 3242688881079429822}
+  - component: {fileID: 8465637186707588740}
   m_Layer: 5
   m_Name: PlayerName
   m_TagString: Untagged
@@ -215,8 +216,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Player name here :'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 12b5da1d65effb04b8f565f2deda7cdb, type: 2}
-  m_sharedMaterial: {fileID: -1177258551600766580, guid: 12b5da1d65effb04b8f565f2deda7cdb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7aafa080c66666e488418475aa090b8d, type: 2}
+  m_sharedMaterial: {fileID: -6143688778573605023, guid: 7aafa080c66666e488418475aa090b8d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -240,8 +241,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 13
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -284,3 +285,43 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8465637186707588740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996153311589760229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:3af9551192204d04793d69c0105b5fd3
+    m_TableEntryReference:
+      m_KeyId: 6882123123924992
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3242688881079429822}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []

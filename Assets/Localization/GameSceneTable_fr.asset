@@ -103,6 +103,30 @@ MonoBehaviour:
       joueur avec le plus de points remporte la partie !"
     m_Metadata:
       m_Items: []
+  - m_Id: 6882123123924992
+    m_Localized: "{global.firstPlayerName} a {global.firstPlayerScore:plural:{} point
+      |{} points}. Pi\xE8ces restantes :"
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 6883063855980544
+    m_Localized: "{global.secondPlayerName} a {global.secondPlayerScore:plural:{}
+      point |{} points}. Pi\xE8ces restantes :"
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 6883069530873856
+    m_Localized: "{global.thirdPlayerName} a {global.thirdPlayerScore:plural:{} point
+      |{} points}. Pi\xE8ces restantes :"
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
+  - m_Id: 6883076434698240
+    m_Localized: "{global.fourthPlayerName} a {global.fourthPlayerScore:plural:{}
+      point |{} points}. Pi\xE8ces restantes :"
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562988
   references:
     version: 2
     RefIds:
@@ -115,3 +139,7 @@ MonoBehaviour:
         - id: 5612518019571712
         - id: 5612547585220608
         - id: 5263165744619520
+        - id: 6882123123924992
+        - id: 6883063855980544
+        - id: 6883069530873856
+        - id: 6883076434698240

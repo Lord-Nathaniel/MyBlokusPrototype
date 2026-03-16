@@ -75,6 +75,22 @@ MonoBehaviour:
     m_Key: StartingMessageText04
     m_Metadata:
       m_Items: []
+  - m_Id: 6882123123924992
+    m_Key: FirstPlayerIngameScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6883063855980544
+    m_Key: SecondPlayerIngameScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6883069530873856
+    m_Key: ThirdPlayerIngameScore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6883076434698240
+    m_Key: FourthPlayerIngameScore
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.Extensions;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 /// <summary>
@@ -40,6 +44,19 @@ public class UIManager : MonoBehaviour
     private List<GameObject> remainingPlayerPieceSubzones = new();
     private List<Dictionary<int, GameObject>> remainingPieceImagesPerPlayer = new();
 
+    private PersistentVariablesSource source;
+    private List<String> playerScoreSmartStringRefences = new();
+    private const string FIRST_PLAYER_SCORE_REF = "firstPlayerScore";
+    private const string SECOND_PLAYER_SCORE_REF = "secondPlayerScore";
+    private const string THIRD_PLAYER_SCORE_REF = "thirdPlayerScore";
+    private const string FOURTH_PLAYER_SCORE_REF = "fourthPlayerScore";
+
+    private const string FIRST_PLAYER_INGAME_SCORE = "FirstPlayerIngameScore";
+    private const string SECOND_PLAYER_INGAME_SCORE = "SecondPlayerIngameScore";
+    private const string THIRD_PLAYER_INGAME_SCORE = "ThirdPlayerIngameScore";
+    private const string FOURTH_PLAYER_INGAME_SCORE = "FourthPlayerIngameScore";
+    private const string GAME_SCENE_TABLE = "GameSceneTable";
+
     // Needed services
     private GameManager gameManager;
     private PlayerPieceManager playerPieceManager;
@@ -48,6 +65,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         ServiceManager.Register(this);
+        source = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>();
     }
 
     private void OnDestroy()
@@ -75,6 +93,11 @@ public class UIManager : MonoBehaviour
         {
             gameManager.NextPlayerTurn();
         });
+
+        playerScoreSmartStringRefences.Add(FIRST_PLAYER_SCORE_REF);
+        playerScoreSmartStringRefences.Add(SECOND_PLAYER_SCORE_REF);
+        playerScoreSmartStringRefences.Add(THIRD_PLAYER_SCORE_REF);
+        playerScoreSmartStringRefences.Add(FOURTH_PLAYER_SCORE_REF);
     }
 
     /// <summary>
@@ -83,19 +106,23 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void GenerateRemainingPlayerPieceImages(List<Color> playerColors)
     {
+        List<String> stringReference = new();
+        stringReference.Add(FIRST_PLAYER_INGAME_SCORE);
+        stringReference.Add(SECOND_PLAYER_INGAME_SCORE);
+        stringReference.Add(THIRD_PLAYER_INGAME_SCORE);
+        stringReference.Add(FOURTH_PLAYER_INGAME_SCORE);
         for (int i = 1; i < playerColors.Count + 1; i++)
         {
             Dictionary<int, GameObject> playerPieceImages = new();
             GameObject currentSubzone = Instantiate(playerPiecesSubzonePrefab, playerPieceImageZone.transform);
             //text setup
-            currentSubzone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + i + " remaining pieces :";
+            currentSubzone.transform.GetChild(0).GetComponent<LocalizeStringEvent>().StringReference.SetReference(GAME_SCENE_TABLE, stringReference[i - 1]);
             //backgroud setup
             Material mat = new Material(playerColorSwap);
             mat.SetColor("_PlayerColor", playerColors[i - 1]);
             currentSubzone.transform.GetChild(1).GetComponent<Image>().material = mat;
             //images setup
             Transform imageZone = currentSubzone.transform.GetChild(2);
-            Debug.Log(remainingPlayerPieces + " | count : " + remainingPlayerPieces.Count);
             for (int j = 0; j < remainingPlayerPieces.Count; j++)
             {
                 GameObject img = Instantiate(remainingPlayerPiecePrefab, imageZone);
@@ -249,14 +276,11 @@ public class UIManager : MonoBehaviour
     /// <param name="score"></param>
     public void UpdateRemainingPlayerPieceImages(int playerID, int pieceID, int score)
     {
-        if (pieceID < 0)
+        if (pieceID >= 0)
         {
-            remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " passed and have " + score + "pts.";
-            remainingPlayerPieceSubzones[playerID].transform.GetChild(2).gameObject.SetActive(true);
-        }
-        else
-        {
-            remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " score : " + score + " pts; remaining pieces :";
+            var playerScoreVar = source["global"][playerScoreSmartStringRefences[playerID]] as IntVariable;
+            playerScoreVar.Value = score;
+
             if (remainingPieceImagesPerPlayer[playerID].TryGetValue(pieceID, out GameObject img))
             {
                 Destroy(img.gameObject);

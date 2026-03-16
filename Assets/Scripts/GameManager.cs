@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
             ));
             currentPlayersColors.Add(playerSettings[i].playerColor);
         }
-
+        setPlayerNameGlobalVar();
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
@@ -138,8 +138,20 @@ public class GameManager : MonoBehaviour
             ));
             currentPlayersColors.Add(currentPlayerColor);
         }
-
+        setPlayerNameGlobalVar();
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
+    }
+
+    void setPlayerNameGlobalVar()
+    {
+        var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
+        firstPlayerNameVar.Value = currentPlayers[0].playerName;
+        var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
+        secondPlayerNameVar.Value = currentPlayers[1].playerName;
+        var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
+        thirdPlayerNameVar.Value = currentPlayers[2].playerName;
+        var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
+        fourthPlayerNameVar.Value = currentPlayers[3].playerName;
     }
 
     /// <summary>

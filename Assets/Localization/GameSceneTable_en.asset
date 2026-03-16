@@ -115,6 +115,30 @@ MonoBehaviour:
       !'
     m_Metadata:
       m_Items: []
+  - m_Id: 6882123123924992
+    m_Localized: '{global.firstPlayerName} have {global.firstPlayerScore:plural:{}
+      point |{} points}. Remaining pieces :'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 6883063855980544
+    m_Localized: '{global.secondPlayerName} have {global.secondPlayerScore:plural:{}
+      point |{} points}. Remaining pieces :'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 6883069530873856
+    m_Localized: '{global.thirdPlayerName} have {global.thirdPlayerScore:plural:{}
+      point |{} points}. Remaining pieces :'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
+  - m_Id: 6883076434698240
+    m_Localized: '{global.fourthPlayerName} have {global.fourthPlayerScore:plural:{}
+      point |{} points}. Remaining pieces :'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205408445562974
   references:
     version: 2
     RefIds:
@@ -128,3 +152,7 @@ MonoBehaviour:
         - id: 5612518019571712
         - id: 5612547585220608
         - id: 5263165744619520
+        - id: 6882123123924992
+        - id: 6883063855980544
+        - id: 6883069530873856
+        - id: 6883076434698240

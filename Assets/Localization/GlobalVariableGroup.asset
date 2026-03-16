@@ -65,38 +65,38 @@ MonoBehaviour:
       data:
         m_Value: 0
     - rid: 2847205408445563001
-      type: {class: StringGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: $firstPlayerName
     - rid: 2847205408445563002
-      type: {class: StringGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: $thridPlayerName
     - rid: 2847205408445563003
-      type: {class: StringGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: $fourthPlayerName
     - rid: 2847205408445563004
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563005
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563006
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563007
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563008
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563009
-      type: {class: IntGlobalVariable, ns: UnityEngine.Localization.SmartFormat.GlobalVariables, asm: Unity.Localization}
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
