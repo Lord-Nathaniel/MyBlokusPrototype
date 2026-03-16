@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -64,7 +62,6 @@ public class MenuManager : MonoBehaviour
 
     private List<int> playerColors = new();
     private List<int> playerTextureIds = new();
-    private int currentLanguageIndex;
 
     private const string GAME_SCENE = "GameScene";
     private const string TIME_OFFSET = "_TimeOffset";
@@ -72,6 +69,7 @@ public class MenuManager : MonoBehaviour
 
     // Needed services
     private PlayerSetup playerSetup;
+    private OptionsMenuManager optionsMenuManager;
 
     private void Awake()
     {
@@ -87,6 +85,7 @@ public class MenuManager : MonoBehaviour
     {
         fullscreenMaterial.SetColor(PLAYER_COLOR, new Color(0f, 0f, 0f, 0f));
         playerSetup = ServiceManager.Get<PlayerSetup>();
+        optionsMenuManager = ServiceManager.Get<OptionsMenuManager>();
 
         cellColors.Add(new Color(0.24f, 0.24f, 0.73f));
         cellColors.Add(new Color(0.73f, 0.06f, 0.06f));
@@ -138,11 +137,6 @@ public class MenuManager : MonoBehaviour
         {
             Application.Quit();
         });
-
-        languageButton.onClick.AddListener(() =>
-        {
-            ToggleLanguage();
-        });
     }
 
     private void SetPlayerMenu(int i)
@@ -192,29 +186,9 @@ public class MenuManager : MonoBehaviour
         if (playerFourToggle.isOn)
             playerSetup.AddPlayerSetting(1, playerInputFields[3].text, cellColors[playerColors[3]], playerTextureIds[3]);
 
-        playerSetup.AddOptionsSetting(soundSlider.GetComponent<Slider>().value,
-                                      musicSlider.GetComponent<Slider>().value,
-                                      currentLanguageIndex);
+        optionsMenuManager.SetOptionsSettingsToPlayerSetup();
 
         SceneManager.LoadScene(GAME_SCENE);
-    }
-
-    /// <summary>
-    /// Toggle to the next available language.
-    /// </summary>
-    public void ToggleLanguage()
-    {
-        List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
-
-        if (locales.Count == 0)
-            return;
-
-        Locale currentLocale = LocalizationSettings.SelectedLocale;
-        currentLanguageIndex = locales.IndexOf(currentLocale);
-
-        int nextIndex = (currentLanguageIndex + 1) % locales.Count;
-
-        LocalizationSettings.SelectedLocale = locales[nextIndex];
     }
 
     private void CreditsAction()
@@ -307,22 +281,6 @@ public class MenuManager : MonoBehaviour
         {
             Toggle(playerTextureButtons[i].transform.parent.gameObject);
         }
-    }
-
-    /// <summary>
-    /// Update the sound value text when the slider value changes.
-    /// </summary>
-    public void UpdateSoundTextValue()
-    {
-        soundValueText.text = soundSlider.GetComponent<Slider>().value.ToString();
-    }
-
-    /// <summary>
-    /// Update the music value text when the slider value changes.
-    /// </summary>
-    public void UpdateMusicTextValue()
-    {
-        musicValueText.text = musicSlider.GetComponent<Slider>().value.ToString();
     }
 
     private void Hide(GameObject toHide)
