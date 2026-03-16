@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
                 true,
                 "Player " + i,
                 currentPlayerColor,
-                0,
+                i,
                 playerPieces,
                 0
             ));
@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
         {
             RemovePieceFromPlayerData(placedPieceID);
             uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPieceID, currentPlayers[currentPlayerID].score);
-            gridManager.SaveCurrentPiece(currentPlayerID);
+            gridManager.SaveCurrentPiece(currentPlayerID, currentPlayers[currentPlayerID].playerTextureID);
             playerPieceManager.StopPlacement();
             SwitchState(SelectNextPlayer());
         }

@@ -19,7 +19,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private PlayerPieceDataSO database;
 
     [Header("Cell rendering")]
-    [SerializeField] private Texture2D placedPieceTexture;
+    [SerializeField] private List<Texture2D> placedPieceTextures;
     [SerializeField] private Material playerColorSwap;
 
     private int gridLenght;
@@ -360,7 +360,7 @@ public class GridManager : MonoBehaviour
     /// <summary>
     /// -IN- PlayerPieceManager from IsPlayerPiecePlaced() 
     /// </summary>
-    public void SaveCurrentPiece(int playerID)
+    public void SaveCurrentPiece(int playerID, int textureID)
     {
         int playerPieceID = playerPieceSO.ID;
         RemoveTempPlayerPiece();
@@ -381,7 +381,7 @@ public class GridManager : MonoBehaviour
 
             Material mat = new Material(playerColorSwap);
             mat.SetColor("_PlayerColor", currentPlayerColor);
-            mat.SetTexture("_MainTex", placedPieceTexture);
+            mat.SetTexture("_MainTex", placedPieceTextures[textureID]);
 
             squareRenderer.material = mat;
         }

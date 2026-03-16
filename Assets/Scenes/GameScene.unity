@@ -169,7 +169,12 @@ MonoBehaviour:
   gridVisualsSmall: {fileID: 913354760}
   gridVisualsLarge: {fileID: 1413473974}
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
-  placedPieceTexture: {fileID: 2800000, guid: a7586351369428347b0fe594ccc28812, type: 3}
+  placedPieceTextures:
+  - {fileID: 2800000, guid: a7586351369428347b0fe594ccc28812, type: 3}
+  - {fileID: 2800000, guid: dc75cc1166102b148a337167accdeaf0, type: 3}
+  - {fileID: 2800000, guid: c58d010717736594db4ed99f500f860c, type: 3}
+  - {fileID: 2800000, guid: 8c36a00ce0bc874418914fa0f3e1bb0f, type: 3}
+  - {fileID: 2800000, guid: 9a62e44662915024ea4f333c262533a7, type: 3}
   playerColorSwap: {fileID: -876546973899608171, guid: 1d06f346bf7331640b080b12b8a7ffed, type: 3}
 --- !u!1 &50716968
 GameObject:
