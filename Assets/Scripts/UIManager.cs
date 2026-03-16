@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
     private Color currentPlayerColor;
     private int currentPlayerID;
     private List<GameObject> remainingPlayerPieceSubzones = new();
-    private List<Dictionary<int, Image>> remainingPieceImagesPerPlayer = new();
+    private List<Dictionary<int, GameObject>> remainingPieceImagesPerPlayer = new();
 
     // Needed services
     private GameManager gameManager;
@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 1; i < playerColors.Count + 1; i++)
         {
-            Dictionary<int, Image> playerPieceImages = new();
+            Dictionary<int, GameObject> playerPieceImages = new();
             GameObject currentSubzone = Instantiate(playerPiecesSubzonePrefab, playerPieceImageZone.transform);
             //text setup
             currentSubzone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + i + " remaining pieces :";
@@ -100,23 +100,7 @@ public class UIManager : MonoBehaviour
             {
                 GameObject img = Instantiate(remainingPlayerPiecePrefab, imageZone);
                 img.GetComponent<Image>().sprite = remainingPlayerPieces[j];
-                //Texture2D pieceTexture = playerPiece.miniature;
-                //if (pieceTexture != null)
-                //{
-                //    img.sprite = Sprite.Create(
-                //        playerPiece.miniature,
-                //        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
-                //        new Vector2(0.5f, 0.5f)
-                //    );
-                //}
-
-                //Material mat = new Material(playerColorSwap);
-                //mat.SetColor("_PlayerColor", playerColors[i - 1]);
-                //mat.SetTexture("_MainTex", pieceTexture);
-
-                //img.material = mat;
-
-                //playerPieceImages.Add(playerPiece.ID, img);
+                playerPieceImages.Add(j, img);
             }
             remainingPieceImagesPerPlayer.Add(playerPieceImages);
             remainingPlayerPieceSubzones.Add(currentSubzone);
@@ -273,7 +257,7 @@ public class UIManager : MonoBehaviour
         else
         {
             remainingPlayerPieceSubzones[playerID].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + playerID + " score : " + score + " pts; remaining pieces :";
-            if (remainingPieceImagesPerPlayer[playerID].TryGetValue(pieceID, out Image img))
+            if (remainingPieceImagesPerPlayer[playerID].TryGetValue(pieceID, out GameObject img))
             {
                 Destroy(img.gameObject);
                 remainingPieceImagesPerPlayer[playerID].Remove(pieceID);
