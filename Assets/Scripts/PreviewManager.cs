@@ -66,13 +66,6 @@ public class PreviewManager : MonoBehaviour
             Renderer squareRenderer = squareGO.GetComponentInChildren<Renderer>();
             squareRenderer.material.SetColor("_PlayerColor", playerColor);
         }
-
-        foreach (Vector2Int corner in corners)
-        {
-            GameObject cornerGO = Instantiate(database.cornerPreviewPrefab, cellIndicatorParent.transform.GetChild(0));
-            cornerGO.transform.localPosition = new Vector3((float)corner.x, 0f, (float)corner.y);
-            cornerGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        }
     }
 
     private void ResetCursorPreview()

@@ -258,6 +258,7 @@ MonoBehaviour:
   endingMessage: {fileID: 1306762190}
   endMessageButton: {fileID: 747848916}
   fullscreenMaterial: {fileID: 2100000, guid: 9a2810c3298c4a843a0c58d51fbce94d, type: 2}
+  cellHighlightMaterial: {fileID: 2100000, guid: 3853aac7281910f40a99781272918d92, type: 2}
 --- !u!1 &105112158
 GameObject:
   m_ObjectHideFlags: 0

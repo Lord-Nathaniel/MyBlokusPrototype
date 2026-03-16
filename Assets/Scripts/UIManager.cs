@@ -37,8 +37,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject endingMessage;
     [SerializeField] private Button endMessageButton;
 
-    [Header("Fullscreen Settings")]
+    [Header("Material Settings")]
     [SerializeField] private Material fullscreenMaterial;
+    [SerializeField] private Material cellHighlightMaterial;
 
     private List<Button> pieceButtons = new();
     private Button selectedButton;
@@ -60,6 +61,7 @@ public class UIManager : MonoBehaviour
     private const string FOURTH_PLAYER_INGAME_SCORE = "FourthPlayerIngameScore";
     private const string GAME_SCENE_TABLE = "GameSceneTable";
     private const string PLAYER_COLOR = "_PlayerColor";
+    private const string INLINE_COLOR = "_InlineColor";
 
     // Needed services
     private GameManager gameManager;
@@ -333,5 +335,6 @@ public class UIManager : MonoBehaviour
     internal void UpdateScreenColor(Color playerColor)
     {
         fullscreenMaterial.SetColor(PLAYER_COLOR, playerColor);
+        cellHighlightMaterial.SetColor(INLINE_COLOR, playerColor);
     }
 }
