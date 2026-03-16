@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image playerPieceImagePrefab;
     [SerializeField] private GameObject playerPiecesSubzonePrefab;
     [SerializeField] private GameObject playerPieceImageZone;
+    [SerializeField] private List<Texture2D> remainingPlayerPieces;
 
     [Header("Start & End Settings")]
     [SerializeField] private GameObject startingMessage;
