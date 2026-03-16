@@ -13,6 +13,9 @@ using UnityEngine.UI;
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
+    [Header("Background Settings")]
+    [SerializeField] private GameObject background;
+
     [Header("Buttons Settings")]
     [SerializeField] private Button gameButton;
     [SerializeField] private Button optionsButton;
@@ -62,7 +65,8 @@ public class MenuManager : MonoBehaviour
     private List<int> playerTextureIds = new();
     private int currentLanguageIndex;
 
-    const string GAME_SCENE = "GameScene";
+    private const string GAME_SCENE = "GameScene";
+    private const string TIME_OFFSET = "_TimeOffset";
 
     // Needed services
     private PlayerSetup playerSetup;
@@ -94,6 +98,8 @@ public class MenuManager : MonoBehaviour
         {
             SetPlayerMenu(i);
         }
+
+        background.GetComponent<Image>().material.SetFloat(TIME_OFFSET, Random.Range(0f, 255f));
 
         gameButton.onClick.AddListener(() =>
         {
