@@ -225,28 +225,29 @@ MonoBehaviour:
   playerPieceImagePrefab: {fileID: 265415383466774337, guid: 28682bc235af521448e2967b3c119b6b, type: 3}
   playerPiecesSubzonePrefab: {fileID: 4813371734795542029, guid: 749bd75cc29945441819f1a9e5b9db15, type: 3}
   playerPieceImageZone: {fileID: 1253508211}
+  remainingPlayerPiecePrefab: {fileID: 361357209285965162, guid: ba40e0dda41a8cf4eb7b74953ac0a19a, type: 3}
   remainingPlayerPieces:
-  - {fileID: 2800000, guid: ae387b202ba5bbc47bcdaf824b754aac, type: 3}
-  - {fileID: 2800000, guid: 8b4cd3557dbc42b429d51063ce0d007f, type: 3}
-  - {fileID: 2800000, guid: 1b399077f0de7af4bb97c73e48bd9297, type: 3}
-  - {fileID: 2800000, guid: 11f2226b2bc06934a9d42389659621ac, type: 3}
-  - {fileID: 2800000, guid: 8ccd5f452df552d42999bdefa1e59c52, type: 3}
-  - {fileID: 2800000, guid: c6d8057c13522184594f448f644d8ee6, type: 3}
-  - {fileID: 2800000, guid: 38a84fcbf47a20d429cbdad0e53ef06b, type: 3}
-  - {fileID: 2800000, guid: ad0eda3cf3c02b947911c32dbfd4af97, type: 3}
-  - {fileID: 2800000, guid: 7e44b7fc6614225469159c4ef69ce3dc, type: 3}
-  - {fileID: 2800000, guid: 188115274f4b3cd40b0d4e7f9daae12f, type: 3}
-  - {fileID: 2800000, guid: ea218bc20d04aa041bcaa2ef1848a88b, type: 3}
-  - {fileID: 2800000, guid: 22648548edd932841a0c1275a781ae65, type: 3}
-  - {fileID: 2800000, guid: baa46dba0278e094e8225d28ab8f5512, type: 3}
-  - {fileID: 2800000, guid: b430109ac1f4bc2408b04f06ab4b6911, type: 3}
-  - {fileID: 2800000, guid: 497fc4c3bab908f469715643b5541b55, type: 3}
-  - {fileID: 2800000, guid: d1447a7446ff42d4e9eff0015ee2171e, type: 3}
-  - {fileID: 2800000, guid: beb2234d68356724b819c0603163439f, type: 3}
-  - {fileID: 2800000, guid: 2e64d18129ef6324d82d80f12a1f5597, type: 3}
-  - {fileID: 2800000, guid: 63f6f6f0b1bde5c46af2419dc836b3fd, type: 3}
-  - {fileID: 2800000, guid: 4c26b011f3c9e7a4588ca67bac360642, type: 3}
-  - {fileID: 2800000, guid: d5f1b80faccc42645a639303f2fe86ef, type: 3}
+  - {fileID: 21300000, guid: ae387b202ba5bbc47bcdaf824b754aac, type: 3}
+  - {fileID: 21300000, guid: 8b4cd3557dbc42b429d51063ce0d007f, type: 3}
+  - {fileID: 21300000, guid: 1b399077f0de7af4bb97c73e48bd9297, type: 3}
+  - {fileID: 21300000, guid: 11f2226b2bc06934a9d42389659621ac, type: 3}
+  - {fileID: 21300000, guid: 8ccd5f452df552d42999bdefa1e59c52, type: 3}
+  - {fileID: 21300000, guid: c6d8057c13522184594f448f644d8ee6, type: 3}
+  - {fileID: 21300000, guid: 38a84fcbf47a20d429cbdad0e53ef06b, type: 3}
+  - {fileID: 21300000, guid: ad0eda3cf3c02b947911c32dbfd4af97, type: 3}
+  - {fileID: 21300000, guid: 7e44b7fc6614225469159c4ef69ce3dc, type: 3}
+  - {fileID: 21300000, guid: 188115274f4b3cd40b0d4e7f9daae12f, type: 3}
+  - {fileID: 21300000, guid: ea218bc20d04aa041bcaa2ef1848a88b, type: 3}
+  - {fileID: 21300000, guid: 22648548edd932841a0c1275a781ae65, type: 3}
+  - {fileID: 21300000, guid: baa46dba0278e094e8225d28ab8f5512, type: 3}
+  - {fileID: 21300000, guid: b430109ac1f4bc2408b04f06ab4b6911, type: 3}
+  - {fileID: 21300000, guid: 497fc4c3bab908f469715643b5541b55, type: 3}
+  - {fileID: 21300000, guid: d1447a7446ff42d4e9eff0015ee2171e, type: 3}
+  - {fileID: 21300000, guid: beb2234d68356724b819c0603163439f, type: 3}
+  - {fileID: 21300000, guid: 2e64d18129ef6324d82d80f12a1f5597, type: 3}
+  - {fileID: 21300000, guid: 63f6f6f0b1bde5c46af2419dc836b3fd, type: 3}
+  - {fileID: 21300000, guid: 4c26b011f3c9e7a4588ca67bac360642, type: 3}
+  - {fileID: 21300000, guid: d5f1b80faccc42645a639303f2fe86ef, type: 3}
   startingMessage: {fileID: 1536989884}
   startMessageButton: {fileID: 1993690412}
   endingMessage: {fileID: 1306762190}
@@ -934,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1649ce486d8940e4faf5ec189a928e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 330585545}
   playerNb: 4
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
 --- !u!4 &276406070
@@ -3568,10 +3569,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1696299430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -280, y: 4.8622}
-  m_SizeDelta: {x: 500, y: 903.0784}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -280, y: 0}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1253508213
 MonoBehaviour:
@@ -3631,8 +3632,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 500, y: 200}
-  m_Spacing: {x: 50, y: 50}
+  m_CellSize: {x: 500, y: 270}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &1274999079

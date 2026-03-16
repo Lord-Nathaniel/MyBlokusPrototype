@@ -24,7 +24,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image playerPieceImagePrefab;
     [SerializeField] private GameObject playerPiecesSubzonePrefab;
     [SerializeField] private GameObject playerPieceImageZone;
-    [SerializeField] private List<Texture2D> remainingPlayerPieces;
+    [SerializeField] private GameObject remainingPlayerPiecePrefab;
+    [SerializeField] private List<Sprite> remainingPlayerPieces;
 
     [Header("Start & End Settings")]
     [SerializeField] private GameObject startingMessage;
@@ -86,28 +87,36 @@ public class UIManager : MonoBehaviour
         {
             Dictionary<int, Image> playerPieceImages = new();
             GameObject currentSubzone = Instantiate(playerPiecesSubzonePrefab, playerPieceImageZone.transform);
+            //text setup
             currentSubzone.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "player " + i + " remaining pieces :";
-            foreach (PlayerPieceSO playerPiece in database.playerPieces)
+            //backgroud setup
+            Material mat = new Material(playerColorSwap);
+            mat.SetColor("_PlayerColor", playerColors[i - 1]);
+            currentSubzone.transform.GetChild(1).GetComponent<Image>().material = mat;
+            //images setup
+            Transform imageZone = currentSubzone.transform.GetChild(2);
+            Debug.Log(remainingPlayerPieces + " | count : " + remainingPlayerPieces.Count);
+            for (int j = 0; j < remainingPlayerPieces.Count; j++)
             {
-                Image img = Instantiate(playerPieceImagePrefab, currentSubzone.transform.GetChild(1));
+                GameObject img = Instantiate(remainingPlayerPiecePrefab, imageZone);
+                img.GetComponent<Image>().sprite = remainingPlayerPieces[j];
+                //Texture2D pieceTexture = playerPiece.miniature;
+                //if (pieceTexture != null)
+                //{
+                //    img.sprite = Sprite.Create(
+                //        playerPiece.miniature,
+                //        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
+                //        new Vector2(0.5f, 0.5f)
+                //    );
+                //}
 
-                Texture2D pieceTexture = playerPiece.miniature;
-                if (pieceTexture != null)
-                {
-                    img.sprite = Sprite.Create(
-                        playerPiece.miniature,
-                        new Rect(0, 0, playerPiece.miniature.width, playerPiece.miniature.height),
-                        new Vector2(0.5f, 0.5f)
-                    );
-                }
+                //Material mat = new Material(playerColorSwap);
+                //mat.SetColor("_PlayerColor", playerColors[i - 1]);
+                //mat.SetTexture("_MainTex", pieceTexture);
 
-                Material mat = new Material(playerColorSwap);
-                mat.SetColor("_PlayerColor", playerColors[i - 1]);
-                mat.SetTexture("_MainTex", pieceTexture);
+                //img.material = mat;
 
-                img.material = mat;
-
-                playerPieceImages.Add(playerPiece.ID, img);
+                //playerPieceImages.Add(playerPiece.ID, img);
             }
             remainingPieceImagesPerPlayer.Add(playerPieceImages);
             remainingPlayerPieceSubzones.Add(currentSubzone);
