@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerNb;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
-    private readonly State state;
     private List<PlayerData> currentPlayers;
 
     const string MENU_SCENE = "MenuScene";
@@ -63,8 +62,8 @@ public class GameManager : MonoBehaviour
         gridManager.InitGridVisuals(currentPlayers.Count);
         PlaceCamera();
 
-        FirstPlayerTurn();
-        //SwitchState(State.StartGame);
+        //FirstPlayerTurn();
+        SwitchState(State.StartGame);
 
     }
 
@@ -232,9 +231,6 @@ public class GameManager : MonoBehaviour
 
     private void SwitchState(State newState)
     {
-        if (state == newState)
-            return;
-
         switch (newState)
         {
             case State.StartGame:

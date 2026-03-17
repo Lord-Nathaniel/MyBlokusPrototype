@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
 
         nextPlayerButton.onClick.AddListener(() =>
         {
-            nextPlayerAction();
+            NextPlayerAction();
         });
 
         playerScoreSmartStringRefences.Add(FIRST_PLAYER_SCORE_REF);
@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
         playerScoreSmartStringRefences.Add(FOURTH_PLAYER_SCORE_REF);
     }
 
-    private void nextPlayerAction()
+    private void NextPlayerAction()
     {
         if (selectedButton != null)
         {
@@ -326,6 +326,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowStartScreen()
     {
+        Debug.Log("[UIManager]ShowStartScreen()");
         Show(startingMessage);
     }
 
