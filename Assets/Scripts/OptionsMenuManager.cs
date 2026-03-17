@@ -5,6 +5,11 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class manages the options menu of the game.
+/// At start, it take the optionsSetting of the PlayerSetup and apply them.
+/// -OUT- PlayerSetup | SoundManager 
+/// </summary>
 public class OptionsMenuManager : MonoBehaviour
 {
     [Header("Options Settings")]

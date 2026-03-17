@@ -31,6 +31,7 @@ public class PlayerPieceManager : MonoBehaviour
     private InputManager inputManager;
     private GridManager gridManager;
     private PreviewManager previewManager;
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class PlayerPieceManager : MonoBehaviour
         inputManager = ServiceManager.Get<InputManager>();
         gridManager = ServiceManager.Get<GridManager>();
         previewManager = ServiceManager.Get<PreviewManager>();
+        soundManager = ServiceManager.Get<SoundManager>();
 
         //TODO remove start because should be called for each player.
         StopPlacement();
@@ -102,9 +104,10 @@ public class PlayerPieceManager : MonoBehaviour
         bool placementValidity = CheckPlacementValidity(mousePosition);
         if (!placementValidity)
         {
-            //soundManager.PlaySound(SoundType.WrongPlacement);
+            soundManager.PlaySound(SoundType.Wrong);
             return;
         }
+        soundManager.PlaySound(SoundType.CheckButton);
 
         if (isPiecePlaced)
         {
@@ -149,6 +152,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].rotable)
         {
+            soundManager.PlaySound(SoundType.Swoosh);
             selectedObjectRotation = (selectedObjectRotation + 1) % 4;
             previewManager.RotatePlacementPreview();
         }
@@ -161,6 +165,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].mirrorable)
         {
+            soundManager.PlaySound(SoundType.Mirror);
             isSelectedObjectMirrored = !isSelectedObjectMirrored;
             previewManager.MirrorPlacementPreview();
         }

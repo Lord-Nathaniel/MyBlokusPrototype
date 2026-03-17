@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
     private GameManager gameManager;
     private PlayerPieceManager playerPieceManager;
     private GridManager gridManager;
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -84,19 +85,23 @@ public class UIManager : MonoBehaviour
         gameManager = ServiceManager.Get<GameManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
         gridManager = ServiceManager.Get<GridManager>();
+        soundManager = ServiceManager.Get<SoundManager>();
 
         startMessageButton.onClick.AddListener(() =>
         {
+            soundManager.PlaySound(SoundType.CassetteRecord);
             gameManager.GameStart();
         });
 
         endMessageButton.onClick.AddListener(() =>
         {
+            soundManager.PlaySound(SoundType.CassetteRecord);
             gameManager.GameEnd();
         });
 
         nextPlayerButton.onClick.AddListener(() =>
         {
+            soundManager.PlaySound(SoundType.Undo);
             gameManager.NextPlayerTurn();
         });
 
@@ -164,6 +169,7 @@ public class UIManager : MonoBehaviour
                 Button newButton = GenerateNewPieceButton(playerColor, playerPiece);
                 newButton.onClick.AddListener(() =>
                 {
+                    soundManager.PlaySound(SoundType.Click);
                     OnClickPieceAction(newButton, playerPiece.ID);
                 });
             }
@@ -172,6 +178,7 @@ public class UIManager : MonoBehaviour
         Button passButton = GeneratePassButton(playerColor);
         passButton.onClick.AddListener(() =>
         {
+            soundManager.PlaySound(SoundType.Undo);
             OnClickPassAction(passButton);
         });
     }
@@ -319,6 +326,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowEndScreen()
     {
+        soundManager.PlaySound(SoundType.Success);
         Show(endingMessage);
     }
 

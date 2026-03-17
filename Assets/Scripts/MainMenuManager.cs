@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// This class manages the keyboard and mouse input.
-/// When the player interact with the game, it calls corresponding Actions.
-/// -IN- PlayerPieceManager | PreviewManager
+/// This class manages the main menu of the game.
+/// It manages the game start conditions, the credits and the quit actions.
+/// -OUT- PlayerPieceManager | PreviewManager | SoundManager
 /// </summary>
 public class MenuManager : MonoBehaviour
 {

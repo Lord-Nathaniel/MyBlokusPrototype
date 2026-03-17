@@ -2827,7 +2827,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 14fe11f536752dc4491e0a83d98ec382, type: 3}
   wrongSound:
   - {fileID: 8300000, guid: 53396cc8f5618e0448059193bd6a4df2, type: 3}
-  - {fileID: 8300000, guid: e56facbe346d5a84493a0a386945ed97, type: 3}
   audioSource: {fileID: 277464736}
 --- !u!4 &277464735
 Transform:
