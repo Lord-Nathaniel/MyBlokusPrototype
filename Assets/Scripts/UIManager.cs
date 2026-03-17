@@ -89,26 +89,44 @@ public class UIManager : MonoBehaviour
 
         startMessageButton.onClick.AddListener(() =>
         {
-            soundManager.PlaySound(SoundType.CassetteRecord);
-            gameManager.GameStart();
+            StartAction();
         });
 
         endMessageButton.onClick.AddListener(() =>
         {
-            soundManager.PlaySound(SoundType.CassetteRecord);
-            gameManager.GameEnd();
+            EndGameAction();
         });
 
         nextPlayerButton.onClick.AddListener(() =>
         {
-            soundManager.PlaySound(SoundType.Undo);
-            gameManager.NextPlayerTurn();
+            nextPlayerAction();
         });
 
         playerScoreSmartStringRefences.Add(FIRST_PLAYER_SCORE_REF);
         playerScoreSmartStringRefences.Add(SECOND_PLAYER_SCORE_REF);
         playerScoreSmartStringRefences.Add(THIRD_PLAYER_SCORE_REF);
         playerScoreSmartStringRefences.Add(FOURTH_PLAYER_SCORE_REF);
+    }
+
+    private void nextPlayerAction()
+    {
+        if (selectedButton != null)
+        {
+            soundManager.PlaySound(SoundType.Undo);
+            gameManager.NextPlayerTurn();
+        }
+    }
+
+    private void EndGameAction()
+    {
+        soundManager.PlaySound(SoundType.CassetteRecord);
+        gameManager.GameEnd();
+    }
+
+    private void StartAction()
+    {
+        soundManager.PlaySound(SoundType.CassetteRecord);
+        gameManager.GameStart();
     }
 
     /// <summary>
