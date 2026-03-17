@@ -22,6 +22,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     // Needed services
     private PlayerSetup playerSetup;
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -36,10 +37,11 @@ public class OptionsMenuManager : MonoBehaviour
     private void Start()
     {
         playerSetup = ServiceManager.Get<PlayerSetup>();
+        soundManager = ServiceManager.Get<SoundManager>();
 
         optionsCloseButton.onClick.AddListener(() =>
         {
-            Hide(optionsZone);
+            CloseOptionsAction();
         });
 
         languageButton.onClick.AddListener(() =>
@@ -47,6 +49,12 @@ public class OptionsMenuManager : MonoBehaviour
             ToggleLanguage();
         });
         InitOptions();
+    }
+
+    private void CloseOptionsAction()
+    {
+        soundManager.PlaySound(SoundType.ButtonPressed);
+        Hide(optionsZone);
     }
 
     private void InitOptions()
@@ -69,6 +77,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     public void ToggleLanguage()
     {
+        soundManager.PlaySound(SoundType.ButtonPressed);
         List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
 
         if (locales.Count == 0)
@@ -87,6 +96,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     public void UpdateSoundTextValue()
     {
+        soundManager.PlaySound(SoundType.Click);
         soundValueText.text = soundSlider.GetComponent<Slider>().value.ToString();
     }
 
@@ -95,6 +105,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     public void UpdateMusicTextValue()
     {
+        soundManager.PlaySound(SoundType.Click);
         musicValueText.text = musicSlider.GetComponent<Slider>().value.ToString();
     }
 

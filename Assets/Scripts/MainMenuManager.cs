@@ -70,6 +70,7 @@ public class MenuManager : MonoBehaviour
     // Needed services
     private PlayerSetup playerSetup;
     private OptionsMenuManager optionsMenuManager;
+    private SoundManager soundManager;
 
     private void Awake()
     {
@@ -86,6 +87,7 @@ public class MenuManager : MonoBehaviour
         fullscreenMaterial.SetColor(PLAYER_COLOR, new Color(0f, 0f, 0f, 0f));
         playerSetup = ServiceManager.Get<PlayerSetup>();
         optionsMenuManager = ServiceManager.Get<OptionsMenuManager>();
+        soundManager = ServiceManager.Get<SoundManager>();
 
         cellColors.Add(new Color(0.24f, 0.24f, 0.73f));
         cellColors.Add(new Color(0.73f, 0.06f, 0.06f));
@@ -125,13 +127,25 @@ public class MenuManager : MonoBehaviour
 
         creditsCloseButton.onClick.AddListener(() =>
         {
-            Hide(creditsZone);
+            CloseCreditsAction();
         });
 
         quitButton.onClick.AddListener(() =>
         {
-            Application.Quit();
+            QuitAction();
         });
+    }
+
+    private void QuitAction()
+    {
+        soundManager.PlaySound(SoundType.CassetteRecord);
+        Application.Quit();
+    }
+
+    private void CloseCreditsAction()
+    {
+        soundManager.PlaySound(SoundType.ButtonPressed);
+        Hide(creditsZone);
     }
 
     private void SetPlayerMenu(int i)
@@ -140,8 +154,8 @@ public class MenuManager : MonoBehaviour
         playerColors.Add(index);
         playerTextureIds.Add(0);
 
-        SelectPlayerColor(index, index);
-        SelectPlayerTexture(index, 0);
+        SelectPlayerColor(index, index, false);
+        SelectPlayerTexture(index, 0, false);
 
         playerColorButtons[index].onClick.AddListener(() =>
         {
@@ -158,7 +172,7 @@ public class MenuManager : MonoBehaviour
             int colorIndex = j;
             playerColorSelectZones[index].transform.GetChild(j).GetComponent<Button>().onClick.AddListener(() =>
             {
-                SelectPlayerColor(index, colorIndex);
+                SelectPlayerColor(index, colorIndex, true);
             });
         }
 
@@ -167,13 +181,15 @@ public class MenuManager : MonoBehaviour
             int textureIndex = k;
             playerTextureSelectZones[index].transform.GetChild(k).GetComponent<Button>().onClick.AddListener(() =>
             {
-                SelectPlayerTexture(index, textureIndex);
+                SelectPlayerTexture(index, textureIndex, true);
             });
         }
     }
 
     private void StartGameAction()
     {
+        soundManager.PlaySound(SoundType.ButtonPressed);
+
         playerSetup.AddPlayerSetting(0, playerInputFields[0].text, cellColors[playerColors[0]], playerTextureIds[0]);
         playerSetup.AddPlayerSetting(1, playerInputFields[1].text, cellColors[playerColors[1]], playerTextureIds[1]);
         if (playerThreeToggle.isOn)
@@ -188,6 +204,7 @@ public class MenuManager : MonoBehaviour
 
     private void CreditsAction()
     {
+        soundManager.PlaySound(SoundType.ButtonPressed);
         Hide(gameZone);
         Hide(optionsZone);
         Toggle(creditsZone);
@@ -195,6 +212,7 @@ public class MenuManager : MonoBehaviour
 
     private void OptionAction()
     {
+        soundManager.PlaySound(SoundType.ButtonPressed);
         Hide(gameZone);
         Hide(creditsZone);
         Toggle(optionsZone);
@@ -202,12 +220,13 @@ public class MenuManager : MonoBehaviour
 
     private void GameAction()
     {
+        soundManager.PlaySound(SoundType.ButtonPressed);
         Hide(optionsZone);
         Hide(creditsZone);
         Toggle(gameZone);
     }
 
-    private void SelectPlayerColor(int playerId, int colorID)
+    private void SelectPlayerColor(int playerId, int colorID, bool shouldSoundPlay)
     {
         Color color = cellColors[colorID];
         playerColors[playerId] = colorID;
@@ -234,10 +253,12 @@ public class MenuManager : MonoBehaviour
             runtimeMaterialInstanceTex.SetTexture("_MainTex", cellTextures[playerTextureIds[playerId]]);
             graphic.material = runtimeMaterialInstanceTex;
         }
+        if (shouldSoundPlay)
+            soundManager.PlaySound(SoundType.SprayCanPaint);
         Hide(playerColorSelectZones[playerId]);
     }
 
-    private void SelectPlayerTexture(int playerId, int textureID)
+    private void SelectPlayerTexture(int playerId, int textureID, bool shouldSoundPlay)
     {
         Texture2D selectedTexture = cellTextures[textureID];
         playerTextureIds[playerId] = textureID;
@@ -248,6 +269,9 @@ public class MenuManager : MonoBehaviour
         runtimeMaterialInstance.SetColor("_PlayerColor", cellColors[playerId]);
         runtimeMaterialInstance.SetTexture("_MainTex", selectedTexture);
         playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
+
+        if (shouldSoundPlay)
+            soundManager.PlaySound(SoundType.SprayCanPaint);
         Hide(playerTextureSelectZones[playerId]);
     }
 
@@ -256,6 +280,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void TogglePlayerThree()
     {
+        soundManager.PlaySound(SoundType.CheckButton);
         Toggle(playerThreeZone);
     }
 
@@ -264,6 +289,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void TogglePlayerFour()
     {
+        soundManager.PlaySound(SoundType.CheckButton);
         Toggle(playerFourZone);
     }
 
@@ -272,6 +298,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ToggleTextureButtons()
     {
+        soundManager.PlaySound(SoundType.CheckButton);
         for (int i = 0; i < playerTextureButtons.Count; i++)
         {
             Toggle(playerTextureButtons[i].transform.parent.gameObject);
