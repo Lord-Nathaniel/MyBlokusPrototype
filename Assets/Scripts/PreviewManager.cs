@@ -64,7 +64,8 @@ public class PreviewManager : MonoBehaviour
             squareGO.transform.localPosition = new Vector3((float)square.x, 0f, (float)square.y);
             squareGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             Renderer squareRenderer = squareGO.GetComponentInChildren<Renderer>();
-            squareRenderer.material.SetColor("_PlayerColor", playerColor);
+            Color newColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0.5f);
+            squareRenderer.material.SetColor("_PlayerColor", newColor);
         }
     }
 
@@ -111,10 +112,13 @@ public class PreviewManager : MonoBehaviour
     /// </summary>
     public void ModifyCursorOpacity(float opacity)
     {
-        //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
-        //{
-        //    cursorSquare.transform.GetChild(0).gameObject.SetActive(true);
-        //}
+        Transform preview = cellIndicatorParent.transform.GetChild(0);
+        for (int i = 0; i < preview.childCount; i++)
+        {
+            GameObject square = preview.GetChild(i).gameObject;
+            Renderer squareRenderer = square.GetComponentInChildren<Renderer>();
+            squareRenderer.material.SetFloat("_Opacity", opacity);
+        }
     }
 
     /// <summary>
@@ -152,12 +156,12 @@ public class PreviewManager : MonoBehaviour
             lastDetectedGridPosition = gridPosition;
             if (!playerPieceManager.CheckPlacementValidity(mousePosition))
             {
-                ModifyCursorColor(Color.red);
+                ModifyCursorOpacity(0.5f);
                 isPlayerColor = false;
             }
             else if (!isPlayerColor)
             {
-                ModifyCursorColor(playerColor);
+                ModifyCursorOpacity(1f);
                 isPlayerColor = true;
             }
         }

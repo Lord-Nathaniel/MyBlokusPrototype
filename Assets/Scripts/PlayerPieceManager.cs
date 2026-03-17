@@ -111,7 +111,7 @@ public class PlayerPieceManager : MonoBehaviour
             gridManager.RemoveTempPlayerPiece();
         }
 
-        previewManager.ModifyCursorOpacity();
+        previewManager.ModifyCursorOpacity(1f);
 
         gridManager.AddTempPlayerPiece(selectedObjectID, currentPlayerID, currentPlayerColor);
         if (!isPiecePlaced)
