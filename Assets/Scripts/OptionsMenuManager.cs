@@ -72,7 +72,7 @@ public class OptionsMenuManager : MonoBehaviour
 
             soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
             musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
-            UpdateSoundTextValue();
+            UpdateSoundValue();
             UpdateMusicTextValue();
         }
     }
@@ -99,10 +99,12 @@ public class OptionsMenuManager : MonoBehaviour
     /// <summary>
     /// Update the sound value text when the slider value changes.
     /// </summary>
-    public void UpdateSoundTextValue()
+    public void UpdateSoundValue()
     {
+        float newSoundVolume = soundSlider.GetComponent<Slider>().value;
         soundManager.PlaySound(SoundType.Click);
         soundValueText.text = soundSlider.GetComponent<Slider>().value.ToString();
+        soundManager.GetComponent<AudioSource>().volume = newSoundVolume / 10;
     }
 
     /// <summary>

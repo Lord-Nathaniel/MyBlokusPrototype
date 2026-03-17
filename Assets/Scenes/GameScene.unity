@@ -351,7 +351,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1843128238}
         m_TargetAssemblyTypeName: OptionsMenuManager, Assembly-CSharp
-        m_MethodName: UpdateSoundTextValue
+        m_MethodName: UpdateSoundValue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
