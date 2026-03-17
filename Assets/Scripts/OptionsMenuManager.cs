@@ -46,14 +46,17 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void InitOptions()
     {
-        soundVolume = playerSetup.optionsSettings.soundVolume;
-        musicVolume = playerSetup.optionsSettings.musicVolume;
-        currentLanguageIndex = playerSetup.optionsSettings.languageIndex;
+        if (playerSetup.optionsSettings != null)
+        {
+            soundVolume = playerSetup.optionsSettings.soundVolume;
+            musicVolume = playerSetup.optionsSettings.musicVolume;
+            currentLanguageIndex = playerSetup.optionsSettings.languageIndex;
 
-        soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
-        musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
-        UpdateSoundTextValue();
-        UpdateMusicTextValue();
+            soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
+            musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
+            UpdateSoundTextValue();
+            UpdateMusicTextValue();
+        }
     }
 
     /// <summary>

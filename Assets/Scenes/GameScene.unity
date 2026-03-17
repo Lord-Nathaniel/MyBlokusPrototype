@@ -349,8 +349,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 1843128238}
+        m_TargetAssemblyTypeName: OptionsMenuManager, Assembly-CSharp
         m_MethodName: UpdateSoundTextValue
         m_Mode: 1
         m_Arguments:
@@ -2240,8 +2240,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 1843128238}
+        m_TargetAssemblyTypeName: OptionsMenuManager, Assembly-CSharp
         m_MethodName: UpdateMusicTextValue
         m_Mode: 1
         m_Arguments:
@@ -9185,13 +9185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7179accf62c6a2148ab6a221f6c45fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  optionsZone: {fileID: 0}
-  optionsCloseButton: {fileID: 0}
-  soundSlider: {fileID: 0}
-  soundValueText: {fileID: 0}
-  musicSlider: {fileID: 0}
-  musicValueText: {fileID: 0}
-  languageButton: {fileID: 0}
+  optionsZone: {fileID: 920389964}
+  optionsCloseButton: {fileID: 534456587}
+  soundSlider: {fileID: 56497129}
+  soundValueText: {fileID: 763668708}
+  musicSlider: {fileID: 564288694}
+  musicValueText: {fileID: 1732600553}
+  languageButton: {fileID: 2056891082}
 --- !u!1 &1869259773
 GameObject:
   m_ObjectHideFlags: 0
