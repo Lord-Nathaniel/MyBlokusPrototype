@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// -IN- PlayerPieceManager from StartPlacement() and StopPlacement()
     /// </summary>
-    public event Action OnLeftClicked, OnMiddleClicked, OnRightClicked, OnExit;
+    public event Action OnLeftClicked, OnMiddleClicked, OnRightClicked, OnEscapeClicked;
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
             OnLeftClicked?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.Escape))
-            OnExit?.Invoke();
+            OnEscapeClicked?.Invoke();
 
         if (Input.GetMouseButtonDown(1))
             OnRightClicked?.Invoke();

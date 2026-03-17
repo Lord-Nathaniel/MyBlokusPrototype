@@ -118,11 +118,6 @@ public class MenuManager : MonoBehaviour
             OptionAction();
         });
 
-        optionsCloseButton.onClick.AddListener(() =>
-        {
-            Hide(optionsZone);
-        });
-
         creditsButton.onClick.AddListener(() =>
         {
             CreditsAction();

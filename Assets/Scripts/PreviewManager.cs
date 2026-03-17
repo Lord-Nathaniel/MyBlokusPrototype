@@ -109,7 +109,7 @@ public class PreviewManager : MonoBehaviour
     /// <summary>
     /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
-    public void ModifyCursorOpacity()
+    public void ModifyCursorOpacity(float opacity)
     {
         //foreach (GameObject cursorSquare in cellIndicatorParent.transform.GetChild(0))
         //{

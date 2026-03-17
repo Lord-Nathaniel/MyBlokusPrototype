@@ -37,6 +37,11 @@ public class OptionsMenuManager : MonoBehaviour
     {
         playerSetup = ServiceManager.Get<PlayerSetup>();
 
+        optionsCloseButton.onClick.AddListener(() =>
+        {
+            Hide(optionsZone);
+        });
+
         languageButton.onClick.AddListener(() =>
         {
             ToggleLanguage();
@@ -101,5 +106,9 @@ public class OptionsMenuManager : MonoBehaviour
         playerSetup.AddOptionsSetting(soundSlider.GetComponent<Slider>().value,
                                   musicSlider.GetComponent<Slider>().value,
                                   currentLanguageIndex);
+    }
+    private void Hide(GameObject toHide)
+    {
+        toHide.SetActive(false);
     }
 }

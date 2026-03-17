@@ -86,7 +86,6 @@ public class PlayerPieceManager : MonoBehaviour
         }
         gridVisualization.SetActive(true);
         inputManager.OnLeftClicked += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
         inputManager.OnRightClicked += RotatePlayerPiece;
         inputManager.OnMiddleClicked += MirrorPlayerPiece;
     }
@@ -177,7 +176,6 @@ public class PlayerPieceManager : MonoBehaviour
         cellIndicatorParent.SetActive(false);
         previewManager.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;
-        inputManager.OnExit -= StopPlacement;
         inputManager.OnRightClicked -= RotatePlayerPiece;
         inputManager.OnMiddleClicked -= MirrorPlayerPiece;
     }
