@@ -9,6 +9,8 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private List<AudioClip> funkMusic;
     [SerializeField] private AudioSource audioSource;
 
+    private int currentMusic = 0;
+
     private void Awake()
     {
         ServiceManager.Register(this);
@@ -24,17 +26,24 @@ public class MusicManager : MonoBehaviour
     /// Plays the needed music from the calling element.
     /// </summary>
     /// <param name="musicType"></param>
-    public void PlaySound(MusicType musicType)
+    public void PlayMusic(MusicType musicType)
     {
-        int i;
         switch (musicType)
         {
             case MusicType.FunkMusic:
-                i = Random.Range(0, funkMusic.Count);
-                audioSource.PlayOneShot(funkMusic[i]);
+                audioSource.PlayOneShot(funkMusic[currentMusic]);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void Update()
+    {
+        if (!audioSource.isPlaying)
+        {
+            currentMusic++;
+            PlayMusic(MusicType.FunkMusic);
         }
     }
 }
