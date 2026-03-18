@@ -238,6 +238,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case State.PlayerTurn:
+                Debug.Log("PalyerTurn");
                 uiManager.HideStartScreen();
                 uiManager.GeneratePlayerPieceButtons(
                     currentPlayers[currentPlayerID].playerColor,

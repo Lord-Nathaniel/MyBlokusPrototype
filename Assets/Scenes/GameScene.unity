@@ -253,6 +253,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 63f6f6f0b1bde5c46af2419dc836b3fd, type: 3}
   - {fileID: 21300000, guid: 4c26b011f3c9e7a4588ca67bac360642, type: 3}
   - {fileID: 21300000, guid: d5f1b80faccc42645a639303f2fe86ef, type: 3}
+  gameCanvas: {fileID: 1406940878}
   startingMessage: {fileID: 1536989884}
   startMessageButton: {fileID: 1993690412}
   endingMessage: {fileID: 1306762190}
@@ -5226,7 +5227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6203,7 +6204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

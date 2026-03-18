@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Sprite> remainingPlayerPieces;
 
     [Header("Start & End Settings")]
+    [SerializeField] private GameObject gameCanvas;
     [SerializeField] private GameObject startingMessage;
     [SerializeField] private Button startMessageButton;
     [SerializeField] private GameObject endingMessage;
@@ -321,13 +322,23 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Update the screen border with the current player color.
+    /// -IN- GameManager from SwitchState()
+    /// </summary>
+    public void UpdateScreenColor(Color playerColor)
+    {
+        fullscreenMaterial.SetColor(PLAYER_COLOR, playerColor);
+        cellHighlightMaterial.SetColor(INLINE_COLOR, playerColor);
+    }
+
+    /// <summary>
     /// Show all UI elements needed for the start of the game.
     /// -IN- GameManager from SwitchState()
     /// </summary>
     public void ShowStartScreen()
     {
-        Debug.Log("[UIManager]ShowStartScreen()");
         Show(startingMessage);
+        Hide(gameCanvas);
     }
 
     /// <summary>
@@ -337,6 +348,7 @@ public class UIManager : MonoBehaviour
     public void HideStartScreen()
     {
         Hide(startingMessage);
+        Show(gameCanvas);
     }
 
     /// <summary>
@@ -347,6 +359,7 @@ public class UIManager : MonoBehaviour
     {
         soundManager.PlaySound(SoundType.Success);
         Show(endingMessage);
+        Hide(gameCanvas);
     }
 
     private void Show(GameObject toShow)
@@ -357,11 +370,5 @@ public class UIManager : MonoBehaviour
     private void Hide(GameObject toHide)
     {
         toHide.SetActive(false);
-    }
-
-    internal void UpdateScreenColor(Color playerColor)
-    {
-        fullscreenMaterial.SetColor(PLAYER_COLOR, playerColor);
-        cellHighlightMaterial.SetColor(INLINE_COLOR, playerColor);
     }
 }
