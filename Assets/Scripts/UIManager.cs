@@ -120,13 +120,13 @@ public class UIManager : MonoBehaviour
 
     private void EndGameAction()
     {
-        soundManager.PlaySound(SoundType.CassetteRecord);
+        soundManager.PlaySound(SoundType.CassetteRecordClick);
         gameManager.GameEnd();
     }
 
     private void StartAction()
     {
-        soundManager.PlaySound(SoundType.CassetteRecord);
+        soundManager.PlaySound(SoundType.CassetteRecordClick);
         gameManager.GameStart();
     }
 
@@ -357,7 +357,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowEndScreen()
     {
-        soundManager.PlaySound(SoundType.Success);
+        soundManager.PlaySound(SoundType.SucessFanfare);
         Show(endingMessage);
         Hide(gameCanvas);
     }

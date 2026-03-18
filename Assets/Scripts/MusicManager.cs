@@ -6,8 +6,7 @@ using UnityEngine;
 /// </summary>
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip clickSound, cassetteRecordSound, checkButtonSound, mirrorSound, successSound, undoSound;
-    [SerializeField] private List<AudioClip> buttonPressSound, sprayCanPaintSound, swooshSound, wrongSound;
+    [SerializeField] private List<AudioClip> funkMusic;
     [SerializeField] private AudioSource audioSource;
 
     private void Awake()
@@ -30,10 +29,10 @@ public class MusicManager : MonoBehaviour
         int i;
         switch (musicType)
         {
-            //case MusicType.Wrong:
-            //    i = Random.Range(0, wrongSound.Count);
-            //    audioSource.PlayOneShot(wrongSound[i]);
-            //    break;
+            case MusicType.FunkMusic:
+                i = Random.Range(0, funkMusic.Count);
+                audioSource.PlayOneShot(funkMusic[i]);
+                break;
             default:
                 break;
         }
@@ -42,5 +41,5 @@ public class MusicManager : MonoBehaviour
 
 public enum MusicType
 {
-
+    FunkMusic
 }

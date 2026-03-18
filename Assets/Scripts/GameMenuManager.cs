@@ -60,19 +60,19 @@ public class GameMenuManager : MonoBehaviour
 
     private void OpenOptionsAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Toggle(optionsZone);
     }
 
     private void CloseOptionsAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         HideMenu();
     }
 
     private void GoToMenuScene()
     {
-        soundManager.PlaySound(SoundType.CassetteRecord);
+        soundManager.PlaySound(SoundType.CassetteRecordClick);
         SceneManager.LoadScene(MENU_SCENE);
     }
 

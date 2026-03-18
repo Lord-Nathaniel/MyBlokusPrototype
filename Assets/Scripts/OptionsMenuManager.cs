@@ -58,7 +58,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void CloseOptionsAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Hide(optionsZone);
     }
 
@@ -82,7 +82,7 @@ public class OptionsMenuManager : MonoBehaviour
     /// </summary>
     public void ToggleLanguage()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
 
         if (locales.Count == 0)

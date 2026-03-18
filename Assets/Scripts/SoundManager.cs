@@ -6,8 +6,20 @@ using UnityEngine;
 /// </summary>
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip clickSound, cassetteRecordSound, checkButtonSound, mirrorSound, successSound, undoSound;
-    [SerializeField] private List<AudioClip> buttonPressSound, sprayCanPaintSound, swooshSound, wrongSound;
+    [SerializeField]
+    private List<AudioClip> buttonPressSounds,
+        cancelSounds,
+        checkButtonClickSounds,
+        cassetteRecordClickSounds,
+        chessPieceSounds,
+        clickSounds,
+        notificationSounds,
+        mirrorSounds,
+        sprayCanPaintSounds,
+        sucessFanfareSounds,
+        swooshSounds,
+        undoSounds,
+        wrongSounds;
     [SerializeField] private AudioSource audioSource;
 
     private void Awake()
@@ -30,39 +42,57 @@ public class SoundManager : MonoBehaviour
         int i;
         switch (soundtype)
         {
+            case SoundType.ButtonPress:
+                i = Random.Range(0, buttonPressSounds.Count);
+                audioSource.PlayOneShot(buttonPressSounds[i]);
+                break;
+            case SoundType.Cancel:
+                i = Random.Range(0, cancelSounds.Count);
+                audioSource.PlayOneShot(cancelSounds[i]);
+                break;
+            case SoundType.CheckButtonClick:
+                i = Random.Range(0, checkButtonClickSounds.Count);
+                audioSource.PlayOneShot(checkButtonClickSounds[i]);
+                break;
+            case SoundType.CassetteRecordClick:
+                i = Random.Range(0, cassetteRecordClickSounds.Count);
+                audioSource.PlayOneShot(cassetteRecordClickSounds[i]);
+                break;
+            case SoundType.ChessPiece:
+                i = Random.Range(0, chessPieceSounds.Count);
+                audioSource.PlayOneShot(chessPieceSounds[i]);
+                break;
             case SoundType.Click:
-                audioSource.PlayOneShot(clickSound);
+                i = Random.Range(0, clickSounds.Count);
+                audioSource.PlayOneShot(clickSounds[i]);
                 break;
-            case SoundType.CassetteRecord:
-                audioSource.PlayOneShot(cassetteRecordSound);
-                break;
-            case SoundType.CheckButton:
-                audioSource.PlayOneShot(checkButtonSound);
+            case SoundType.Notification:
+                i = Random.Range(0, notificationSounds.Count);
+                audioSource.PlayOneShot(notificationSounds[i]);
                 break;
             case SoundType.Mirror:
-                audioSource.PlayOneShot(mirrorSound);
-                break;
-            case SoundType.Success:
-                audioSource.PlayOneShot(successSound);
-                break;
-            case SoundType.Undo:
-                audioSource.PlayOneShot(undoSound);
-                break;
-            case SoundType.ButtonPressed:
-                i = Random.Range(0, buttonPressSound.Count);
-                audioSource.PlayOneShot(buttonPressSound[i]);
+                i = Random.Range(0, mirrorSounds.Count);
+                audioSource.PlayOneShot(mirrorSounds[i]);
                 break;
             case SoundType.SprayCanPaint:
-                i = Random.Range(0, sprayCanPaintSound.Count);
-                audioSource.PlayOneShot(sprayCanPaintSound[i]);
+                i = Random.Range(0, sprayCanPaintSounds.Count);
+                audioSource.PlayOneShot(sprayCanPaintSounds[i]);
+                break;
+            case SoundType.SucessFanfare:
+                i = Random.Range(0, sucessFanfareSounds.Count);
+                audioSource.PlayOneShot(sucessFanfareSounds[i]);
                 break;
             case SoundType.Swoosh:
-                i = Random.Range(0, swooshSound.Count);
-                audioSource.PlayOneShot(swooshSound[i]);
+                i = Random.Range(0, swooshSounds.Count);
+                audioSource.PlayOneShot(swooshSounds[i]);
+                break;
+            case SoundType.Undo:
+                i = Random.Range(0, undoSounds.Count);
+                audioSource.PlayOneShot(undoSounds[i]);
                 break;
             case SoundType.Wrong:
-                i = Random.Range(0, wrongSound.Count);
-                audioSource.PlayOneShot(wrongSound[i]);
+                i = Random.Range(0, wrongSounds.Count);
+                audioSource.PlayOneShot(wrongSounds[i]);
                 break;
             default:
                 break;
@@ -72,14 +102,17 @@ public class SoundManager : MonoBehaviour
 
 public enum SoundType
 {
+    ButtonPress,
+    Cancel,
+    CheckButtonClick,
+    CassetteRecordClick,
+    ChessPiece,
     Click,
-    CassetteRecord,
-    CheckButton,
+    Notification,
     Mirror,
-    Success,
-    Undo,
-    ButtonPressed,
     SprayCanPaint,
+    SucessFanfare,
     Swoosh,
+    Undo,
     Wrong
 }

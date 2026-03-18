@@ -138,13 +138,13 @@ public class MenuManager : MonoBehaviour
 
     private void QuitAction()
     {
-        soundManager.PlaySound(SoundType.CassetteRecord);
+        soundManager.PlaySound(SoundType.CassetteRecordClick);
         Application.Quit();
     }
 
     private void CloseCreditsAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Hide(creditsZone);
     }
 
@@ -188,7 +188,7 @@ public class MenuManager : MonoBehaviour
 
     private void StartGameAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
 
         playerSetup.AddPlayerSetting(0, playerInputFields[0].text, cellColors[playerColors[0]], playerTextureIds[0]);
         playerSetup.AddPlayerSetting(1, playerInputFields[1].text, cellColors[playerColors[1]], playerTextureIds[1]);
@@ -204,7 +204,7 @@ public class MenuManager : MonoBehaviour
 
     private void CreditsAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Hide(gameZone);
         Hide(optionsZone);
         Toggle(creditsZone);
@@ -212,7 +212,7 @@ public class MenuManager : MonoBehaviour
 
     private void OptionAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Hide(gameZone);
         Hide(creditsZone);
         Toggle(optionsZone);
@@ -220,7 +220,7 @@ public class MenuManager : MonoBehaviour
 
     private void GameAction()
     {
-        soundManager.PlaySound(SoundType.ButtonPressed);
+        soundManager.PlaySound(SoundType.ButtonPress);
         Hide(optionsZone);
         Hide(creditsZone);
         Toggle(gameZone);
@@ -280,7 +280,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void TogglePlayerThree()
     {
-        soundManager.PlaySound(SoundType.CheckButton);
+        soundManager.PlaySound(SoundType.CheckButtonClick);
         Toggle(playerThreeZone);
     }
 
@@ -289,7 +289,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void TogglePlayerFour()
     {
-        soundManager.PlaySound(SoundType.CheckButton);
+        soundManager.PlaySound(SoundType.CheckButtonClick);
         Toggle(playerFourZone);
     }
 
@@ -298,7 +298,7 @@ public class MenuManager : MonoBehaviour
     /// </summary>
     public void ToggleTextureButtons()
     {
-        soundManager.PlaySound(SoundType.CheckButton);
+        soundManager.PlaySound(SoundType.CheckButtonClick);
         for (int i = 0; i < playerTextureButtons.Count; i++)
         {
             Toggle(playerTextureButtons[i].transform.parent.gameObject);

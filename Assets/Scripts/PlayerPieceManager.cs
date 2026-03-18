@@ -107,7 +107,7 @@ public class PlayerPieceManager : MonoBehaviour
             soundManager.PlaySound(SoundType.Wrong);
             return;
         }
-        soundManager.PlaySound(SoundType.CheckButton);
+        soundManager.PlaySound(SoundType.CheckButtonClick);
 
         if (isPiecePlaced)
         {
