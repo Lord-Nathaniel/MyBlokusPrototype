@@ -237,12 +237,12 @@ public class MenuManager : MonoBehaviour
         playerOneColorButtonMaterial.color = color;
         playerOneColorButtonGraphic.material = playerOneColorButtonMaterial;
 
-        Graphic playerOneTextureButtonGraphic = playerTextureButtons[playerId].GetComponent<Graphic>();
+        Graphic playerTextureButtonGraphic = playerTextureButtons[playerId].GetComponent<Graphic>();
 
         Material runtimeMaterialInstance = new Material(playerColorSwap);
         runtimeMaterialInstance.SetColor("_PlayerColor", color);
         runtimeMaterialInstance.SetTexture("_MainTex", cellTextures[playerTextureIds[playerId]]);
-        playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
+        playerTextureButtonGraphic.material = runtimeMaterialInstance;
 
         for (int i = 0; i < playerTextureSelectZones[playerId].transform.childCount; i++)
         {
@@ -263,12 +263,12 @@ public class MenuManager : MonoBehaviour
         Texture2D selectedTexture = cellTextures[textureID];
         playerTextureIds[playerId] = textureID;
 
-        Graphic playerOneTextureButtonGraphic = playerTextureButtons[playerId].GetComponent<Graphic>();
+        Graphic graphic = playerTextureButtons[playerId].GetComponent<Graphic>();
 
         Material runtimeMaterialInstance = new Material(playerColorSwap);
-        runtimeMaterialInstance.SetColor("_PlayerColor", cellColors[playerId]);
+        runtimeMaterialInstance.SetColor("_PlayerColor", cellColors[playerColors[playerId]]);
         runtimeMaterialInstance.SetTexture("_MainTex", selectedTexture);
-        playerOneTextureButtonGraphic.material = runtimeMaterialInstance;
+        graphic.material = runtimeMaterialInstance;
 
         if (shouldSoundPlay)
             soundManager.PlaySound(SoundType.SprayCanPaint);
