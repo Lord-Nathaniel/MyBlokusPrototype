@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance { get; private set; }
+
     [SerializeField]
     private List<AudioClip> buttonPressSounds,
         cancelSounds,
@@ -24,6 +26,13 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         ServiceManager.Register(this);
         DontDestroyOnLoad(gameObject);
     }

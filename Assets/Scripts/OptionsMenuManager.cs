@@ -80,7 +80,7 @@ public class OptionsMenuManager : MonoBehaviour
         else
         {
             soundVolume = 8f;
-            musicVolume = 5f;
+            musicVolume = 4f;
 
             soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
             musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);

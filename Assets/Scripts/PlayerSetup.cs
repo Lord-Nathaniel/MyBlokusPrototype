@@ -9,11 +9,20 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class PlayerSetup : MonoBehaviour
 {
+    public static PlayerSetup Instance { get; private set; }
+
     public List<PlayerSetting> playerSettings { get; private set; }
     public OptionsSettings optionsSettings { get; private set; }
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         ServiceManager.Register(this);
         DontDestroyOnLoad(gameObject);
     }

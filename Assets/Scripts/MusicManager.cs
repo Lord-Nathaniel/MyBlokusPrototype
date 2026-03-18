@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager Instance { get; private set; }
+
     [SerializeField] private List<AudioClip> funkMusic;
     [SerializeField] private AudioSource audioSource;
 
@@ -13,6 +15,13 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         ServiceManager.Register(this);
         DontDestroyOnLoad(gameObject);
     }
@@ -28,13 +37,17 @@ public class MusicManager : MonoBehaviour
     /// <param name="musicType"></param>
     public void PlayMusic(MusicType musicType)
     {
-        switch (musicType)
+        if (!audioSource.isPlaying)
         {
-            case MusicType.FunkMusic:
-                audioSource.PlayOneShot(funkMusic[currentMusic]);
-                break;
-            default:
-                break;
+            switch (musicType)
+            {
+                case MusicType.FunkMusic:
+                    audioSource.resource = funkMusic[currentMusic];
+                    audioSource.Play();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
