@@ -71,6 +71,7 @@ public class MenuManager : MonoBehaviour
     private PlayerSetup playerSetup;
     private OptionsMenuManager optionsMenuManager;
     private SoundManager soundManager;
+    private MusicManager musicManager;
 
     private void Awake()
     {
@@ -88,6 +89,9 @@ public class MenuManager : MonoBehaviour
         playerSetup = ServiceManager.Get<PlayerSetup>();
         optionsMenuManager = ServiceManager.Get<OptionsMenuManager>();
         soundManager = ServiceManager.Get<SoundManager>();
+        musicManager = ServiceManager.Get<MusicManager>();
+
+        musicManager.PlayMusic(MusicType.FunkMusic);
 
         cellColors.Add(new Color(0.24f, 0.24f, 0.73f));
         cellColors.Add(new Color(0.73f, 0.06f, 0.06f));

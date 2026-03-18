@@ -28,6 +28,7 @@ public class OptionsMenuManager : MonoBehaviour
     // Needed services
     private PlayerSetup playerSetup;
     private SoundManager soundManager;
+    private MusicManager musicManager;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         playerSetup = ServiceManager.Get<PlayerSetup>();
         soundManager = ServiceManager.Get<SoundManager>();
+        musicManager = ServiceManager.Get<MusicManager>();
 
         optionsCloseButton.onClick.AddListener(() =>
         {
@@ -73,7 +75,17 @@ public class OptionsMenuManager : MonoBehaviour
             soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
             musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
             UpdateSoundValue();
-            UpdateMusicTextValue();
+            UpdateMusicValue();
+        }
+        else
+        {
+            soundVolume = 8f;
+            musicVolume = 5f;
+
+            soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
+            musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
+            UpdateSoundValue();
+            UpdateMusicValue();
         }
     }
 
@@ -103,17 +115,19 @@ public class OptionsMenuManager : MonoBehaviour
     {
         float newSoundVolume = soundSlider.GetComponent<Slider>().value;
         soundManager.PlaySound(SoundType.Click);
-        soundValueText.text = soundSlider.GetComponent<Slider>().value.ToString();
+        soundValueText.text = newSoundVolume.ToString();
         soundManager.GetComponent<AudioSource>().volume = newSoundVolume / 10;
     }
 
     /// <summary>
     /// Update the music value text when the slider value changes.
     /// </summary>
-    public void UpdateMusicTextValue()
+    public void UpdateMusicValue()
     {
+        float newMusicVolume = musicSlider.GetComponent<Slider>().value;
         soundManager.PlaySound(SoundType.Click);
-        musicValueText.text = musicSlider.GetComponent<Slider>().value.ToString();
+        musicValueText.text = newMusicVolume.ToString();
+        musicManager.GetComponent<AudioSource>().volume = newMusicVolume / 10;
     }
 
     /// <summary>
