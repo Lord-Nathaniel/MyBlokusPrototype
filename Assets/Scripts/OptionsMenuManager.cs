@@ -75,7 +75,7 @@ public class OptionsMenuManager : MonoBehaviour
         else
         {
             soundVolume = 8f;
-            musicVolume = 4f;
+            musicVolume = 3f;
         }
         soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
         soundValueText.text = soundVolume.ToString();

@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
     {
         if (selectedButton != null)
         {
-            soundManager.PlaySound(SoundType.Undo);
+            soundManager.PlaySound(SoundType.ButtonPress);
             gameManager.NextPlayerTurn();
         }
     }
@@ -188,7 +188,6 @@ public class UIManager : MonoBehaviour
                 Button newButton = GenerateNewPieceButton(playerColor, playerPiece);
                 newButton.onClick.AddListener(() =>
                 {
-                    soundManager.PlaySound(SoundType.Click);
                     OnClickPieceAction(newButton, playerPiece.ID);
                 });
             }
@@ -197,7 +196,6 @@ public class UIManager : MonoBehaviour
         Button passButton = GeneratePassButton(playerColor);
         passButton.onClick.AddListener(() =>
         {
-            soundManager.PlaySound(SoundType.Undo);
             OnClickPassAction(passButton);
         });
     }
@@ -227,12 +225,14 @@ public class UIManager : MonoBehaviour
     {
         if (selectedButton == passButton)
         {
+            soundManager.PlaySound(SoundType.Cancel);
             Hide(selectedButton.transform.GetChild(0).gameObject);
             selectedButton = null;
         }
 
         else if (selectedButton != null)
         {
+            soundManager.PlaySound(SoundType.Notification);
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
             gridManager.RemoveTempPlayerPiece();
@@ -243,6 +243,7 @@ public class UIManager : MonoBehaviour
 
         else
         {
+            soundManager.PlaySound(SoundType.Notification);
             selectedButton = passButton;
             Show(passButton.transform.GetChild(0).gameObject);
         }
@@ -276,6 +277,7 @@ public class UIManager : MonoBehaviour
     {
         if (selectedButton == button)
         {
+            soundManager.PlaySound(SoundType.Cancel);
             Hide(selectedButton.transform.GetChild(0).gameObject);
             playerPieceManager.StopPlacement();
             gridManager.RemoveTempPlayerPiece();
@@ -288,12 +290,14 @@ public class UIManager : MonoBehaviour
             playerPieceManager.StopPlacement();
             gridManager.RemoveTempPlayerPiece();
 
+            soundManager.PlaySound(SoundType.Cancel);
             playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor, currentPlayerID);
             selectedButton = button;
             Show(button.transform.GetChild(0).gameObject);
         }
         else
         {
+            soundManager.PlaySound(SoundType.Click);
             playerPieceManager.StartPlacement(playerPieceID, currentPlayerColor, currentPlayerID);
             selectedButton = button;
             Show(button.transform.GetChild(0).gameObject);
@@ -337,6 +341,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowStartScreen()
     {
+        soundManager.PlaySound(SoundType.Notification);
         Show(startingMessage);
         Hide(gameCanvas);
     }
