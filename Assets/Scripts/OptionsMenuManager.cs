@@ -71,22 +71,19 @@ public class OptionsMenuManager : MonoBehaviour
             soundVolume = playerSetup.optionsSettings.soundVolume;
             musicVolume = playerSetup.optionsSettings.musicVolume;
             currentLanguageIndex = playerSetup.optionsSettings.languageIndex;
-
-            soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
-            musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
-            UpdateSoundValue();
-            UpdateMusicValue();
         }
         else
         {
             soundVolume = 8f;
             musicVolume = 4f;
-
-            soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
-            musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
-            UpdateSoundValue();
-            UpdateMusicValue();
         }
+        soundSlider.GetComponent<Slider>().SetValueWithoutNotify(soundVolume);
+        soundValueText.text = soundVolume.ToString();
+        soundManager.GetComponent<AudioSource>().volume = soundVolume / 10;
+
+        musicSlider.GetComponent<Slider>().SetValueWithoutNotify(musicVolume);
+        musicValueText.text = musicVolume.ToString();
+        musicManager.GetComponent<AudioSource>().volume = musicVolume / 10;
     }
 
     /// <summary>
