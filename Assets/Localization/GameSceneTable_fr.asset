@@ -31,16 +31,17 @@ MonoBehaviour:
       m_Items:
       - rid: 2847205408445562988
   - m_Id: 5612518019571712
-    m_Localized: "{global.thirdPlayerName} est troisi\xE8me, avec {global.thirdPlayerScore:plural:{}
-      point|{}points} et {global.thirdPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{}
-      pi\xE8ces plac\xE9es}."
+    m_Localized: "{global.isThirdPlayerActive:choose(True):{global.thirdPlayerName}
+      est troisi\xE8me, avec {global.thirdPlayerScore:plural:{} point|{}points} et
+      {global.thirdPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{} pi\xE8ces plac\xE9es}.}"
     m_Metadata:
       m_Items:
       - rid: 2847205408445562988
   - m_Id: 5612547585220608
-    m_Localized: "{global.fourthPlayerName} est quatri\xE8me, avec {global.fourthPlayerScore:plural:{}
-      point|{}points} et {global.fourthPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{}
-      pi\xE8ces plac\xE9es}."
+    m_Localized: "{global.isFourthPlayerActive:choose(True):{global.fourthPlayerName}
+      est quatri\xE8me, avec {global.fourthPlayerScore:plural:{} point|{}points}
+      et {global.fourthPlayerPlacedPieces:plural:{} pi\xE8ce plac\xE9e|{} pi\xE8ces
+      plac\xE9es}.}"
     m_Metadata:
       m_Items:
       - rid: 2847205408445562988

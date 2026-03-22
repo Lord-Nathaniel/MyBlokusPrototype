@@ -155,7 +155,7 @@ public class PreviewManager : MonoBehaviour
         if (lastDetectedGridPosition != gridPosition)
         {
             lastDetectedGridPosition = gridPosition;
-            if (!playerPieceManager.CheckPlacementValidity(mousePosition))
+            if (!playerPieceManager.CheckPlacementValidity(mousePosition, false))
             {
                 ModifyCursorOpacity(0.5f);
                 isPlayerColor = false;

@@ -55,7 +55,7 @@ public class MusicManager : MonoBehaviour
     {
         if (!audioSource.isPlaying)
         {
-            currentMusic++;
+            currentMusic = (currentMusic + 1) % funkMusic.Count;
             PlayMusic(MusicType.FunkMusic);
         }
     }

@@ -38,16 +38,16 @@ MonoBehaviour:
       m_Items:
       - rid: 2847205408445562974
   - m_Id: 5612518019571712
-    m_Localized: '{global.thirdPlayerName} is third, with {global.thirdPlayerScore:plural:{}
-      point |{} points} and {global.thirdPlayerPlacedPieces:plural:{} placed piece|{}
-      placed pieces}.'
+    m_Localized: '{global.isThirdPlayerActive:choose(True):{global.thirdPlayerName}
+      is third, with {global.thirdPlayerScore:plural:{} point |{} points} and {global.thirdPlayerPlacedPieces:plural:{}
+      placed piece|{} placed pieces}.}'
     m_Metadata:
       m_Items:
       - rid: 2847205408445562974
   - m_Id: 5612547585220608
-    m_Localized: '{global.isFourthPlayerActive:choose(False|True): NULL | {{global.fourthPlayerName}
+    m_Localized: '{global.isFourthPlayerActive:choose(True):{global.fourthPlayerName}
       is fourth, with {global.fourthPlayerScore:plural:{} point |{} points} and {global.fourthPlayerPlacedPieces:plural:{}
-      placed piece|{} placed pieces}.}}'
+      placed piece|{} placed pieces}.}'
     m_Metadata:
       m_Items:
       - rid: 2847205408445562974

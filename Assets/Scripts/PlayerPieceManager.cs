@@ -98,7 +98,7 @@ public class PlayerPieceManager : MonoBehaviour
             return;
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
 
-        bool placementValidity = CheckPlacementValidity(mousePosition);
+        bool placementValidity = CheckPlacementValidity(mousePosition, true);
         if (!placementValidity)
         {
             soundManager.PlaySound(SoundType.Wrong);
@@ -122,7 +122,7 @@ public class PlayerPieceManager : MonoBehaviour
     /// Thi helps to remember the current state of piece rotation.
     /// -IN- PreviewManager from Update()
     /// </summary>
-    public bool CheckPlacementValidity(Vector3 mousePosition)
+    public bool CheckPlacementValidity(Vector3 mousePosition, bool shouldPlacePiece)
     {
         if (selectedObjectID == -1)
             return false;
@@ -131,7 +131,8 @@ public class PlayerPieceManager : MonoBehaviour
                                             database.playerPieces[selectedObjectID].ID,
                                             selectedObjectRotation,
                                             isSelectedObjectMirrored,
-                                            currentPlayerID);
+                                            currentPlayerID,
+                                            shouldPlacePiece);
     }
 
 
