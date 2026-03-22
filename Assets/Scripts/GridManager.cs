@@ -32,8 +32,10 @@ public class GridManager : MonoBehaviour
 
     Dictionary<Vector3Int, CellData> placedSquares = new();
 
+    private List<GameObject> startCells = new();
     private List<GameObject> tempPlacedSquares = new();
     private Color currentPlayerColor;
+    private bool isFirstPlacedPiece = true;
 
     private void Awake()
     {
@@ -65,7 +67,7 @@ public class GridManager : MonoBehaviour
     /// <param name="isMirrored"></param>
     /// <param name="isFirstPlacedPiece"></param>
     /// <returns></returns>
-    public bool CanPlaceObjectAt(Vector3 mousePosition, int ID, int rotationNb, bool isMirrored, bool isFirstPlacedPiece, int playerID)
+    public bool CanPlaceObjectAt(Vector3 mousePosition, int ID, int rotationNb, bool isMirrored, int playerID)
     {
         Vector3Int gridPosition = WorldToCell(mousePosition);
         playerPieceSO = database.playerPieces[ID];
@@ -315,6 +317,7 @@ public class GridManager : MonoBehaviour
             Vector3 worldSquare = CellToWorld(element.Key);
             GameObject newObject = Instantiate(database.cornerPreviewPrefab);
             newObject.transform.position = new Vector3(worldSquare.x, 0.01f, worldSquare.z);
+            startCells.Add(newObject);
         }
     }
 
@@ -384,6 +387,43 @@ public class GridManager : MonoBehaviour
             mat.SetTexture("_MainTex", placedPieceTextures[textureID]);
 
             squareRenderer.material = mat;
+        }
+    }
+
+    /// <summary>
+    /// Remove all starting cells when every players has ended their first turn.
+    /// -IN- PlayerPieceManager from  
+    /// </summary>
+    public void PurgeStartingCells(int playerNb)
+    {
+        isFirstPlacedPiece = false;
+        if (playerNb == 2)
+        {
+            Vector3Int startCell1 = new Vector3Int(4, 0, 4);
+            if (placedSquares.TryGetValue(startCell1, out CellData cell1) && cell1.PlayerID == -10)
+                placedSquares.Remove(startCell1);
+            Vector3Int startCell2 = new Vector3Int(9, 0, 9);
+            if (placedSquares.TryGetValue(startCell2, out CellData cell2) && cell2.PlayerID == -10)
+                placedSquares.Remove(startCell2);
+        }
+        else
+        {
+            Vector3Int startCell1 = new Vector3Int(0, 0, 0);
+            if (placedSquares.TryGetValue(startCell1, out CellData cell1) && cell1.PlayerID == -10)
+                placedSquares.Remove(startCell1);
+            Vector3Int startCell2 = new Vector3Int(0, 0, 19);
+            if (placedSquares.TryGetValue(startCell2, out CellData cell2) && cell2.PlayerID == -10)
+                placedSquares.Remove(startCell2);
+            Vector3Int startCell3 = new Vector3Int(19, 0, 0);
+            if (placedSquares.TryGetValue(startCell3, out CellData cell3) && cell3.PlayerID == -10)
+                placedSquares.Remove(startCell3);
+            Vector3Int startCell4 = new Vector3Int(19, 0, 19);
+            if (placedSquares.TryGetValue(startCell4, out CellData cell4) && cell4.PlayerID == -10)
+                placedSquares.Remove(startCell4);
+        }
+        foreach (GameObject startCell in startCells)
+        {
+            Destroy(startCell);
         }
     }
 }

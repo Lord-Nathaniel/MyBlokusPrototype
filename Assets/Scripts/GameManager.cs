@@ -15,10 +15,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private int playerNb;
     [SerializeField] private PlayerPieceDataSO database;
     private int currentPlayerID = 0;
     private List<PlayerData> currentPlayers;
+    private int firstPlacedPieceNb = 0;
+    private int playerNb = 4;
 
     const string MENU_SCENE = "MenuScene";
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     private PlayerPieceManager playerPieceManager;
     private GridManager gridManager;
     private PlayerSetup playerSetup;
+    private SoundManager soundManager;
 
     public enum State
     {
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
         gridManager = ServiceManager.Get<GridManager>();
         //playerSetup = ServiceManager.Get<PlayerSetup>();
+        soundManager = ServiceManager.Get<SoundManager>();
 
         //InitPlayers();
         ProtoInitPlayers();
@@ -162,29 +165,45 @@ public class GameManager : MonoBehaviour
         SwitchState(State.PlayerTurn);
     }
 
-    private void FirstPlayerTurn()
-    {
-        SwitchState(SelectNextPlayer());
-    }
-
     /// <summary>
     /// Switch from currentPlayer state to nextPlayer state
     /// -IN- UIManager from Start()
     /// </summary>
-    public void NextPlayerTurn()
+    public void NextPlayerTurn(bool isPlayerPassing)
     {
-        int placedPieceID = playerPieceManager.PlacedPlayerPieceID();
-        if (placedPieceID >= 0)
+        if (isPlayerPassing)
         {
+            PlayerPasses();
+            ControlFirstTurn();
+        }
+        int placedPieceID = playerPieceManager.PlacedPlayerPieceID();
+        if (placedPieceID < 0)
+        {
+            return;
+        }
+        else
+        {
+            soundManager.PlaySound(SoundType.ButtonPress);
+            ControlFirstTurn();
+
             RemovePieceFromPlayerData(placedPieceID);
             uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPieceID, currentPlayers[currentPlayerID].score);
             gridManager.SaveCurrentPiece(currentPlayerID, currentPlayers[currentPlayerID].playerTextureID);
             playerPieceManager.StopPlacement();
             SwitchState(SelectNextPlayer());
         }
-        else
+    }
+
+    private void ControlFirstTurn()
+    {
+        if (firstPlacedPieceNb < playerNb - 1)
         {
-            PlayerPasses();
+            firstPlacedPieceNb++;
+        }
+        else if (firstPlacedPieceNb == playerNb - 1)
+        {
+            gridManager.PurgeStartingCells(playerNb);
+            firstPlacedPieceNb++;
         }
     }
 
@@ -238,7 +257,6 @@ public class GameManager : MonoBehaviour
                 break;
 
             case State.PlayerTurn:
-                Debug.Log("PalyerTurn");
                 uiManager.HideStartScreen();
                 uiManager.GeneratePlayerPieceButtons(
                     currentPlayers[currentPlayerID].playerColor,

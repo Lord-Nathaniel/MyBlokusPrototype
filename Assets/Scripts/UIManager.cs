@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
 
     private List<Button> pieceButtons = new();
     private Button selectedButton;
+    private bool isPassButtonSelected = false;
     private Color currentPlayerColor;
     private int currentPlayerID;
     private List<GameObject> remainingPlayerPieceSubzones = new();
@@ -111,10 +112,16 @@ public class UIManager : MonoBehaviour
 
     private void NextPlayerAction()
     {
-        if (selectedButton != null)
+        if (selectedButton == null)
+            return;
+
+        if (isPassButtonSelected)
         {
-            soundManager.PlaySound(SoundType.ButtonPress);
-            gameManager.NextPlayerTurn();
+            gameManager.NextPlayerTurn(true);
+        }
+        else
+        {
+            gameManager.NextPlayerTurn(false);
         }
     }
 
@@ -202,6 +209,7 @@ public class UIManager : MonoBehaviour
 
     private Button GeneratePassButton(Color playerColor)
     {
+        isPassButtonSelected = false;
         Button passButton = Instantiate(playerPieceButtonPrefab, zone.transform, false);
         Image passButtonImg = passButton.GetComponent<Image>();
         if (passButtonTexture != null)
@@ -228,6 +236,7 @@ public class UIManager : MonoBehaviour
             soundManager.PlaySound(SoundType.Cancel);
             Hide(selectedButton.transform.GetChild(0).gameObject);
             selectedButton = null;
+            isPassButtonSelected = false;
         }
 
         else if (selectedButton != null)
@@ -239,6 +248,7 @@ public class UIManager : MonoBehaviour
 
             selectedButton = passButton;
             Show(passButton.transform.GetChild(0).gameObject);
+            isPassButtonSelected = true;
         }
 
         else
@@ -246,6 +256,7 @@ public class UIManager : MonoBehaviour
             soundManager.PlaySound(SoundType.Notification);
             selectedButton = passButton;
             Show(passButton.transform.GetChild(0).gameObject);
+            isPassButtonSelected = true;
         }
     }
 

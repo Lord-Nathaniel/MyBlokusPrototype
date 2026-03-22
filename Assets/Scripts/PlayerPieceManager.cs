@@ -20,11 +20,8 @@ public class PlayerPieceManager : MonoBehaviour
     private int selectedObjectID = -1;
     private int selectedObjectRotation = 0;
     private bool isSelectedObjectMirrored = false;
-    private bool isFirstPlacedPiece = true;
-    private int firstPlacedPieceNb = 0;
-    private int playerNb = 4;
     private int currentPlayerID;
-    private bool isPiecePlaced = false;
+    private bool isPiecePlaced;
     private Color currentPlayerColor;
 
     // Needed services
@@ -119,12 +116,6 @@ public class PlayerPieceManager : MonoBehaviour
         gridManager.AddTempPlayerPiece(selectedObjectID, currentPlayerID, currentPlayerColor);
         if (!isPiecePlaced)
             isPiecePlaced = true;
-        if (isFirstPlacedPiece)
-        {
-            firstPlacedPieceNb++;
-            if (firstPlacedPieceNb == playerNb)
-                isFirstPlacedPiece = false;
-        }
     }
 
     /// <summary>
@@ -140,7 +131,6 @@ public class PlayerPieceManager : MonoBehaviour
                                             database.playerPieces[selectedObjectID].ID,
                                             selectedObjectRotation,
                                             isSelectedObjectMirrored,
-                                            isFirstPlacedPiece,
                                             currentPlayerID);
     }
 
@@ -154,7 +144,7 @@ public class PlayerPieceManager : MonoBehaviour
         {
             soundManager.PlaySound(SoundType.Swoosh);
             selectedObjectRotation = (selectedObjectRotation + 1) % 4;
-            previewManager.RotatePlacementPreview();
+            previewManager.RotatePlacementPreview(selectedObjectRotation);
         }
     }
 
@@ -167,7 +157,7 @@ public class PlayerPieceManager : MonoBehaviour
         {
             soundManager.PlaySound(SoundType.Mirror);
             isSelectedObjectMirrored = !isSelectedObjectMirrored;
-            previewManager.MirrorPlacementPreview();
+            previewManager.MirrorPlacementPreview(isSelectedObjectMirrored);
         }
     }
 
