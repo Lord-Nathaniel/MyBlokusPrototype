@@ -95,6 +95,16 @@ public class PlayerSetup : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Purge all Player Settings after quitting current game.
+    /// -IN- GameManager from GameEnd()
+    /// </summary>
+    /// <returns></returns>
+    public void PurgePlayerSettings()
+    {
+        playerSettings = new();
+    }
 }
 
 /// <summary>

@@ -1046,7 +1046,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mainCamera: {fileID: 330585545}
-  playerNb: 4
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
 --- !u!4 &276406070
 Transform:
@@ -6075,7 +6074,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PlayerName is third, with XXpts and YY placed pieces.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7aafa080c66666e488418475aa090b8d, type: 2}
   m_sharedMaterial: {fileID: -6143688778573605023, guid: 7aafa080c66666e488418475aa090b8d, type: 2}
@@ -8357,7 +8356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PlayerName is fourth, with XXpts and YY placed pieces.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7aafa080c66666e488418475aa090b8d, type: 2}
   m_sharedMaterial: {fileID: -6143688778573605023, guid: 7aafa080c66666e488418475aa090b8d, type: 2}

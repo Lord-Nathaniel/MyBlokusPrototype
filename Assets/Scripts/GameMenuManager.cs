@@ -23,6 +23,7 @@ public class GameMenuManager : MonoBehaviour
     private InputManager inputManager;
     private PreviewManager previewManager;
     private SoundManager soundManager;
+    private GameManager gameManager;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class GameMenuManager : MonoBehaviour
         inputManager = ServiceManager.Get<InputManager>();
         previewManager = ServiceManager.Get<PreviewManager>();
         soundManager = ServiceManager.Get<SoundManager>();
+        gameManager = ServiceManager.Get<GameManager>();
         inputManager.OnEscapeClicked += ShowMenu;
 
         menuCloseButton.onClick.AddListener(() =>
@@ -73,6 +75,7 @@ public class GameMenuManager : MonoBehaviour
     private void GoToMenuScene()
     {
         soundManager.PlaySound(SoundType.CassetteRecordClick);
+        gameManager.GameEnd();
         SceneManager.LoadScene(MENU_SCENE);
     }
 

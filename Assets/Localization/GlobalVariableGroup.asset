@@ -49,13 +49,19 @@ MonoBehaviour:
   - name: fourthPlayerPlacedPieces
     variable:
       rid: 2847205408445563009
+  - name: isThirdPlayerActive
+    variable:
+      rid: 2847205646782955709
+  - name: isFourthPlayerActive
+    variable:
+      rid: 2847205646782955710
   references:
     version: 2
     RefIds:
     - rid: 2847205408445562992
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: $secondPlayerName
+        m_Value: 
     - rid: 2847205408445562993
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
@@ -67,19 +73,19 @@ MonoBehaviour:
     - rid: 2847205408445563001
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: $firstPlayerName
+        m_Value: 
     - rid: 2847205408445563002
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: $thridPlayerName
+        m_Value: 
     - rid: 2847205408445563003
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: $fourthPlayerName
+        m_Value: Player 3
     - rid: 2847205408445563004
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
+        m_Value: 5
     - rid: 2847205408445563005
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
@@ -91,12 +97,20 @@ MonoBehaviour:
     - rid: 2847205408445563007
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
+        m_Value: 1
     - rid: 2847205408445563008
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
     - rid: 2847205408445563009
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 2847205646782955709
+      type: {class: BoolVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
+      data:
+        m_Value: 0
+    - rid: 2847205646782955710
+      type: {class: BoolVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0

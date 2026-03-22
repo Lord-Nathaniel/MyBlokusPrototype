@@ -55,19 +55,17 @@ public class GameManager : MonoBehaviour
         uiManager = ServiceManager.Get<UIManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
         gridManager = ServiceManager.Get<GridManager>();
-        //playerSetup = ServiceManager.Get<PlayerSetup>();
+        playerSetup = ServiceManager.Get<PlayerSetup>();
         soundManager = ServiceManager.Get<SoundManager>();
 
-        //InitPlayers();
-        ProtoInitPlayers();
+        InitPlayers();
+        //ProtoInitPlayers();
         //TODO temporary, to bypass the start screen
 
         gridManager.InitGridVisuals(currentPlayers.Count);
         PlaceCamera();
 
-        //FirstPlayerTurn();
         SwitchState(State.StartGame);
-
     }
 
     private void PlaceCamera()
@@ -147,13 +145,27 @@ public class GameManager : MonoBehaviour
     private void SetPlayerNameGlobalVar()
     {
         var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
+        if (currentPlayers[0].playerName == "")
+            currentPlayers[0].playerName = "Player One";
         firstPlayerNameVar.Value = currentPlayers[0].playerName;
         var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
+        if (currentPlayers[1].playerName == "")
+            currentPlayers[1].playerName = "Player Two";
         secondPlayerNameVar.Value = currentPlayers[1].playerName;
-        var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
-        thirdPlayerNameVar.Value = currentPlayers[2].playerName;
-        var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
-        fourthPlayerNameVar.Value = currentPlayers[3].playerName;
+        if (currentPlayers.Count >= 3)
+        {
+            var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
+            if (currentPlayers[2].playerName == "")
+                currentPlayers[2].playerName = "Player Three";
+            thirdPlayerNameVar.Value = currentPlayers[2].playerName;
+        }
+        if (currentPlayers.Count == 4)
+        {
+            var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
+            if (currentPlayers[3].playerName == "")
+                currentPlayers[3].playerName = "Player Four";
+            fourthPlayerNameVar.Value = currentPlayers[3].playerName;
+        }
     }
 
     /// <summary>
@@ -245,6 +257,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameEnd()
     {
+        playerSetup.PurgePlayerSettings();
         SceneManager.LoadScene(MENU_SCENE);
     }
 
@@ -276,31 +289,48 @@ public class GameManager : MonoBehaviour
     {
         int totalPiecesNb = database.playerPieces.Count;
         var sortedCurrentPlayers = currentPlayers.OrderByDescending(FindObjectOfType => FindObjectOfType.score).ToList();
+        var isThirdPlayerActiveVar = source["global"]["isThirdPlayerActive"] as BoolVariable;
+        isThirdPlayerActiveVar.Value = false;
+        var isFourthPlayerActiveVar = source["global"]["isFourthPlayerActive"] as BoolVariable;
+        isFourthPlayerActiveVar.Value = false;
 
         var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
         firstPlayerNameVar.Value = sortedCurrentPlayers[0].playerName;
-        var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
-        secondPlayerNameVar.Value = sortedCurrentPlayers[1].playerName;
-        var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
-        thirdPlayerNameVar.Value = sortedCurrentPlayers[2].playerName;
-        var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
-        fourthPlayerNameVar.Value = sortedCurrentPlayers[3].playerName;
         var firstPlayerScoreVar = source["global"]["firstPlayerScore"] as IntVariable;
         firstPlayerScoreVar.Value = sortedCurrentPlayers[0].score;
-        var secondPlayerScoreVar = source["global"]["secondPlayerScore"] as IntVariable;
-        secondPlayerScoreVar.Value = sortedCurrentPlayers[1].score;
-        var thirdPlayerScoreVar = source["global"]["thirdPlayerScore"] as IntVariable;
-        thirdPlayerScoreVar.Value = sortedCurrentPlayers[2].score;
-        var fourthPlayerScoreVar = source["global"]["fourthPlayerScore"] as IntVariable;
-        fourthPlayerScoreVar.Value = sortedCurrentPlayers[3].score;
         var firstPlayerPlacedPiecesVar = source["global"]["firstPlayerPlacedPieces"] as IntVariable;
         firstPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[0].remainingPlayerPieces.Count;
+
+        var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
+        secondPlayerNameVar.Value = sortedCurrentPlayers[1].playerName;
+        var secondPlayerScoreVar = source["global"]["secondPlayerScore"] as IntVariable;
+        secondPlayerScoreVar.Value = sortedCurrentPlayers[1].score;
         var secondPlayerPlacedPiecesVar = source["global"]["secondPlayerPlacedPieces"] as IntVariable;
         secondPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[1].remainingPlayerPieces.Count;
-        var thirdPlayerPlacedPiecesVar = source["global"]["thirdPlayerPlacedPieces"] as IntVariable;
-        thirdPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[2].remainingPlayerPieces.Count;
-        var fourthPlayerPlacedPiecesVar = source["global"]["fourthPlayerPlacedPieces"] as IntVariable;
-        fourthPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[3].remainingPlayerPieces.Count;
+
+        if (sortedCurrentPlayers.Count >= 3)
+        {
+            isThirdPlayerActiveVar.Value = true;
+
+            var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
+            thirdPlayerNameVar.Value = sortedCurrentPlayers[2].playerName;
+            var thirdPlayerScoreVar = source["global"]["thirdPlayerScore"] as IntVariable;
+            thirdPlayerScoreVar.Value = sortedCurrentPlayers[2].score;
+            var thirdPlayerPlacedPiecesVar = source["global"]["thirdPlayerPlacedPieces"] as IntVariable;
+            thirdPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[2].remainingPlayerPieces.Count;
+        }
+
+        if (sortedCurrentPlayers.Count == 4)
+        {
+            isFourthPlayerActiveVar.Value = true;
+
+            var fourthPlayerNameVar = source["global"]["fourthPlayerName"] as StringVariable;
+            fourthPlayerNameVar.Value = sortedCurrentPlayers[3].playerName;
+            var fourthPlayerScoreVar = source["global"]["fourthPlayerScore"] as IntVariable;
+            fourthPlayerScoreVar.Value = sortedCurrentPlayers[3].score;
+            var fourthPlayerPlacedPiecesVar = source["global"]["fourthPlayerPlacedPieces"] as IntVariable;
+            fourthPlayerPlacedPiecesVar.Value = totalPiecesNb - sortedCurrentPlayers[3].remainingPlayerPieces.Count;
+        }
     }
 
     private class PlayerData
