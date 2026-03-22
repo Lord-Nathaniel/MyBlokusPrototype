@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -111,33 +112,46 @@ public class MenuManager : MonoBehaviour
 
         gameButton.onClick.AddListener(() =>
         {
+            AnimateButton(gameButton);
             GameAction();
         });
 
         gameStartButton.onClick.AddListener(() =>
         {
+            AnimateButton(gameStartButton);
             StartGameAction();
         });
 
         optionsButton.onClick.AddListener(() =>
         {
+            AnimateButton(optionsButton);
             OptionAction();
         });
 
         creditsButton.onClick.AddListener(() =>
         {
+            AnimateButton(creditsButton);
             CreditsAction();
         });
 
         creditsCloseButton.onClick.AddListener(() =>
         {
+            AnimateButton(creditsCloseButton);
             CloseCreditsAction();
         });
 
         quitButton.onClick.AddListener(() =>
         {
+            AnimateButton(quitButton);
             QuitAction();
         });
+    }
+
+    private void AnimateButton(Button button)
+    {
+        button.transform.DOScale(1.2f, 0.2f)
+            .SetEase(Ease.OutBounce)
+            .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void QuitAction()

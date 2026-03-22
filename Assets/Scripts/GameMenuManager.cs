@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,18 +47,28 @@ public class GameMenuManager : MonoBehaviour
 
         menuCloseButton.onClick.AddListener(() =>
         {
+            AnimateButton(menuCloseButton);
             CloseOptionsAction();
         });
 
         menuOptionsButton.onClick.AddListener(() =>
         {
+            AnimateButton(menuOptionsButton);
             OpenOptionsAction();
         });
 
         menuMainMenuButton.onClick.AddListener(() =>
         {
+            AnimateButton(menuMainMenuButton);
             GoToMenuScene();
         });
+    }
+
+    private void AnimateButton(Button button)
+    {
+        button.transform.DOScale(1.2f, 0.2f)
+            .SetEase(Ease.OutBounce)
+            .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void OpenOptionsAction()

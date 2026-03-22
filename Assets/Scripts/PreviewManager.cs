@@ -94,7 +94,7 @@ public class PreviewManager : MonoBehaviour
     /// </summary>
     public void RotatePlacementPreview(int rotationNb)
     {
-        Tween myTween = cellIndicatorParent.transform.GetChild(0).DORotate(new Vector3(0, rotationNb * 90f, 0), 0.2f);
+        cellIndicatorParent.transform.GetChild(0).DORotate(new Vector3(0, rotationNb * 90f, 0), 0.2f);
     }
 
     /// <summary>

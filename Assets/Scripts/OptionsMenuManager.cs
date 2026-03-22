@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -48,14 +49,23 @@ public class OptionsMenuManager : MonoBehaviour
 
         optionsCloseButton.onClick.AddListener(() =>
         {
+            AnimateButton(optionsCloseButton);
             CloseOptionsAction();
         });
 
         languageButton.onClick.AddListener(() =>
         {
+            AnimateButton(languageButton);
             ToggleLanguage();
         });
         InitOptions();
+    }
+
+    private void AnimateButton(Button button)
+    {
+        button.transform.DOScale(1.2f, 0.2f)
+            .SetEase(Ease.OutBounce)
+            .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void CloseOptionsAction()
