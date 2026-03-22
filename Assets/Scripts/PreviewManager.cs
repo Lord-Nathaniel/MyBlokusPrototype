@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -91,20 +92,20 @@ public class PreviewManager : MonoBehaviour
     /// Rotates 90° clockwise the preview.
     /// -IN- PlayerPieceManager from RotatePlayerPiece()
     /// </summary>
-    public void RotatePlacementPreview()
+    public void RotatePlacementPreview(int rotationNb)
     {
-        cellIndicatorParent.transform.GetChild(0).Rotate(0f, 90f, 0f);
+        Tween myTween = cellIndicatorParent.transform.GetChild(0).DORotate(new Vector3(0, rotationNb * 90f, 0), 0.2f);
     }
 
     /// <summary>
     /// Mirrors the preview.
     /// -IN- PlayerPieceManager from MirrorPlayerPiece()
     /// </summary>
-    public void MirrorPlacementPreview()
+    public void MirrorPlacementPreview(bool isMirrored)
     {
         Vector3 scale = cellIndicatorParent.transform.GetChild(0).localScale;
         scale.x *= -1;
-        cellIndicatorParent.transform.GetChild(0).localScale = scale;
+        cellIndicatorParent.transform.GetChild(0).DOScale(new Vector3(scale.x, scale.y, scale.z), 0.2f);
     }
 
     /// <summary>
