@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// This class manages the state of the game. 
 /// It receives state change ask as input, and output action to do with the current state.
-/// -IN- UIManager
-/// -OUT- UIManager | PlayerPieceManager
+/// -IN- UIManager | GameMenuManager
+/// -OUT- UIManager | PlayerPieceManager | gridManager | playerSetup | soundManager
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -59,9 +59,6 @@ public class GameManager : MonoBehaviour
         soundManager = ServiceManager.Get<SoundManager>();
 
         InitPlayers();
-        //ProtoInitPlayers();
-        //TODO temporary, to bypass the start screen
-
         gridManager.InitGridVisuals(currentPlayers.Count);
         PlaceCamera();
 
@@ -113,35 +110,6 @@ public class GameManager : MonoBehaviour
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
-    private void ProtoInitPlayers()
-    {
-        playerNb = 4;
-        currentPlayers = new List<PlayerData>(playerNb);
-        List<Color> currentPlayersColors = new List<Color>();
-        for (int i = 0; i < playerNb; i++)
-        {
-            List<int> playerPieces = new();
-            for (int j = 0; j < database.playerPieces.Count; j++)
-            {
-                playerPieces.Add(j);
-            }
-
-            Color currentPlayerColor = new Color((float)(i * 0.3), (float)(i * 0.3), (float)(i * 0.3));
-
-            currentPlayers.Add(new PlayerData(
-                true,
-                "Player " + i,
-                currentPlayerColor,
-                i,
-                playerPieces,
-                0
-            ));
-            currentPlayersColors.Add(currentPlayerColor);
-        }
-        SetPlayerNameGlobalVar();
-        uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
-    }
-
     private void SetPlayerNameGlobalVar()
     {
         var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
@@ -170,7 +138,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Switch from StartGame state to the currentPlayer state
-    /// -IN- UIManager from Start()
+    /// -IN- UIManager from StartAction()
     /// </summary>
     public void GameStart()
     {
@@ -179,7 +147,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Switch from currentPlayer state to nextPlayer state
-    /// -IN- UIManager from Start()
+    /// -IN- UIManager from NextPlayerAction()
     /// </summary>
     public void NextPlayerTurn(bool isPlayerPassing)
     {
@@ -202,8 +170,25 @@ public class GameManager : MonoBehaviour
             uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, placedPieceID, currentPlayers[currentPlayerID].score);
             gridManager.SaveCurrentPiece(currentPlayerID, currentPlayers[currentPlayerID].playerTextureID);
             playerPieceManager.StopPlacement();
-            SwitchState(SelectNextPlayer());
+
+            if (currentPlayers[currentPlayerID].remainingPlayerPieces.Count == 0)
+            {
+                ComputeAndEndPlayerTurn(placedPieceID);
+            }
+            else
+            {
+                SwitchState(SelectNextPlayer());
+            }
         }
+    }
+    private void ComputeAndEndPlayerTurn(int placedPieceID)
+    {
+        int scoreToAdd = 6;
+        if (placedPieceID == 0)
+            scoreToAdd += 5;
+
+        currentPlayers[currentPlayerID].score += scoreToAdd;
+        PlayerPasses();
     }
 
     private void ControlFirstTurn()
@@ -219,11 +204,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Player has selected the pass button and passed
-    /// -IN- UIManager from Start()
-    /// </summary>
-    public void PlayerPasses()
+    private void PlayerPasses()
     {
         currentPlayers[currentPlayerID].isActive = false;
         uiManager.UpdateRemainingPlayerPieceImages(currentPlayerID, -1, currentPlayers[currentPlayerID].score);
@@ -253,7 +234,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Quit the game and go back to the menu scene after the game has ended.
-    /// -IN- UIManager from Start()
+    /// -IN- UIManager from EndGameAction(), GameMenuManager from GoToMenuScene()
     /// </summary>
     public void GameEnd()
     {
@@ -342,13 +323,13 @@ public class GameManager : MonoBehaviour
         public List<int> remainingPlayerPieces;
         public int score;
 
-        public PlayerData(bool isActive, string playerName, Color playerColor, int playerTextureID, List<int> playerPieces, int score)
+        public PlayerData(bool isActive, string playerName, Color playerColor, int playerTextureID, List<int> remainingPlayerPieces, int score)
         {
             this.isActive = isActive;
             this.playerName = playerName;
             this.playerColor = playerColor;
             this.playerTextureID = playerTextureID;
-            this.remainingPlayerPieces = playerPieces;
+            this.remainingPlayerPieces = remainingPlayerPieces;
             this.score = score;
         }
     }
