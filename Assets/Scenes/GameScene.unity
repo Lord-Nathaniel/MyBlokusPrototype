@@ -2492,7 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61808f6ae760bf04c834ace7878cd4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPieceManager
-  cellIndicatorParent: {fileID: 699255946}
+  cursorIndicatorParent: {fileID: 699255946}
   grid: {fileID: 1000392020}
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   gridVisualization: {fileID: 738940046}
@@ -10060,7 +10060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec00632d3e47c4b960c5f40f8f4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PreviewSystem
-  cellIndicatorParent: {fileID: 699255946}
+  cursorIndicatorParent: {fileID: 699255946}
   database: {fileID: 11400000, guid: 340d481beb8ec274ab74d42c93968f78, type: 2}
   grid: {fileID: 1000392020}
   cellIndicatorParentYOffset: 0.015
