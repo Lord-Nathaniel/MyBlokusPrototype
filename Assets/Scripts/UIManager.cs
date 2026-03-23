@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -91,16 +92,21 @@ public class UIManager : MonoBehaviour
 
         startMessageButton.onClick.AddListener(() =>
         {
-            StartAction();
+            startMessageButton.transform.DOScale(1.1f, 0.1f)
+                                        .SetEase(Ease.OutBounce)
+                                        .OnComplete(() => StartAction());
         });
 
         endMessageButton.onClick.AddListener(() =>
         {
-            EndGameAction();
+            endMessageButton.transform.DOScale(1.1f, 0.1f)
+                                      .SetEase(Ease.OutBounce)
+                                      .OnComplete(() => EndGameAction());
         });
 
         nextPlayerButton.onClick.AddListener(() =>
         {
+            AnimateButton(nextPlayerButton);
             NextPlayerAction();
         });
 
@@ -108,6 +114,13 @@ public class UIManager : MonoBehaviour
         playerScoreSmartStringRefences.Add(SECOND_PLAYER_SCORE_REF);
         playerScoreSmartStringRefences.Add(THIRD_PLAYER_SCORE_REF);
         playerScoreSmartStringRefences.Add(FOURTH_PLAYER_SCORE_REF);
+    }
+
+    private void AnimateButton(Button button)
+    {
+        button.transform.DOScale(1.2f, 0.2f)
+                        .SetEase(Ease.OutBounce)
+                        .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void NextPlayerAction()
