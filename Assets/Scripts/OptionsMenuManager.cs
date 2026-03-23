@@ -9,7 +9,8 @@ using UnityEngine.UI;
 /// <summary>
 /// This class manages the options menu of the game.
 /// At start, it take the optionsSetting of the PlayerSetup and apply them.
-/// -OUT- PlayerSetup | SoundManager 
+/// -IN- GameManager | SoundSlider | MusicSlider
+/// -OUT- PlayerSetup | SoundManager | MusicManager
 /// </summary>
 public class OptionsMenuManager : MonoBehaviour
 {
@@ -49,8 +50,9 @@ public class OptionsMenuManager : MonoBehaviour
 
         optionsCloseButton.onClick.AddListener(() =>
         {
-            AnimateButton(optionsCloseButton);
-            CloseOptionsAction();
+            optionsCloseButton.transform.DOScale(1.1f, 0.1f)
+                                        .SetEase(Ease.OutBounce)
+                                        .OnComplete(() => CloseOptionsAction());
         });
 
         languageButton.onClick.AddListener(() =>
@@ -64,8 +66,8 @@ public class OptionsMenuManager : MonoBehaviour
     private void AnimateButton(Button button)
     {
         button.transform.DOScale(1.2f, 0.2f)
-            .SetEase(Ease.OutBounce)
-            .OnComplete(() => button.transform.DOScale(1f, 0.2f));
+                        .SetEase(Ease.OutBounce)
+                        .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void CloseOptionsAction()
@@ -96,10 +98,7 @@ public class OptionsMenuManager : MonoBehaviour
         musicManager.GetComponent<AudioSource>().volume = musicVolume / 10;
     }
 
-    /// <summary>
-    /// Toggle to the next available language.
-    /// </summary>
-    public void ToggleLanguage()
+    private void ToggleLanguage()
     {
         soundManager.PlaySound(SoundType.ButtonPress);
         List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
@@ -116,7 +115,8 @@ public class OptionsMenuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update the sound value text when the slider value changes.
+    /// Update the sound value text when the slider value changes.    /// 
+    /// -IN- SoundSlider from OnValueChanged()
     /// </summary>
     public void UpdateSoundValue()
     {
@@ -128,6 +128,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     /// <summary>
     /// Update the music value text when the slider value changes.
+    /// -IN- MusicSlider from OnValueChanged()
     /// </summary>
     public void UpdateMusicValue()
     {
@@ -139,6 +140,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     /// <summary>
     /// Set the sound and music volumes and language to the Player Setup.
+    /// -IN- GameManager from StartGameAction()
     /// </summary>
     public void SetOptionsSettingsToPlayerSetup()
     {
@@ -146,6 +148,7 @@ public class OptionsMenuManager : MonoBehaviour
                                   musicSlider.GetComponent<Slider>().value,
                                   currentLanguageIndex);
     }
+
     private void Hide(GameObject toHide)
     {
         toHide.SetActive(false);
