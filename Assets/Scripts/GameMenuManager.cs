@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// This class manages the escape menu during the game.
 /// At start, it take the optionsSetting of the PlayerSetup and apply them to the correct zone.
-/// -OUT- InputManager | PreviewManager 
+/// -OUT- InputManager | PreviewManager | SoundManager | GameManager 
 /// </summary>
 public class GameMenuManager : MonoBehaviour
 {
@@ -47,8 +47,9 @@ public class GameMenuManager : MonoBehaviour
 
         menuCloseButton.onClick.AddListener(() =>
         {
-            AnimateButton(menuCloseButton);
-            CloseOptionsAction();
+            menuCloseButton.transform.DOScale(1.1f, 0.1f)
+                                     .SetEase(Ease.OutBounce)
+                                     .OnComplete(() => CloseOptionsAction());
         });
 
         menuOptionsButton.onClick.AddListener(() =>
@@ -59,16 +60,17 @@ public class GameMenuManager : MonoBehaviour
 
         menuMainMenuButton.onClick.AddListener(() =>
         {
-            AnimateButton(menuMainMenuButton);
-            GoToMenuScene();
+            menuMainMenuButton.transform.DOScale(1.1f, 0.1f)
+                                        .SetEase(Ease.OutBounce)
+                                        .OnComplete(() => GoToMenuScene());
         });
     }
 
     private void AnimateButton(Button button)
     {
         button.transform.DOScale(1.2f, 0.2f)
-            .SetEase(Ease.OutBounce)
-            .OnComplete(() => button.transform.DOScale(1f, 0.2f));
+                        .SetEase(Ease.OutBounce)
+                        .OnComplete(() => button.transform.DOScale(1f, 0.2f));
     }
 
     private void OpenOptionsAction()
