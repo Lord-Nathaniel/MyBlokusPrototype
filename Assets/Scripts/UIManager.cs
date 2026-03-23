@@ -12,7 +12,7 @@ using UnityEngine.UI;
 /// This class manage all UI settings and actions.
 /// It mainly exchange with the GameManager to display UI from the current state of the game.
 /// -IN- GameManager
-/// -OUT- GameManager | PlayerPieceManager
+/// -OUT- GameManager | PlayerPieceManager | GridManager | SoundManager
 /// </summary>
 public class UIManager : MonoBehaviour
 {
@@ -152,7 +152,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Spawn all player piece images in the remaining pieces zone.
-    /// -IN- GameManager from ProtoInitPlayers()
+    /// -IN- GameManager from InitPlayers()
     /// </summary>
     public void GenerateRemainingPlayerPieceImages(List<Color> playerColors)
     {
@@ -251,7 +251,6 @@ public class UIManager : MonoBehaviour
             selectedButton = null;
             isPassButtonSelected = false;
         }
-
         else if (selectedButton != null)
         {
             soundManager.PlaySound(SoundType.Notification);
@@ -263,7 +262,6 @@ public class UIManager : MonoBehaviour
             Show(passButton.transform.GetChild(0).gameObject);
             isPassButtonSelected = true;
         }
-
         else
         {
             soundManager.PlaySound(SoundType.Notification);
@@ -307,7 +305,6 @@ public class UIManager : MonoBehaviour
             gridManager.RemoveTempPlayerPiece();
             selectedButton = null;
         }
-
         else if (selectedButton != null)
         {
             Hide(selectedButton.transform.GetChild(0).gameObject);
@@ -330,6 +327,7 @@ public class UIManager : MonoBehaviour
 
     /// <summary>
     /// Update the player pieces lists
+    /// -IN- GameManager from NextPlayerTurn() and PlayerPasses()
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="pieceID"></param>
@@ -353,6 +351,7 @@ public class UIManager : MonoBehaviour
     /// Update the screen border with the current player color.
     /// -IN- GameManager from SwitchState()
     /// </summary>
+    /// <param name="playerColor"></param>
     public void UpdateScreenColor(Color playerColor)
     {
         fullscreenMaterial.SetColor(PLAYER_COLOR, playerColor);
