@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerPieceManager : MonoBehaviour
 {
-    [SerializeField] private GameObject cellIndicatorParent;
+    [SerializeField] private GameObject cursorIndicatorParent;
     [SerializeField] private Grid grid;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private GameObject gridVisualization;
@@ -102,9 +102,11 @@ public class PlayerPieceManager : MonoBehaviour
         if (!placementValidity)
         {
             soundManager.PlaySound(SoundType.Wrong);
+            previewManager.AnimatePreviewWrongPlacement();
             return;
         }
         soundManager.PlaySound(SoundType.ChessPiece);
+        previewManager.AnimatePreviewGoodPlacement();
 
         if (isPiecePlaced)
         {
@@ -169,7 +171,7 @@ public class PlayerPieceManager : MonoBehaviour
     {
         isPiecePlaced = false;
         selectedObjectID = -1;
-        cellIndicatorParent.SetActive(false);
+        cursorIndicatorParent.SetActive(false);
         previewManager.StopShowingPreview();
         inputManager.OnLeftClicked -= PlaceStructure;
         inputManager.OnRightClicked -= RotatePlayerPiece;

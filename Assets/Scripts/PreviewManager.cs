@@ -5,20 +5,23 @@ using UnityEngine;
 /// <summary>
 /// This class manages the preview attached to the player cursor.
 /// Actions only changes the preview attached to the cursor and have no gameplay interaction.
-/// -IN- PlayerPieceManager
+/// -IN- PlayerPieceManager | GameMenuManager
 /// -OUT- InputManager | PlayerPieceManager
 /// </summary>
 public class PreviewManager : MonoBehaviour
 {
-    [SerializeField] private GameObject cellIndicatorParent;
+    [SerializeField] private GameObject cursorIndicatorParent;
     [SerializeField] private PlayerPieceDataSO database;
     [SerializeField] private Grid grid;
+    [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
 
     private PlayerPieceSO playerPieceSO;
-    [SerializeField] private float cellIndicatorParentYOffset = 0.015f;
     private Color playerColor;
     private Vector3Int lastDetectedGridPosition = Vector3Int.zero;
     private bool isPlayerColor = true;
+
+    private const string PLAYER_COLOR = "_PlayerColor";
+    private const string INLINE_COLOR = "_InlineColor";
 
     // Needed services
     private InputManager inputManager;
@@ -39,19 +42,20 @@ public class PreviewManager : MonoBehaviour
         inputManager = ServiceManager.Get<InputManager>();
         playerPieceManager = ServiceManager.Get<PlayerPieceManager>();
 
-        cellIndicatorParent.SetActive(false);
+        cursorIndicatorParent.SetActive(false);
     }
 
     /// <summary>
     /// Create the preview object.
     /// -IN- PlayerPieceManager from StartPlacement()
     /// </summary>
-    /// <param name="ID"></param>
-    public void StartShowingPlacementPreview(int ID, Color playerColor)
+    /// <param name="pieceID"></param>
+    /// <param name="playerColor"></param>
+    public void StartShowingPlacementPreview(int pieceID, Color playerColor)
     {
         this.playerColor = playerColor;
-        cellIndicatorParent.SetActive(true);
-        playerPieceSO = database.playerPieces[ID];
+        cursorIndicatorParent.SetActive(true);
+        playerPieceSO = database.playerPieces[pieceID];
         StartCursorPreview(playerPieceSO.squares, playerPieceSO.corners);
     }
 
@@ -61,30 +65,30 @@ public class PreviewManager : MonoBehaviour
 
         foreach (Vector2Int square in squares)
         {
-            GameObject squareGO = Instantiate(database.squarePreviewPrefab, cellIndicatorParent.transform.GetChild(0));
+            GameObject squareGO = Instantiate(database.squarePreviewPrefab, cursorIndicatorParent.transform.GetChild(0));
             squareGO.transform.localPosition = new Vector3((float)square.x, 0f, (float)square.y);
             squareGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             Renderer squareRenderer = squareGO.GetComponentInChildren<Renderer>();
             Color newColor = new Color(playerColor.r, playerColor.g, playerColor.b, 0.5f);
-            squareRenderer.material.SetColor("_PlayerColor", newColor);
+            squareRenderer.material.SetColor(PLAYER_COLOR, newColor);
         }
     }
 
     private void ResetCursorPreview()
     {
-        foreach (Transform child in cellIndicatorParent.transform.GetChild(0))
+        foreach (Transform child in cursorIndicatorParent.transform.GetChild(0))
         {
             Destroy(child.gameObject);
         }
-        cellIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
-        cellIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        cellIndicatorParent.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, 0f);
+        cursorIndicatorParent.transform.position = new Vector3(0f, cellIndicatorParentYOffset, 0f);
+        cursorIndicatorParent.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        cursorIndicatorParent.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        Vector3 scale = cellIndicatorParent.transform.GetChild(0).localScale;
+        Vector3 scale = cursorIndicatorParent.transform.GetChild(0).localScale;
         if (scale.x == -1)
         {
             scale.x = 1;
-            cellIndicatorParent.transform.GetChild(0).localScale = scale;
+            cursorIndicatorParent.transform.GetChild(0).localScale = scale;
         }
     }
 
@@ -94,7 +98,7 @@ public class PreviewManager : MonoBehaviour
     /// </summary>
     public void RotatePlacementPreview(int rotationNb)
     {
-        cellIndicatorParent.transform.GetChild(0).DORotate(new Vector3(0, rotationNb * 90f, 0), 0.2f);
+        cursorIndicatorParent.transform.GetChild(0).DORotate(new Vector3(0, rotationNb * 90f, 0), 0.2f);
     }
 
     /// <summary>
@@ -103,17 +107,18 @@ public class PreviewManager : MonoBehaviour
     /// </summary>
     public void MirrorPlacementPreview(bool isMirrored)
     {
-        Vector3 scale = cellIndicatorParent.transform.GetChild(0).localScale;
+        Vector3 scale = cursorIndicatorParent.transform.GetChild(0).localScale;
         scale.x *= -1;
-        cellIndicatorParent.transform.GetChild(0).DOScale(new Vector3(scale.x, scale.y, scale.z), 0.2f);
+        cursorIndicatorParent.transform.GetChild(0).DOScale(new Vector3(scale.x, scale.y, scale.z), 0.2f);
     }
 
     /// <summary>
-    /// -IN- PlayerPieceManager from PlaceStructure()
+    /// Modify the preview opacity.
+    /// -IN- PlayerPieceManager from PlaceStructure(), GameMenuManager from ShowMenu() and HideMenu()
     /// </summary>
     public void ModifyCursorOpacity(float opacity)
     {
-        Transform preview = cellIndicatorParent.transform.GetChild(0);
+        Transform preview = cursorIndicatorParent.transform.GetChild(0);
         for (int i = 0; i < preview.childCount; i++)
         {
             GameObject square = preview.GetChild(i).gameObject;
@@ -123,19 +128,31 @@ public class PreviewManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Shakes the preview when clicking and having a wrong placement.
     /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
-    public void ModifyCursorColor(Color color)
+    public void AnimatePreviewWrongPlacement()
     {
-        Transform preview = cellIndicatorParent.transform.GetChild(0);
-        for (int i = 0; i < preview.childCount; i++)
-        {
-            GameObject square = preview.GetChild(i).gameObject;
-            Renderer squareRenderer = square.GetComponentInChildren<Renderer>();
-            squareRenderer.material.SetColor("_PlayerColor", color);
-        }
+        Transform preview = cursorIndicatorParent.transform.GetChild(0);
+        preview.DOShakePosition(0.6f, new Vector3(1f, 0f, 0f), 10, 0, false, false, ShakeRandomnessMode.Harmonic);
     }
 
+    /// <summary>
+    /// Scale down the preview when clicking and having a good placement.
+    /// -IN- PlayerPieceManager from PlaceStructure()
+    /// </summary>
+    public void AnimatePreviewGoodPlacement()
+    {
+        Transform preview = cursorIndicatorParent.transform.GetChild(0);
+        preview.DOScale(0.9f, 0.4f)
+               .SetEase(Ease.OutBounce)
+               .OnComplete(() => preview.transform.DOScale(1f, 0.05f));
+    }
+
+    /// <summary>
+    /// Hide the preview when stopping piece placement.
+    /// -IN- PlayerPieceManager from StopPlacement()
+    /// </summary>
     public void StopShowingPreview()
     {
         ResetCursorPreview();
@@ -148,7 +165,7 @@ public class PreviewManager : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        cellIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,
+        cursorIndicatorParent.transform.position = new Vector3(grid.CellToWorld(gridPosition).x,
                                                              cellIndicatorParentYOffset,
                                                              grid.CellToWorld(gridPosition).z);
 
