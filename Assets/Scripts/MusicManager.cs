@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class manages the non-musical audio of the game. 
+/// This class manages the non-musical audio of the game.
+/// It will not be destroyed on load and will allow music to continue from a scene to another.
+/// -IN- MainMenuManager
 /// </summary>
 public class MusicManager : MonoBehaviour
 {
@@ -33,6 +35,7 @@ public class MusicManager : MonoBehaviour
 
     /// <summary>
     /// Plays the needed music from the calling element.
+    /// -IN- MainMenuManager from Start()
     /// </summary>
     /// <param name="musicType"></param>
     public void PlayMusic(MusicType musicType)
