@@ -21,7 +21,6 @@ public class PreviewManager : MonoBehaviour
     private bool isPlayerColor = true;
 
     private const string PLAYER_COLOR = "_PlayerColor";
-    private const string INLINE_COLOR = "_InlineColor";
 
     // Needed services
     private InputManager inputManager;
@@ -95,6 +94,7 @@ public class PreviewManager : MonoBehaviour
     /// <summary>
     /// Rotates 90° clockwise the preview.
     /// -IN- PlayerPieceManager from RotatePlayerPiece()
+    /// /// <param name="rotationNb"></param>
     /// </summary>
     public void RotatePlacementPreview(int rotationNb)
     {
@@ -104,6 +104,7 @@ public class PreviewManager : MonoBehaviour
     /// <summary>
     /// Mirrors the preview.
     /// -IN- PlayerPieceManager from MirrorPlayerPiece()
+    /// <param name="isMirrored"></param>
     /// </summary>
     public void MirrorPlacementPreview(bool isMirrored)
     {
@@ -115,6 +116,7 @@ public class PreviewManager : MonoBehaviour
     /// <summary>
     /// Modify the preview opacity.
     /// -IN- PlayerPieceManager from PlaceStructure(), GameMenuManager from ShowMenu() and HideMenu()
+    /// /// <param name="opacity"></param>
     /// </summary>
     public void ModifyCursorOpacity(float opacity)
     {
