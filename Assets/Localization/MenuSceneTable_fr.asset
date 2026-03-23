@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: fr
   m_SharedData: {fileID: 11400000, guid: 832424974c608e24c8ed3a8a38cf5536, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 2847205646782955730
   m_TableData:
   - m_Id: 123939201024
     m_Localized: Jouer
@@ -94,6 +95,56 @@ MonoBehaviour:
     m_Localized: 'Langue : FR'
     m_Metadata:
       m_Items: []
+  - m_Id: 9497179087052800
+    m_Localized: '{global.creditCurrentLocalizedString}'
+    m_Metadata:
+      m_Items:
+      - rid: 2847205646782955730
+  - m_Id: 9497234640609280
+    m_Localized: "Merci \xE9norm\xE9ment d'avoir jou\xE9 \xE0 mon jeu !\n\nOn se
+      retrouve bient\xF4t pour les suivants !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497256467767296
+    m_Localized: "Polices d'\xE9criture t\xE9l\xE9charg\xE9es depuis Dafont.com :\n\n-
+      SimpleType par Fenotype \n- BlockT par Jeff Bensch \n- Roboto par Google Android
+      Design "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497266022391808
+    m_Localized: "Effets sonores t\xE9l\xE9charg\xE9s depuis pixabay.com :\n\n- Ui
+      sounds pack depuis Pixabay\n- Cassette recorder mechanical click sound par
+      arunangshubanerjee\n- Spray can par Davidgallie\n- Swosh sound effect par Dheerajakam4jor\n-
+      Epic success fanfare par Doubleducks\n- Swoosh and Button sounds effects par
+      Dragon Studio\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9502263099400192
+    m_Localized: "Effets sonores t\xE9l\xE9charg\xE9s depuis pixabay.com :\n\n- UI
+      Button sounds effects par Emilianodleon\n- UI sounds effects par Floraphonic\n-
+      Game start par Foboytails\n- Chess pieces par Freesound community\n- New notification
+      par Universfield"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9502308989280256
+    m_Localized: "Musiques t\xE9l\xE9charg\xE9es depuis pixabay.com :\n\n- Funk groove
+      soul par The_Mountain\n- Funky funk beat music par Sosin\n- Funk funky_72sec
+      par PrettyJohn\n- Funk funky par Watermello"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9507254031753216
+    m_Localized: "Les tutoriels vid\xE9os les plus utiles trouv\xE9s sur Youtube
+      :\n\n- Master Grid Placement in Unity 2022 par Sunny Valley Studio\n- Unity
+      Shader Graph - Fullscreen Shader Tutorial par Gabriel Aguiar Prod\n- Unity
+      DOTween Guide par Casayona Code"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2847205646782955730
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 9497179087052800

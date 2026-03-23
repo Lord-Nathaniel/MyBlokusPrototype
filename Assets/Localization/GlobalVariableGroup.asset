@@ -55,33 +55,36 @@ MonoBehaviour:
   - name: isFourthPlayerActive
     variable:
       rid: 2847205646782955710
+  - name: creditCurrentLocalizedString
+    variable:
+      rid: 2847205646782955719
   references:
     version: 2
     RefIds:
     - rid: 2847205408445562992
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 
+        m_Value: Player Two
     - rid: 2847205408445562993
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
+        m_Value: 5
     - rid: 2847205408445562994
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 0
+        m_Value: 21
     - rid: 2847205408445563001
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 
+        m_Value: Player One
     - rid: 2847205408445563002
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 
+        m_Value: Player Three
     - rid: 2847205408445563003
       type: {class: StringVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: Player 3
+        m_Value: Player Four
     - rid: 2847205408445563004
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
@@ -97,7 +100,7 @@ MonoBehaviour:
     - rid: 2847205408445563007
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
-        m_Value: 1
+        m_Value: 21
     - rid: 2847205408445563008
       type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
@@ -114,3 +117,14 @@ MonoBehaviour:
       type: {class: BoolVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables, asm: Unity.Localization}
       data:
         m_Value: 0
+    - rid: 2847205646782955719
+      type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:832424974c608e24c8ed3a8a38cf5536
+        m_TableEntryReference:
+          m_KeyId: 9507254031753216
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []

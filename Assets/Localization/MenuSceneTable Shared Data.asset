@@ -91,6 +91,34 @@ MonoBehaviour:
     m_Key: LanguageButton
     m_Metadata:
       m_Items: []
+  - m_Id: 9497179087052800
+    m_Key: CreditsTextZone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497234640609280
+    m_Key: CreditEntry01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497256467767296
+    m_Key: CreditEntry02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9497266022391808
+    m_Key: CreditEntry03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9502263099400192
+    m_Key: CreditEntry04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9502308989280256
+    m_Key: CreditEntry05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9507254031753216
+    m_Key: CreditEntry06
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

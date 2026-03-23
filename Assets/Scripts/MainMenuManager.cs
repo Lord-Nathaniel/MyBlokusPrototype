@@ -2,6 +2,9 @@ using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -57,8 +60,13 @@ public class MenuManager : MonoBehaviour
     [Header("Credits Settings")]
     [SerializeField] private GameObject creditsZone;
     [SerializeField] private Button creditsCloseButton;
+    [SerializeField] private Button creditsNextButton;
+    [SerializeField] private Button creditsPreviousButton;
+    [SerializeField] private List<LocalizedString> creditsLocalizedStrings;
 
     private int maxPlayerNb = 4;
+    private int currentCreditsLocalizedString = 0;
+    private PersistentVariablesSource source;
 
     private List<Color> cellColors = new();
     private List<int> playerColors = new();
@@ -77,6 +85,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         ServiceManager.Register(this);
+        source = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>();
     }
 
     private void OnDestroy()
@@ -148,6 +157,18 @@ public class MenuManager : MonoBehaviour
                                 .SetEase(Ease.OutBounce)
                                 .OnComplete(() => QuitAction());
         });
+
+        creditsNextButton.onClick.AddListener(() =>
+        {
+            AnimateButton(creditsNextButton);
+            NextCreditEntryAction();
+        });
+
+        creditsPreviousButton.onClick.AddListener(() =>
+        {
+            AnimateButton(creditsPreviousButton);
+            PreviousCreditEntryAction();
+        });
     }
 
     private void AnimateButton(Button button)
@@ -155,6 +176,31 @@ public class MenuManager : MonoBehaviour
         button.transform.DOScale(1.2f, 0.2f)
             .SetEase(Ease.OutBounce)
             .OnComplete(() => button.transform.DOScale(1f, 0.2f));
+    }
+    private void PreviousCreditEntryAction()
+    {
+        soundManager.PlaySound(SoundType.Click);
+        currentCreditsLocalizedString = (currentCreditsLocalizedString - 1 + creditsLocalizedStrings.Count) % creditsLocalizedStrings.Count;
+
+        var creditCurrentLocalizedStringVar = source["global"]["creditCurrentLocalizedString"] as LocalizedString;
+        creditCurrentLocalizedStringVar.TableReference =
+            creditsLocalizedStrings[currentCreditsLocalizedString].TableReference;
+
+        creditCurrentLocalizedStringVar.TableEntryReference =
+            creditsLocalizedStrings[currentCreditsLocalizedString].TableEntryReference;
+    }
+
+    private void NextCreditEntryAction()
+    {
+        soundManager.PlaySound(SoundType.Click);
+        currentCreditsLocalizedString = (currentCreditsLocalizedString + 1) % creditsLocalizedStrings.Count;
+
+        var creditCurrentLocalizedStringVar = source["global"]["creditCurrentLocalizedString"] as LocalizedString;
+        creditCurrentLocalizedStringVar.TableReference =
+            creditsLocalizedStrings[currentCreditsLocalizedString].TableReference;
+
+        creditCurrentLocalizedStringVar.TableEntryReference =
+            creditsLocalizedStrings[currentCreditsLocalizedString].TableEntryReference;
     }
 
     private void QuitAction()
