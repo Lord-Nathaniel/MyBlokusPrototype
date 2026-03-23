@@ -325,7 +325,12 @@ public class MenuManager : MonoBehaviour
         soundManager.PlaySound(SoundType.CheckButtonClick);
         for (int i = 0; i < playerTextureButtons.Count; i++)
         {
-            Toggle(playerTextureButtons[i].transform.parent.gameObject);
+            GameObject currentButton = playerTextureButtons[i].transform.parent.gameObject;
+            if (currentButton.activeInHierarchy)
+            {
+                SelectPlayerTexture(i, 0, false);
+            }
+            Toggle(currentButton);
         }
     }
 
