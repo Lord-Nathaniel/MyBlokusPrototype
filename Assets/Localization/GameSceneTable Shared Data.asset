@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: MenuMainMenuButton
     m_Metadata:
       m_Items: []
+  - m_Id: 9466790738010112
+    m_Key: PlayerEndTurnButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

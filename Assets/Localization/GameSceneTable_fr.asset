@@ -141,7 +141,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7069420737929216
-    m_Localized: Menu Principal
+    m_Localized: Retour Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9466790738010112
+    m_Localized: Valider
     m_Metadata:
       m_Items: []
   references:

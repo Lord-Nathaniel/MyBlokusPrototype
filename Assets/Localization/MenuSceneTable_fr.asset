@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 292302757888
-    m_Localized: "Cr\xE9dits"
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   - m_Id: 367481462784
@@ -35,11 +35,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1193541246976
-    m_Localized: "Cr\xE9ez votre partie"
+    m_Localized: Creez votre partie
     m_Metadata:
       m_Items: []
   - m_Id: 1370972889088
-    m_Localized: "D\xE9marrer la partie"
+    m_Localized: Commencer
     m_Metadata:
       m_Items: []
   - m_Id: 1471548104704
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4016408502272
-    m_Localized: "Cr\xE9dits"
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   - m_Id: 4070607298560

@@ -94,10 +94,17 @@ public class GameMenuManager : MonoBehaviour
 
     private void ShowMenu()
     {
-        soundManager.PlaySound(SoundType.Undo);
-        Toggle(canvasMain);
-        Toggle(menuZone);
-        previewManager.ModifyCursorOpacity(0f);
+        if (!menuZone.activeInHierarchy)
+        {
+            soundManager.PlaySound(SoundType.Undo);
+            Toggle(canvasMain);
+            Toggle(menuZone);
+            previewManager.ModifyCursorOpacity(0f);
+        }
+        else
+        {
+            HideMenu();
+        }
     }
 
     private void HideMenu()
@@ -105,6 +112,8 @@ public class GameMenuManager : MonoBehaviour
         soundManager.PlaySound(SoundType.Undo);
         Toggle(canvasMain);
         Toggle(menuZone);
+        if (optionsZone.activeInHierarchy)
+            Toggle(optionsZone);
         previewManager.ModifyCursorOpacity(1f);
     }
 

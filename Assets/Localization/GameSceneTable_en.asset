@@ -155,6 +155,10 @@ MonoBehaviour:
     m_Localized: Main Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 9466790738010112
+    m_Localized: End Turn
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
