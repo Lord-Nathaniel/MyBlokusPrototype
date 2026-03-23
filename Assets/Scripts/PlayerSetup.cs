@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// This class manages the information needed between scene.
 /// It will not be destroyed on load and will debug log all carried information.
-/// -IN- MenuManager
+/// -IN- MenuManager | OptionsMenuManager | GameManager
 /// </summary>
 public class PlayerSetup : MonoBehaviour
 {
@@ -40,9 +40,8 @@ public class PlayerSetup : MonoBehaviour
 
     /// <summary>
     /// Create a PlayerSetting to be kept between scenes.
-    /// -IN- MenuManager from StartGameAction()
+    /// -IN- OptionsMenuManager from SetOptionsSettingsToPlayerSetup()
     /// </summary>
-    /// <returns></returns>
     public void AddPlayerSetting(int playerID, string playerName, Color playerColor, int playerTextureID)
     {
         PlayerSetting playerSetting = new PlayerSetting(playerID, playerName, playerColor, playerTextureID);
@@ -53,7 +52,6 @@ public class PlayerSetup : MonoBehaviour
     /// Create a OptionsSetting to be kept between scenes.
     /// -IN- MenuManager from StartGameAction()
     /// </summary>
-    /// <returns></returns>
     public void AddOptionsSetting(float soundVolume, float musicVolume, int languageIndex)
     {
         optionsSettings = new OptionsSettings(soundVolume, musicVolume, languageIndex);
@@ -100,7 +98,6 @@ public class PlayerSetup : MonoBehaviour
     /// Purge all Player Settings after quitting current game.
     /// -IN- GameManager from GameEnd()
     /// </summary>
-    /// <returns></returns>
     public void PurgePlayerSettings()
     {
         playerSettings = new();
@@ -109,6 +106,7 @@ public class PlayerSetup : MonoBehaviour
 
 /// <summary>
 /// Store the player settings to be put in the PlayerSetup list, which don't get destroyed between scenes.
+/// -IN- GameManager
 /// </summary>
 public class PlayerSetting
 {
