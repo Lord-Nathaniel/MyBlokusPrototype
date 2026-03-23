@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 /// <summary>
 /// This class manages the main menu of the game.
-/// It manages the game start conditions, the credits and the quit actions.
-/// -OUT- PlayerPieceManager | PreviewManager | SoundManager
+/// It manages the game start conditions, the credits and the quit actions./// 
+/// -IN- PlayerThreeToggle | PlayerFourToggle | TextureToggle
+/// -OUT- PlayerPieceManager | PreviewManager | SoundManager | MusicManager
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
@@ -60,7 +61,6 @@ public class MenuManager : MonoBehaviour
     private int maxPlayerNb = 4;
 
     private List<Color> cellColors = new();
-
     private List<int> playerColors = new();
     private List<int> playerTextureIds = new();
 
@@ -118,8 +118,9 @@ public class MenuManager : MonoBehaviour
 
         gameStartButton.onClick.AddListener(() =>
         {
-            AnimateButton(gameStartButton);
-            StartGameAction();
+            gameStartButton.transform.DOScale(1.1f, 0.1f)
+                                     .SetEase(Ease.OutBounce)
+                                     .OnComplete(() => StartGameAction());
         });
 
         optionsButton.onClick.AddListener(() =>
@@ -136,14 +137,16 @@ public class MenuManager : MonoBehaviour
 
         creditsCloseButton.onClick.AddListener(() =>
         {
-            AnimateButton(creditsCloseButton);
-            CloseCreditsAction();
+            creditsCloseButton.transform.DOScale(1.1f, 0.1f)
+                              .SetEase(Ease.OutBounce)
+                              .OnComplete(() => CloseCreditsAction());
         });
 
         quitButton.onClick.AddListener(() =>
         {
-            AnimateButton(quitButton);
-            QuitAction();
+            quitButton.transform.DOScale(1.1f, 0.1f)
+                                .SetEase(Ease.OutBounce)
+                                .OnComplete(() => QuitAction());
         });
     }
 
@@ -295,6 +298,7 @@ public class MenuManager : MonoBehaviour
 
     /// <summary>
     /// Allow the player three to be selected.
+    /// -IN- PlayerThreeToggle from OnValueChanged()
     /// </summary>
     public void TogglePlayerThree()
     {
@@ -303,7 +307,8 @@ public class MenuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Allow the player four to be selected.
+    /// Allow the player four to be selected. 
+    /// -IN- PlayerFourToggle from OnValueChanged()
     /// </summary>
     public void TogglePlayerFour()
     {
@@ -313,6 +318,7 @@ public class MenuManager : MonoBehaviour
 
     /// <summary>
     /// Allow the textures to be selected.
+    /// -IN- TextureToggle from OnValueChanged()
     /// </summary>
     public void ToggleTextureButtons()
     {

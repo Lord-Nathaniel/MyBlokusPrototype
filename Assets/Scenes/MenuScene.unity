@@ -9518,7 +9518,7 @@ GameObject:
   - component: {fileID: 1109863855}
   - component: {fileID: 1109863856}
   m_Layer: 5
-  m_Name: TogglePlayerFour
+  m_Name: PlayerFourToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12466,7 +12466,7 @@ GameObject:
   - component: {fileID: 1469892565}
   - component: {fileID: 1469892566}
   m_Layer: 5
-  m_Name: TogglePlayerThree
+  m_Name: PlayerThreeToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12908,7 +12908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1534982506
 RectTransform:
   m_ObjectHideFlags: 0
