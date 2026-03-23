@@ -3,6 +3,8 @@ using UnityEngine;
 
 /// <summary>
 /// This class manages the non-musical audio of the game. 
+/// /// It will not be destroyed on load.
+/// -IN- GameManager, GameMenuManager, MainMenuManager, OptionsMenuManager, UIManager
 /// </summary>
 public class SoundManager : MonoBehaviour
 {
@@ -44,6 +46,7 @@ public class SoundManager : MonoBehaviour
 
     /// <summary>
     /// Plays the needed sound from the calling element.
+    /// -IN- GameManager, GameMenuManager, MainMenuManager, OptionsMenuManager, UIManager
     /// </summary>
     /// <param name="soundtype"></param>
     public void PlaySound(SoundType soundtype)
