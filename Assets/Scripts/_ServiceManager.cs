@@ -2,21 +2,26 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class allows every managers to register in this dictionary and be called from any other manager without direct call.
+/// It will not be destroyed on load and will allow music to continue from a scene to another.
+/// -IN- All Managers
+/// </summary>
 [DefaultExecutionOrder(-1000)]
 public class ServiceManager : MonoBehaviour
 {
     private static readonly Dictionary<Type, object> services = new();
 
-    private static ServiceManager instance;
+    private static ServiceManager Instance;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Bootstrap()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            var go = new GameObject("[ServiceLocator]");
-            instance = go.AddComponent<ServiceManager>();
-            DontDestroyOnLoad(go);
+            var gameObject = new GameObject("[ServiceLocator]");
+            Instance = gameObject.AddComponent<ServiceManager>();
+            DontDestroyOnLoad(gameObject);
         }
     }
 
