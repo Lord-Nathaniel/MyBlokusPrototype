@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// This class manages the player piece element data during the player turn.
-/// -IN- GameManager
-/// -OUT- InputManager | GridManager | PreviewManager
+/// This class manages the player piece element data and actions during the player turn.
+/// -IN- GameManager | UIManager
+/// -OUT- InputManager | GridManager | PreviewManager | SoundManager
 /// </summary>
 public class PlayerPieceManager : MonoBehaviour
 {
@@ -47,14 +47,16 @@ public class PlayerPieceManager : MonoBehaviour
         previewManager = ServiceManager.Get<PreviewManager>();
         soundManager = ServiceManager.Get<SoundManager>();
 
-        //TODO remove start because should be called for each player.
         StopPlacement();
     }
 
     /// <summary>
     /// State of the game where playerpiece preview is shown and other things disabbled when a player use the select button.
+    /// -IN- UIManager from OnClickPieceAction()
     /// </summary>
     /// <param name="pieceID"></param>
+    /// <param name="playerColor"></param>
+    /// <param name="playerID"></param>
     public void StartPlacement(int pieceID, Color playerColor, int playerID)
     {
         currentPlayerID = playerID;
@@ -89,10 +91,7 @@ public class PlayerPieceManager : MonoBehaviour
         inputManager.OnMiddleClicked += MirrorPlayerPiece;
     }
 
-    /// <summary>
-    /// State of the game where the gridManager is called to know if writing is legal.
-    /// </summary>
-    public void PlaceStructure()
+    private void PlaceStructure()
     {
         if (inputManager.IsPointerOverUI())
             return;
@@ -137,11 +136,7 @@ public class PlayerPieceManager : MonoBehaviour
                                             shouldPlacePiece);
     }
 
-
-    /// <summary>
-    /// This helps to rememeber the current state of piece rotation.
-    /// </summary>
-    public void RotatePlayerPiece()
+    private void RotatePlayerPiece()
     {
         if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].rotable)
         {
@@ -151,10 +146,7 @@ public class PlayerPieceManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// This helps to rememeber the current state of piece mirroring.
-    /// </summary>
-    public void MirrorPlayerPiece()
+    private void MirrorPlayerPiece()
     {
         if (selectedObjectID > -1 && database.playerPieces[selectedObjectID].mirrorable)
         {
@@ -166,6 +158,7 @@ public class PlayerPieceManager : MonoBehaviour
 
     /// <summary>
     /// State of the game where player turn should either end or go back to placement state.
+    /// -IN- UIManager from OnClickPassAction() and OnClickPieceAction(); GameManager from NextPlayerTurn()
     /// </summary>
     public void StopPlacement()
     {
