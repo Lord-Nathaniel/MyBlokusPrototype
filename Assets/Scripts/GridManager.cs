@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This class manages the grid data and display.
 /// It contains a dictionnary of all Cells with its state.
-/// -IN- PlayerPieceManager
+/// -IN- PlayerPieceManager | UIManager
 /// </summary>
 public class GridManager : MonoBehaviour
 {
@@ -62,15 +62,16 @@ public class GridManager : MonoBehaviour
     /// -IN- PlayerPieceManager from CheckPlacementValidity()
     /// </summary>
     /// <param name="mousePosition"></param>
-    /// <param name="ID"></param>
+    /// <param name="pieceID"></param>
     /// <param name="rotationNb"></param>
     /// <param name="isMirrored"></param>
-    /// <param name="isFirstPlacedPiece"></param>
+    /// <param name="playerID"></param>
+    /// <param name="shouldPlacePiece"></param>
     /// <returns></returns>
-    public bool CanPlaceObjectAt(Vector3 mousePosition, int ID, int rotationNb, bool isMirrored, int playerID, bool shouldPlacePiece)
+    public bool CanPlaceObjectAt(Vector3 mousePosition, int pieceID, int rotationNb, bool isMirrored, int playerID, bool shouldPlacePiece)
     {
         Vector3Int gridPosition = WorldToCell(mousePosition);
-        playerPieceSO = database.playerPieces[ID];
+        playerPieceSO = database.playerPieces[pieceID];
         List<Vector2Int> selectedSquares = playerPieceSO.squares;
         List<Vector2Int> selectedCorners = playerPieceSO.corners;
 
@@ -130,20 +131,10 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        //Debug.Log("All rules respected, piece placed !");
         if (shouldPlacePiece)
         {
-            squarePositions = new();
-            foreach (Vector3Int tempSquare in tempSquarePositions)
-            {
-                squarePositions.Add(tempSquare);
-                Debug.Log("temp square : " + tempSquare.x + " | " + tempSquare.y + " | " + tempSquare.z);
-            }
-
-            foreach (Vector3Int square in squarePositions)
-            {
-                Debug.Log("square : " + square.x + " | " + square.y + " | " + square.z);
-            }
+            //Debug.Log("All rules respected, piece placed !");
+            squarePositions = new List<Vector3Int>(tempSquarePositions);
         }
         return true;
     }
@@ -258,7 +249,6 @@ public class GridManager : MonoBehaviour
     /// Internal conversion from Vector3 to Vector3Int with the grid offset.
     /// </summary>
     /// <param name="world"></param>
-    /// <returns></returns>
     public Vector3Int WorldToCell(Vector3 world)
     {
         Vector3 local = world - gridOrigin;
@@ -273,7 +263,6 @@ public class GridManager : MonoBehaviour
     /// Internal conversion from Vector3Int to Vector3 with the grid offset.
     /// </summary>
     /// <param name="cell"></param>
-    /// <returns></returns>
     public Vector3 CellToWorld(Vector3Int cell)
     {
         float x = (cell.x + 0.5f) * cellLenght;
@@ -340,6 +329,7 @@ public class GridManager : MonoBehaviour
     /// </summary>
     /// <param name="pieceID"></param>
     /// <param name="playerID"></param>
+    /// <param name="playerColor"></param>
     public void AddTempPlayerPiece(int pieceID, int playerID, Color playerColor)
     {
         if (playerPieceSO != database.playerPieces[pieceID])
@@ -359,9 +349,8 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// Remove the player piece squares stored on the grid.
-    /// -IN- PlayerPieceManager from StartPlacement() and PlaceStructure()
+    /// -IN- PlayerPieceManager from StartPlacement() and PlaceStructure(), UIManager from OnClickPassAction() and OnClickPieceAction(
     /// </summary>
-    /// <param name="ID"></param>
     public void RemoveTempPlayerPiece()
     {
         if (playerPieceSO == null)
@@ -374,7 +363,10 @@ public class GridManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Remove the temporary placed piece, place the piece and add it to the grid dictionary
     /// -IN- PlayerPieceManager from IsPlayerPiecePlaced() 
+    /// <param name="playerID"></param>
+    /// <param name="textureID"></param>
     /// </summary>
     public void SaveCurrentPiece(int playerID, int textureID)
     {
@@ -404,7 +396,8 @@ public class GridManager : MonoBehaviour
 
     /// <summary>
     /// Remove all starting cells when every players has ended their first turn.
-    /// -IN- PlayerPieceManager from  
+    /// -IN- PlayerPieceManager from ControlFirstTurn()
+    /// <param name="playerNb"></param>
     /// </summary>
     public void PurgeStartingCells(int playerNb)
     {
