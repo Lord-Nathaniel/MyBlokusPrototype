@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// This class manages the keyboard and mouse input.
 /// When the player interact with the game, it calls corresponding Actions.
-/// -IN- PlayerPieceManager | PreviewManager
+/// -IN- PlayerPieceManager | PreviewManager | GameMenuManager
 /// </summary>
 public class InputManager : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     private Vector3 lastPosition;
 
     /// <summary>
-    /// -IN- PlayerPieceManager from StartPlacement() and StopPlacement()
+    /// -IN- PlayerPieceManager from StartPlacement() and StopPlacement(), GameMenuManager from Start() and OnDestroy()
     /// </summary>
     public event Action OnLeftClicked, OnMiddleClicked, OnRightClicked, OnEscapeClicked;
 
@@ -48,16 +48,13 @@ public class InputManager : MonoBehaviour
     /// Checks the UI EventSystem to know if the mouseCursor is over an UI element.
     /// -IN- PlayerPieceManager from PlaceStructure()
     /// </summary>
-    /// <returns></returns>
     public bool IsPointerOverUI()
         => EventSystem.current.IsPointerOverGameObject();
 
     /// <summary>
-    /// Gives the last mouse positions.
-    /// -IN- PlayerPieceManager from PlaceStructure()
-    /// -IN- PreviewManager from Update()
+    /// Gives the last mouse position.
+    /// -IN- PlayerPieceManager from PlaceStructure(), PreviewManager from Update()
     /// </summary>
-    /// <returns></returns>
     public Vector3 GetSelectedMapPosition()
     {
         Vector3 mousePos = Input.mousePosition;
