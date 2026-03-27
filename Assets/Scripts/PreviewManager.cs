@@ -19,6 +19,8 @@ public class PreviewManager : MonoBehaviour
     private Color playerColor;
     private Vector3Int lastDetectedGridPosition = Vector3Int.zero;
     private bool isPlayerColor = true;
+    private Tween shakeTween;
+    private Vector3 positionBeforeTween;
 
     private const string PLAYER_COLOR = "_PlayerColor";
 
@@ -136,7 +138,18 @@ public class PreviewManager : MonoBehaviour
     public void AnimatePreviewWrongPlacement()
     {
         Transform preview = cursorIndicatorParent.transform.GetChild(0);
-        preview.DOShakePosition(0.6f, new Vector3(1f, 0f, 0f), 10, 0, false, false, ShakeRandomnessMode.Harmonic);
+
+        if (shakeTween != null)
+        {
+            shakeTween?.Kill();
+        }
+        else
+        {
+            positionBeforeTween = preview.localPosition;
+        }
+
+        shakeTween = preview.DOShakePosition(0.6f, new Vector3(1f, 0f, 0f), 10, 90f, false, false, ShakeRandomnessMode.Full)
+                            .OnComplete(() => preview.localPosition = positionBeforeTween);
     }
 
     /// <summary>
