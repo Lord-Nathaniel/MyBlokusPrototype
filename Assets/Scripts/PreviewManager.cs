@@ -159,9 +159,10 @@ public class PreviewManager : MonoBehaviour
     public void AnimatePreviewGoodPlacement()
     {
         Transform preview = cursorIndicatorParent.transform.GetChild(0);
-        preview.DOScale(0.9f, 0.4f)
+        Vector3 scaleBeforeTween = preview.localScale;
+        preview.DOScale(scaleBeforeTween * 0.9f, 0.4f)
                .SetEase(Ease.OutBounce)
-               .OnComplete(() => preview.transform.DOScale(1f, 0.05f));
+               .OnComplete(() => preview.transform.DOScale(scaleBeforeTween, 0.05f));
     }
 
     /// <summary>
