@@ -106,26 +106,34 @@ public class GameManager : MonoBehaviour
             ));
             currentPlayersColors.Add(playerSettings[i].playerColor);
         }
-        SetPlayerNameGlobalVar();
+        InitPlayerGlobalVar();
         uiManager.GenerateRemainingPlayerPieceImages(currentPlayersColors);
     }
 
-    private void SetPlayerNameGlobalVar()
+    private void InitPlayerGlobalVar()
     {
         var firstPlayerNameVar = source["global"]["firstPlayerName"] as StringVariable;
         if (currentPlayers[0].playerName == "")
             currentPlayers[0].playerName = "Player One";
         firstPlayerNameVar.Value = currentPlayers[0].playerName;
+        var firstPlayerScoreVar = source["global"]["firstPlayerScore"] as IntVariable;
+        firstPlayerScoreVar.Value = 0;
+
         var secondPlayerNameVar = source["global"]["secondPlayerName"] as StringVariable;
         if (currentPlayers[1].playerName == "")
             currentPlayers[1].playerName = "Player Two";
         secondPlayerNameVar.Value = currentPlayers[1].playerName;
+        var secondPlayerScoreVar = source["global"]["secondPlayerScore"] as IntVariable;
+        secondPlayerScoreVar.Value = 0;
+
         if (currentPlayers.Count >= 3)
         {
             var thirdPlayerNameVar = source["global"]["thirdPlayerName"] as StringVariable;
             if (currentPlayers[2].playerName == "")
                 currentPlayers[2].playerName = "Player Three";
             thirdPlayerNameVar.Value = currentPlayers[2].playerName;
+            var thirdPlayerScoreVar = source["global"]["thirdPlayerScore"] as IntVariable;
+            thirdPlayerScoreVar.Value = 0;
         }
         if (currentPlayers.Count == 4)
         {
@@ -133,6 +141,8 @@ public class GameManager : MonoBehaviour
             if (currentPlayers[3].playerName == "")
                 currentPlayers[3].playerName = "Player Four";
             fourthPlayerNameVar.Value = currentPlayers[3].playerName;
+            var fourthPlayerScoreVar = source["global"]["fourthPlayerScore"] as IntVariable;
+            fourthPlayerScoreVar.Value = 0;
         }
     }
 
@@ -173,7 +183,7 @@ public class GameManager : MonoBehaviour
 
             if (currentPlayers[currentPlayerID].remainingPlayerPieces.Count == 0)
             {
-                ComputeAndEndPlayerTurn(placedPieceID);
+                ComputeBonusScore(placedPieceID);
             }
             else
             {
@@ -181,7 +191,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void ComputeAndEndPlayerTurn(int placedPieceID)
+    private void ComputeBonusScore(int placedPieceID)
     {
         int scoreToAdd = 6;
         if (placedPieceID == 0)

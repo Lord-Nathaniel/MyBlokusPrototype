@@ -100,7 +100,7 @@ public class PlayerSetup : MonoBehaviour
     /// </summary>
     public void PurgePlayerSettings()
     {
-        playerSettings = new();
+        playerSettings.Clear();
     }
 }
 
